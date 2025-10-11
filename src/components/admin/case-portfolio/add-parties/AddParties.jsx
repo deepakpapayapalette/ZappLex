@@ -6,7 +6,7 @@ import "react-multi-carousel/lib/styles.css"
 import AdminCard1 from '../../../common/AdminCard1';
 import { Dialog } from '@mui/material';
 // import AddLayers from './AddLayers';
-import Test from './test';
+// import Test from './test';
 import { Add } from '@mui/icons-material';
 import AddLayers from './AddLayers';
 import ShowLawyersCard from './ShowLawyersCard';
