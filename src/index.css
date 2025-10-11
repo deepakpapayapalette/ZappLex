@@ -61,7 +61,7 @@ h6 {
     --web-destructive: #F80E0E;
     --web-destructive-foreground: #F8FAFC;
 
-    --web-border: #286578;
+    --web-border: #0A66C2;
     --web-input: #E2E8F0;
     --web-ring: #020817;
     --text-para: #4d4d4d;
@@ -69,11 +69,11 @@ h6 {
 
     --web-radius: 0.5rem;
 
-    --sidebar-background: #0077B5;
+    --sidebar-background: #0a66c2;
 
     --sidebar-foreground: #4c91acaf;
 
-    --sidebar-primary: #ffffff1a;
+    --sidebar-primary: #004182;
 
     --sidebar-primary-foreground: #FAFAFA;
 
@@ -83,7 +83,7 @@ h6 {
 
     --sidebar-border: #E5E7EB;
 
-    --sidebar-ring: #3B82F6;
+    --sidebar-ring: #0A66C2;
   }
 
   .dark {

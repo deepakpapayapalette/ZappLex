@@ -10,6 +10,8 @@ import { IconButton, InputAdornment } from "@mui/material";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { Popup } from '../components/common/Popup'
 import Logo from '../assets/images/logo-web.png'
+import loginImg from '../assets/images/login.jpg'
+
 const Login = () => {
   const [isLoading, setIsLoading] = React.useState(false);
   const navigate = useNavigate();
@@ -55,7 +57,7 @@ const Login = () => {
   return (
     <div className='h-screen overflow-auto grid  grid-cols-1 md:grid-cols-2 gap-3 p-4'>
       <div className='flex items-center justify-center xs:px-2 sm:px-4 py-4'>
-        <img src="/LoginSide2.png" alt="Signupbg" className='w-full max-h-[600px] h-full object-cover rounded-lg' />
+        <img src={loginImg} alt="Signupbg" className='w-full max-h-[400px] h-full object-cover rounded-lg' />
       </div>
       {/*==========  Login Form  start here ==========*/}
       <div className='flex w-full justify-center flex-col py-8 md:py-14 xs:px-4 sm:px-6 md:px-20'>

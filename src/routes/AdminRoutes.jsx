@@ -19,7 +19,10 @@ import VerificationChecklistType from "../pages/admin/configrations/Verification
 import VerifierName from "../pages/admin/configrations/VerifierName";
 import DiseaseType from "../pages/admin/configrations/DiseaseType";
 import CasePortfolioPage from "../pages/admin/CasePortfolioPage";
-import AddParties from "../components/admin/case-portfolio/AddParties";
+
+// import AddLayers from "../components/admin/case-portfolio/add-parties/AddLayers";
+import AddParties from "../components/admin/case-portfolio/add-parties/AddParties";
+// import PleadingsForm from "../components/admin/case-portfolio/add-parties/PleadingsForm";
 
 const AdminRoutes = () => (
   <Routes>
@@ -27,6 +30,8 @@ const AdminRoutes = () => (
       <Route index element={<Home />} />
       <Route path="case-portfolio/" element={<CasePortfolioPage />} />
       <Route path="add-parties/" element={<AddParties />} />
+      {/* <Route path=" pleadings/" element={<PleadingsForm />} /> */}
+
 
       {/* <Route path="configuration/" element={<AdminConfigOutlet />}>
           <Route path="unit-type" element={<UnitType />} />

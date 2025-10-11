@@ -1,7 +1,39 @@
 import React, { useState } from 'react'
-import FormInput from '../../common/FormInput'
-import FormButton from '../../common/FormButton';
+import FormInput from '../../../common/FormInput'
+import FormButton from '../../../common/FormButton';
+import Carousel from "react-multi-carousel"
+import "react-multi-carousel/lib/styles.css"
+import AdminCard1 from '../../../common/AdminCard1';
+import { Dialog } from '@mui/material';
+// import AddLayers from './AddLayers';
+import Test from './test';
+import { Add } from '@mui/icons-material';
+import AddLayers from './AddLayers';
+import ShowLawyersCard from './ShowLawyersCard';
+import PleadingsForm from './PleadingsForm';
 
+const plaintiffData = [
+  {
+    id: 1,
+    title: "Plaintiff",
+    subtitle: "Plaintiff",
+  },
+  {
+    id: 2,
+    title: "Defendant",
+    subtitle: "Defendant",
+  },
+  {
+    id: 3,
+    title: "Witness",
+    subtitle: "Witness",
+  },
+  {
+    id: 4,
+    title: "Witness",
+    subtitle: "Witness",
+  }
+]
 const roles = [
   { value: "", label: "Choose" },
   { value: "plaintiff", label: "Plaintiff" },
@@ -18,6 +50,18 @@ const states = [
 
 
 const AddParties = () => {
+  const [layerOpen, setLayerOpen] = useState(false);
+  const [childData, setChildData] = React.useState([]);
+  const [lawyerShow, setLawyerShow] = useState(false);
+  const [showPleadings, setShowPleadings] = useState(false);
+
+  const handleChildData = (data) => {
+    console.log("Received data from AddLayers:", data);
+    setChildData(data);
+  };
+
+  console.log("Current childData state in AddParties:", childData);
+
   const [formData, setFormData] = useState({
     name: "",
     role: "",
@@ -34,7 +78,6 @@ const AddParties = () => {
     e.preventDefault();
     // Handle form submission here, using formData
   };
-
   const onChange = (e) => {
     const { name, value } = e.target;
     setFormData(prev => ({
@@ -42,25 +85,37 @@ const AddParties = () => {
       [name]: value
     }));
   };
-
   // Stub handlers for verify buttons
   const handleVerifyAadhaar = () => {
     // Aadhaar verification logic here
   };
-
   const handleVerifyMobile = () => {
     // Mobile verification logic here
   };
-
   const handleAddMore = () => {
     alert("Add more  here");
   };
-
   const handleNext = (e) => {
     e.preventDefault();
     // Logic for Next step
   };
-
+  const responsive = {
+    desktop: {
+      breakpoint: { max: 3000, min: 1024 },
+      items: 3,
+      partialVisibilityGutter: 24,
+    },
+    tablet: {
+      breakpoint: { max: 1024, min: 640 },
+      items: 2,
+      partialVisibilityGutter: 20,
+    },
+    mobile: {
+      breakpoint: { max: 640, min: 0 },
+      items: 1,
+      partialVisibilityGutter: 16,
+    },
+  }
 
   return (
     <>
@@ -68,7 +123,7 @@ const AddParties = () => {
         <div className="container">
           <h2 className='text-xl md:text-3xl  mb-4'>Add New Case</h2>
           <div className="shadow-card p-5 sm:p-8 rounded-lg">
-            <h3 className='text-xl md:text-2xl font-semibold mb-3'>Case Registration</h3>
+            <h3 className='text-xl md:text-2xl font-semibold mb-3'>Add Parties</h3>
             <div className=''>
               <form onSubmit={handleSubmit}>
                 <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4'>
@@ -183,13 +238,107 @@ const AddParties = () => {
                 </div>
 
                 <div className='mt-5 flex  gap-4'>
-                  <FormButton size="large" type="button" onClick={handleAddMore}>Add More</FormButton>
+                  <FormButton size="large" type="button" onClick={handleAddMore} variant='outlined' >Add More</FormButton>
                   <FormButton size="large" type="submit" >Next</FormButton>
                 </div>
               </form>
             </div>
           </div>
-        </div >
+        </div>
+
+        <div className="container space-top">
+          <div className="shadow-card p-5 sm:p-8 rounded-lg">
+            <h2 className='text-xl md:text-3xl  mb-4'>Plaintiff</h2>
+            <Carousel
+              responsive={responsive}
+              infinite
+              keyBoardControl
+              swipeable
+              draggable
+              showDots={false}
+              containerClass="pb-4 pt-4"
+              itemClass="ps-1 pt-2 pe-4"
+              arrows={false}
+              renderButtonGroupOutside={false}
+              partialVisible
+            >
+              {plaintiffData.map((item, index) => (
+                <AdminCard1 key={index}
+                  setLayerOpen={setLayerOpen}
+                  setLawyerShow={setLawyerShow}
+                  setShowPleadings={setShowPleadings}
+                />
+              ))}
+            </Carousel>
+          </div>
+        </div>
+
+        <div className="container space-top mb-6 md:mb-12">
+          <div className="shadow-card p-5 sm:p-8 rounded-lg">
+            <h2 className='text-xl md:text-3xl  mb-4'>Defendant</h2>
+            <Carousel
+              responsive={responsive}
+              infinite
+              keyBoardControl
+              swipeable
+              draggable
+              showDots={false}
+              containerClass="pb-4 pt-4"
+              itemClass="ps-1 pt-2 pe-4"
+              arrows={false}
+              renderButtonGroupOutside={false}
+              partialVisible
+            >
+              {plaintiffData.map((item, index) => (
+                <AdminCard1 key={index}
+                  setLayerOpen={setLayerOpen}
+                  setLawyerShow={setLawyerShow}
+                  setShowPleadings={setShowPleadings}
+                />
+              ))}
+            </Carousel>
+          </div>
+        </div>
+
+        <div className="container">
+
+          {/* ==================Add-New-Lawyer=Popup================== */}
+          <Dialog
+            open={layerOpen}
+            onClose={() => setLayerOpen(false)}
+            aria-describedby="layer-open"
+          >
+            <div id="layer-open">
+              <AddLayers closeValue={setLayerOpen} onDataSend={handleChildData} />
+            </div>
+          </Dialog>
+          {/* ==================Lawyer-Records-Popup================== */}
+          <Dialog
+            open={lawyerShow}
+            onClose={() => setLawyerShow(false)}
+            aria-describedby="show-lawyer"
+            maxWidth="lg"
+          >
+            <div id="show-lawyer" className='p-6'>
+              <ShowLawyersCard closeValue={setLawyerShow} lawyerRecord={childData} />
+            </div>
+          </Dialog>
+          {/* ==================pleading-Popup================== */}
+          <Dialog
+            open={showPleadings}
+            onClose={() => setShowPleadings(false)}
+            aria-describedby="pleading-form"
+            fullWidth
+            maxWidth="lg"
+          >
+            <div id="pleading-form" className=' '>
+              <PleadingsForm
+              // closeValue={setLawyerShow}
+              // lawyerRecord={childData}
+              />
+            </div>
+          </Dialog>
+        </div>
 
       </section >
     </>

@@ -5,7 +5,7 @@ const Home = () => {
     <>
       <section>
         <div className="container">
-          <h1>ljl</h1>
+          <h1>Dashboard</h1>
         </div>
       </section>
     </>
