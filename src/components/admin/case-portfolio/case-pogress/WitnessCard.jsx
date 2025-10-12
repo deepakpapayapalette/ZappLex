@@ -3,11 +3,16 @@ import { IoMdCheckmarkCircleOutline } from "react-icons/io";
 import FormButton from '../../../common/FormButton';
 import { useNavigate } from 'react-router-dom';
 
-export default function WitnessCard({ setDetailCaseRecord, setWitnessRecordHistory }) {
-  const navitage = useNavigate();
-  const handleNavitage = () => {
-    navitage("/admin/case-portfolio/case-pogress/case-records")
-  }
+export default function WitnessCard({
+  setDetailCaseRecord,
+  setWitnessRecordHistory,
+  setWitnessTestimony,
+  setCrossExamination,
+  setWitnessSanctitystate,
+  setPlaintiffSummaryState
+}) {
+
+
 
 
   return (
@@ -15,35 +20,43 @@ export default function WitnessCard({ setDetailCaseRecord, setWitnessRecordHisto
       {/* Header Section */}
       <div className="bg-white rounded-lg p-4 mb-4 shadow-sm">
         <div className="flex gap-4">
-          <img
-            src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop"
-            alt="Ravi Rai"
-            className="w-24 h-24 rounded-lg object-cover"
-          />
-          <div className="flex-1">
-            <div className="flex items-center gap-2 mb-2">
-              <h2 className="text-xl font-semibold">Ravi Rai</h2>
+          <div className='flex flex-col lg:flex-row'>
+            <div className='lg:me-3'>
 
+              <img
+                src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop"
+                alt="Ravi Rai"
+                className="w-24 h-24 rounded-lg object-cover"
+              />
             </div>
+            <div className="flex-1">
+              <div className="flex items-center gap-2 mb-2">
+                <h2 className="text-xl font-semibold">Ravi Rai</h2>
 
-            <div className="space-y-1 text-sm text-gray-700">
-              <div className="flex items-center gap-2">
-                <Phone className="w-4 h-4" />
-                <span>+91 5996565151</span>
-                <IoMdCheckmarkCircleOutline className="text-webprimary" size={15} />
               </div>
 
-              <div className="flex items-center gap-2">
-                <Calendar className="w-4 h-4" />
-                <span>30/12/2025</span>
-                <User className="w-4 h-4 ml-2" />
-                <span>Male</span>
-              </div>
+              <div className="space-y-1 text-sm text-gray-700">
+                <div className="flex items-center gap-2">
+                  <Phone className="w-4 h-4" />
+                  <span>+91 5996565151</span>
+                  <IoMdCheckmarkCircleOutline className="text-webprimary" size={15} />
+                </div>
 
-              <div className="flex items-start gap-2">
-                <MapPin className="w-4 h-4 mt-0.5 flex-shrink-0" />
-                <span>H-Block, Sector-63, Noida, Uttar Pradesh, 201301</span>
-                <IoMdCheckmarkCircleOutline className="text-webprimary" size={16} />
+                <div className="flex items-center gap-2">
+                  <Calendar className="w-4 h-4" />
+                  <span>30/12/2025</span>
+                  <User className="w-4 h-4 ml-2" />
+                  <span>Male</span>
+                </div>
+
+                <div className="flex items-start gap-2">
+                  <MapPin className="w-4 h-4 mt-0.5 flex-shrink-0" />
+                  <span>H-Block, Sector-63, Noida, Uttar Pradesh, 201301</span>
+                  <div className=''>
+
+                    <IoMdCheckmarkCircleOutline className="text-webprimary" size={16} />
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -129,21 +142,25 @@ export default function WitnessCard({ setDetailCaseRecord, setWitnessRecordHisto
       {/* Bottom Action Buttons */}
       <div className="grid grid-cols-2 gap-3">
         <FormButton
+          onClick={() => setWitnessTestimony(true)}
           variant='outlined'
           sx={{ paddingBlock: '10px' }} className="bg-white text-webprimary border-2 border-webprimary py-3 rounded-lg font-medium hover:bg-blue-50">
           Witness Testimony
         </FormButton>
         <FormButton
+          onClick={() => setCrossExamination(true)}
           variant='outlined'
           sx={{ paddingBlock: '10px' }} className="bg-white text-webprimary border-2 border-webprimary py-3 rounded-lg font-medium hover:bg-blue-50">
           Cross-Examination
         </FormButton>
         <FormButton
+          onClick={() => setWitnessSanctitystate(true)}
           variant='outlined'
           sx={{ paddingBlock: '10px' }} className="bg-white text-webprimary border-2 border-webprimary py-3 rounded-lg font-medium hover:bg-blue-50">
           Evidence Sanctity Compliance
         </FormButton>
         <FormButton
+          onClick={() => setPlaintiffSummaryState(true)}
           variant='outlined'
           sx={{ paddingBlock: '10px' }} className="bg-white text-webprimary border-2 border-webprimary py-3 rounded-lg font-medium hover:bg-blue-50">
           Summary

@@ -9,6 +9,11 @@ import { Dialog } from '@mui/material';
 import DetailedWitnessHistory from "./DetailedWitnessHistory";
 import ClosingStatements from "./ClosingStatements";
 import OpeningStatements from "./OpeningStatements";
+import WitnessTestimony from "./witness-popup/WitnessTestimonyTab";
+import WitnessTestimonyTab from "./witness-popup/WitnessTestimonyTab";
+import CrossExaminationTab from "./witness-popup/crossExaminationTab";
+import WitnessSanctityTab from "./witness-popup/WitnessSanctityTab";
+import PlaintiffSummary from "./witness-popup/PlaintiffSummary";
 
 
 const StatementsBtns = ["Add Opening Statements",
@@ -35,9 +40,13 @@ const tabs = [
 
 const CaseProgressDashboard = () => {
   const [scrollIndex, setScrollIndex] = useState(0);
-  const [activeTab, setActiveTab] = useState('witness');
+  const [activeTab, setActiveTab] = useState('opening');
   const [detailCaseRecord, setDetailCaseRecord] = useState(false);
   const [witnessRecordHistory, setWitnessRecordHistory] = useState(false);
+  const [WitnessTestimony, setWitnessTestimony] = useState(false);
+  const [CrossExamination, setCrossExamination] = useState(false);
+  const [WitnessSanctityState, setWitnessSanctitystate] = useState(false);
+  const [PlaintiffSummaryState, setPlaintiffSummaryState] = useState(false);
 
   function renderContent() {
     switch (activeTab) {
@@ -46,7 +55,14 @@ const CaseProgressDashboard = () => {
       case "evidence":
         return <><EvidenceCard /> </>;
       case "witness":
-        return <><WitnessCard setDetailCaseRecord={setDetailCaseRecord} setWitnessRecordHistory={setWitnessRecordHistory} /> </>;
+        return <><WitnessCard
+          setDetailCaseRecord={setDetailCaseRecord}
+          setWitnessRecordHistory={setWitnessRecordHistory}
+          setWitnessTestimony={setWitnessTestimony}
+          setCrossExamination={setCrossExamination}
+          setWitnessSanctitystate={setWitnessSanctitystate}
+          setPlaintiffSummaryState={setPlaintiffSummaryState}
+        /> </>;
       case "closing":
         return <><ClosingStatements /> </>;
       default:
@@ -122,16 +138,10 @@ const CaseProgressDashboard = () => {
                   </div>
                   {i !== hearingsData.length - 1 && (
                     <>
-
-
                       {/* <div className="hidden lg:block absolute top-[50%] left-[100%] w-[80px] h-[1px] bg-active z-0"></div> */}
                     </>)}
-
                 </div>
-
-
               </div>))}
-
           </div>
         </div>
         <button
@@ -168,7 +178,7 @@ const CaseProgressDashboard = () => {
       {/*===============-end-Statements-buttons================= */}
 
       {/* ====================plaintiff-difenderCard============== */}
-      <div className="grid md:grid-cols-2 gap-6">
+      <div className="grid lg:grid-cols-2 gap-6">
         <div className="border rounded-xl p-5 shadow-sm">
           <h1 className="font-semibold text-lg mb-4">Plaintiff Submissions</h1>
           <div>
@@ -191,7 +201,8 @@ const CaseProgressDashboard = () => {
             </div>
           </div>
         </div>
-        <div className="border rounded-xl p-5 shadow-sm">
+
+        {/* <div className="border rounded-xl p-5 shadow-sm">
           <h1 className="font-semibold text-lg mb-4">Defendant Submissions</h1>
           <div>
             <div className="grid grid-cols-2 gap-3 mb-6">
@@ -212,7 +223,7 @@ const CaseProgressDashboard = () => {
               {renderContent()}
             </div>
           </div>
-        </div>
+        </div> */}
       </div>
 
       {/* =================witness-record-popup================ */}
@@ -236,6 +247,87 @@ const CaseProgressDashboard = () => {
       >
         <div id="witness-record-history">
           <DetailedWitnessHistory closePopup={setWitnessRecordHistory} />
+        </div>
+      </Dialog>
+
+      { /* =================witness-testimony-popup================ */}
+      <Dialog
+        open={WitnessTestimony}
+        onClose={() => setWitnessTestimony(false)}
+        aria-describedby="witness-testimony-tab"
+        sx={{
+          "& .MuiDialog-container": {
+            "& .MuiPaper-root": {
+              width: "100%",
+              maxWidth: "800px",
+            },
+          },
+        }}
+      >
+        <div id="witness-testimony-tab">
+          <WitnessTestimonyTab closePopup={setWitnessTestimony} />
+          {/* <DetailedWitnessHistory closePopup={setWitnessRecordHistory} /> */}
+        </div>
+      </Dialog>
+
+
+      { /* =================witness-testimony-popup================ */}
+      <Dialog
+        open={CrossExamination}
+        onClose={() => setCrossExamination(false)}
+        aria-describedby="witness-testimony-tab"
+        sx={{
+          "& .MuiDialog-container": {
+            "& .MuiPaper-root": {
+              width: "100%",
+              maxWidth: "800px",
+            },
+          },
+        }}
+      >
+        <div id="witness-testimony-tab">
+          <CrossExaminationTab closePopup={setCrossExamination} />
+
+        </div>
+      </Dialog>
+
+
+      { /* =================witness-testimony-popup================ */}
+      <Dialog
+        open={WitnessSanctityState}
+        onClose={() => setWitnessSanctitystate(false)}
+        aria-describedby="witness-SanctityTab"
+        sx={{
+          "& .MuiDialog-container": {
+            "& .MuiPaper-root": {
+              width: "100%",
+              maxWidth: "800px",
+            },
+          },
+        }}
+      >
+        <div id="witness-SanctityTab">
+          <WitnessSanctityTab closePopup={setWitnessSanctitystate} />
+
+        </div>
+      </Dialog>
+      { /* =================plaintiff-Summary-popup================ */}
+      <Dialog
+        open={PlaintiffSummaryState}
+        onClose={() => setPlaintiffSummaryState(false)}
+        aria-describedby="witness-SanctityTab"
+        sx={{
+          "& .MuiDialog-container": {
+            "& .MuiPaper-root": {
+              width: "100%",
+              maxWidth: "800px",
+            },
+          },
+        }}
+      >
+        <div id="witness-SanctityTab">
+          <PlaintiffSummary closePopup={setPlaintiffSummaryState} />
+
         </div>
       </Dialog>
     </div>

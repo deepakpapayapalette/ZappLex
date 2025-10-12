@@ -36,8 +36,8 @@ const plaintiffData = [
 ]
 const roles = [
   { value: "", label: "Choose" },
-  { value: "plaintiff", label: "Plaintiff" },
-  { value: "defendant", label: "Defendant" },
+  { _id: 'plaintiff', lookup_value: "plaintiff", },
+  { _id: "Defendant", lookup_value: "defendant", },
   // Add more roles as needed
 ];
 
