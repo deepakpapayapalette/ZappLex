@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import FormButton from "../../../common/FormButton";
-
 import EvidenceCard from "./EvidenceCard";
 import WitnessCard from "./WitnessCard";
 import DetailedCaseRecords from "./DetailedCaseRecords";
@@ -9,11 +8,9 @@ import { Dialog } from '@mui/material';
 import DetailedWitnessHistory from "./DetailedWitnessHistory";
 import ClosingStatements from "./ClosingStatements";
 import OpeningStatements from "./OpeningStatements";
-// import WitnessTestimony from "./witness-popup/WitnessTestimonyTab";
-import WitnessTestimonyTab from "./witness-popup/WitnessTestimonyTab";
-import CrossExaminationTab from "./witness-popup/crossExaminationTab";
 import WitnessSanctityTab from "./witness-popup/WitnessSanctityTab";
 import PlaintiffSummary from "./witness-popup/PlaintiffSummary";
+import CrossExamPopup from "./witness-popup/CrossExamPopup";
 
 
 const StatementsBtns = ["Add Opening Statements",
@@ -265,8 +262,7 @@ const CaseProgressDashboard = () => {
         }}
       >
         <div id="witness-testimony-tab">
-          <WitnessTestimonyTab closePopup={setWitnessTestimony} />
-          {/* <DetailedWitnessHistory closePopup={setWitnessRecordHistory} /> */}
+          <CrossExamPopup closePopup={setWitnessTestimony} />
         </div>
       </Dialog>
 
@@ -286,7 +282,7 @@ const CaseProgressDashboard = () => {
         }}
       >
         <div id="witness-testimony-tab">
-          <CrossExaminationTab closePopup={setCrossExamination} />
+          <CrossExaminationPopup closePopup={setCrossExamination} />
         </div>
       </Dialog>
 

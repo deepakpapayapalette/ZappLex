@@ -1,3 +1,4 @@
+import React from 'react'
 import { X } from 'lucide-react';
 
 const crossExaminationData = [
@@ -42,27 +43,30 @@ const crossExaminationData = [
     answer: "No, he never communicated any such request to me before or after issuing the cheque."
   }
 ];
+const CrossExamPopup = (closePopup) => {
+  return (
+    <>
+      <div className="bg-white rounded-xl shadow-md p-7 max-w-3xl mx-auto">
+        {/* Modal header with close "X" */}
+        <div className="flex justify-between items-start mb-2">
+          <h1 className="text-2xl font-bold">Cross-Examination</h1>
+          <button className="text-gray-500 hover:text-gray-700"
+            onClick={() => closePopup(false)}
+          >
+            <X className="w-6 h-6" />
+          </button>
+        </div>
+        <ol className="mt-4">
+          {crossExaminationData.map((item, idx) => (
+            <li key={idx} className="mb-6">
+              <div className="font-bold text-lg">{item.question}</div>
+              <p className="mt-2 text-gray-700 text-base">{item.answer}</p>
+            </li>
+          ))}
+        </ol>
+      </div>
+    </>
+  )
+}
 
-const CrossExaminationTab = ({ closePopup }) => (
-  <div className="bg-white rounded-xl shadow-md p-7 max-w-3xl mx-auto">
-    {/* Modal header with close "X" */}
-    <div className="flex justify-between items-start mb-2">
-      <h1 className="text-2xl font-bold">Cross-Examination</h1>
-      <button className="text-gray-500 hover:text-gray-700"
-        onClick={() => closePopup(false)}
-      >
-        <X className="w-6 h-6" />
-      </button>
-    </div>
-    <ol className="mt-4">
-      {crossExaminationData.map((item, idx) => (
-        <li key={idx} className="mb-6">
-          <div className="font-bold text-lg">{item.question}</div>
-          <p className="mt-2 text-gray-700 text-base">{item.answer}</p>
-        </li>
-      ))}
-    </ol>
-  </div>
-);
-
-export default CrossExaminationTab;
+export default CrossExamPopup
