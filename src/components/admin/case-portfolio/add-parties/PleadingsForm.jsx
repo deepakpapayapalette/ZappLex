@@ -64,7 +64,7 @@ const PleadingsForm = () => {
   };
 
   return (
-    <div className="bg-white lg:p-6 rounded-2xl shadow">
+    <div className="bg-white  p-4 lg:p-8 rounded-2xl shadow">
       <h2 className="text-xl font-semibold mb-4">Pleadings</h2>
 
       <form onSubmit={handleSubmit} className="space-y-6">
@@ -184,7 +184,7 @@ const PleadingsForm = () => {
         </button>
 
         {/* Buttons */}
-        <div className="mt-6 flex gap-4">
+        <div className="mt-6 flex flex-col md:flex-row gap-4">
           <FormButton
             size="large"
             type="button"
@@ -194,10 +194,9 @@ const PleadingsForm = () => {
             + Add More
           </FormButton>
           <FormButton
-            size="large"
-
+            // size="large"
             onClick={handlePreview}
-            variant="outlined"
+          // className="hover:bg-active"
           >
             Preview
           </FormButton>

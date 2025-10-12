@@ -3,6 +3,93 @@ import { FaUserPlus, FaPlus, FaSearch } from "react-icons/fa";
 import Carousel from "react-multi-carousel"
 import "react-multi-carousel/lib/styles.css"
 import { Link } from "react-router-dom";
+const allCases = [
+  {
+    id: 1,
+    caseNo: "CIV-2025-0456",
+    plaintiff: "Rajesh Kumar",
+    defendant: "Amit Singh",
+    courtName: "District Court of Noida, Uttar Pradesh",
+    status: "Pending",
+    caseType: "Criminal (Murder)",
+    lastHearingDate: "2025-01-10",
+    nextHearingDate: "2025-01-15",
+    expectedJudgement: "2 years 8 months",
+    complianceScore: "good",
+    dateCreated: "2025-10-12"
+
+  },
+  {
+    id: 2,
+    caseNo: "CIV-2025-0457",
+    plaintiff: "Priya Sharma",
+    defendant: "Vijay Patel",
+    courtName: "District Court of Delhi, Delhi",
+    status: "Active",
+    caseType: "Civil (Property)",
+    lastHearingDate: "2025-01-08",
+    nextHearingDate: "2025-01-20",
+    expectedJudgement: "1 year 4 months",
+    complianceScore: "better",
+    dateCreated: "2025-10-12"
+  },
+  {
+    id: 3,
+    caseNo: "CIV-2025-0458",
+    plaintiff: "Suresh Reddy",
+    defendant: "Lakshmi Devi",
+    courtName: "High Court of Mumbai, Maharashtra",
+    status: "Pending",
+    caseType: "Criminal (Fraud)",
+    lastHearingDate: "2025-01-05",
+    nextHearingDate: "2025-11-8",
+    expectedJudgement: "3 years 2 months",
+    complianceScore: "worth",
+    dateCreated: "2025-10-10"
+  },
+  {
+    id: 4,
+    caseNo: "CIV-2024-1234",
+    plaintiff: "Meera Nair",
+    defendant: "Ramesh Kumar",
+    courtName: "District Court of Bangalore, Karnataka",
+    status: "Closed",
+    caseType: "Civil (Divorce)",
+    lastHearingDate: "2025-10-10",
+    nextHearingDate: "2025-10-10",
+    expectedJudgement: "6 months",
+    complianceScore: "not-good",
+    dateCreated: "2025-10-11"
+  },
+  {
+    id: 5,
+    caseNo: "CIV-2025-0459",
+    plaintiff: "Arjun Verma",
+    defendant: "Sneha Gupta",
+    courtName: "District Court of Noida, Uttar Pradesh",
+    status: "Pending",
+    caseType: "Criminal (Assault)",
+    lastHearingDate: "2025-01-09",
+    nextHearingDate: "2025-01-18",
+    expectedJudgement: "1 year 10 months",
+    complianceScore: "useless",
+    dateCreated: "2025-10-13"
+  },
+  {
+    id: 6,
+    caseNo: "CIV-2025-0460",
+    plaintiff: "Kavita Joshi",
+    defendant: "Manoj Tiwari",
+    courtName: "District Court of Chennai, Tamil Nadu",
+    status: "Active",
+    caseType: "Civil (Contract)",
+    lastHearingDate: "2025-01-07",
+    nextHearingDate: "2025-01-22",
+    expectedJudgement: "2 years 3 months",
+    complianceScore: "good",
+    dateCreated: "2025-10-10"
+  }
+];
 
 const CaseList = () => {
   const [activeFilter, setActiveFilter] = useState("today");
@@ -25,94 +112,14 @@ const CaseList = () => {
     },
   }
 
-  // Sample case data with different dates
-  const allCases = [
-    {
-      id: 1,
-      caseNo: "CIV-2025-0456",
-      plaintiff: "Rajesh Kumar",
-      defendant: "Amit Singh",
-      courtName: "District Court of Noida, Uttar Pradesh",
-      status: "Pending",
-      caseType: "Criminal (Murder)",
-      lastHearingDate: "2025-01-10",
-      nextHearingDate: "2025-01-15",
-      expectedJudgement: "2 years 8 months",
-      complianceScore: "good",
-      dateCreated: "2025-10-10"
+  //getting data from localstorage
+  const regCase = JSON.parse(localStorage.getItem("regCase")) || [];
 
-    },
-    {
-      id: 2,
-      caseNo: "CIV-2025-0457",
-      plaintiff: "Priya Sharma",
-      defendant: "Vijay Patel",
-      courtName: "District Court of Delhi, Delhi",
-      status: "Active",
-      caseType: "Civil (Property)",
-      lastHearingDate: "2025-01-08",
-      nextHearingDate: "2025-01-20",
-      expectedJudgement: "1 year 4 months",
-      complianceScore: "better",
-      dateCreated: "2025-10-11"
-    },
-    {
-      id: 3,
-      caseNo: "CIV-2025-0458",
-      plaintiff: "Suresh Reddy",
-      defendant: "Lakshmi Devi",
-      courtName: "High Court of Mumbai, Maharashtra",
-      status: "Pending",
-      caseType: "Criminal (Fraud)",
-      lastHearingDate: "2025-01-05",
-      nextHearingDate: "2025-11-8",
-      expectedJudgement: "3 years 2 months",
-      complianceScore: "worth",
-      dateCreated: "2025-10-10"
-    },
-    {
-      id: 4,
-      caseNo: "CIV-2024-1234",
-      plaintiff: "Meera Nair",
-      defendant: "Ramesh Kumar",
-      courtName: "District Court of Bangalore, Karnataka",
-      status: "Closed",
-      caseType: "Civil (Divorce)",
-      lastHearingDate: "2025-10-10",
-      nextHearingDate: "2025-10-10",
-      expectedJudgement: "6 months",
-      complianceScore: "not-good",
-      dateCreated: "2025-10-10"
-    },
-    {
-      id: 5,
-      caseNo: "CIV-2025-0459",
-      plaintiff: "Arjun Verma",
-      defendant: "Sneha Gupta",
-      courtName: "District Court of Noida, Uttar Pradesh",
-      status: "Pending",
-      caseType: "Criminal (Assault)",
-      lastHearingDate: "2025-01-09",
-      nextHearingDate: "2025-01-18",
-      expectedJudgement: "1 year 10 months",
-      complianceScore: "useless",
-      dateCreated: "2025-10-09"
-    },
-    {
-      id: 6,
-      caseNo: "CIV-2025-0460",
-      plaintiff: "Kavita Joshi",
-      defendant: "Manoj Tiwari",
-      courtName: "District Court of Chennai, Tamil Nadu",
-      status: "Active",
-      caseType: "Civil (Contract)",
-      lastHearingDate: "2025-01-07",
-      nextHearingDate: "2025-01-22",
-      expectedJudgement: "2 years 3 months",
-      complianceScore: "good",
-      dateCreated: "2025-10-10"
-    }
-  ];
+  // console.log(regCase, "localsorge CaseList");
+
+  // Sample case data with different dates
+
+
 
   // Filter cases based on selected time period
   const getFilteredCases = () => {
@@ -120,7 +127,7 @@ const CaseList = () => {
     today.setHours(0, 0, 0, 0);
 
     return allCases.filter(caseItem => {
-      const caseDate = new Date(caseItem.dateCreated);
+      const caseDate = new Date(caseItem.dateAdded || caseItem.dateCreated);
       caseDate.setHours(0, 0, 0, 0);
 
       // Search filter
@@ -164,11 +171,11 @@ const CaseList = () => {
 
   const getComplianceLabel = (score) => {
     const labels = {
-      "useless": "Useless",
-      "worth": "Worth",
-      "not-good": "Not Good",
-      "good": "Good",
-      "better": "Better"
+      "useless": "1",
+      "worth": "2",
+      "not-good": "3",
+      "good": "4",
+      "better": "5"
     };
     return labels[score] || score;
   };
@@ -229,7 +236,7 @@ const CaseList = () => {
           <div className="mt-4">
             <input
               type="text"
-              placeholder="Search by case number, plaintiff, or defendant..."
+              placeholder="Search by case number, court, case type, plaintiff, or defendant..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
               className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:border-primary"
@@ -263,21 +270,21 @@ const CaseList = () => {
               renderButtonGroupOutside={false}
               partialVisible
             >
-              {filteredCases.map((caseItem) => (
-                <div key={caseItem.id} className="bg-white rounded-xl border border-gray-300 hover:shadow-card transition-shadow pb-3">
+              {filteredCases.map((caseItem, index) => (
+                <div key={caseItem.id || index} className="bg-white rounded-xl border border-gray-300 hover:shadow-card transition-shadow pb-3">
                   {/* Case Header */}
                   <div className="px-3 py-4 ">
                     <h3 className="text-lg font-bold text-gray-900 mb-1">Case No.</h3>
-                    <p className="text-gray-700 mb-4">{caseItem.caseNo}</p>
+                    <p className="text-gray-700 mb-4">{caseItem.caseNumber || caseItem.caseNo || "N/A"}</p>
 
                     <div className="grid grid-cols-2 gap-4 mb-4">
                       <div>
                         <h4 className="font-semibold text-gray-900 mb-1">Plaintiff</h4>
-                        <p className="text-gray-600 text-sm">{caseItem.plaintiff}</p>
+                        <p className="text-gray-600 text-sm">{caseItem.plaintiff || "Rajesh Kumar"}</p>
                       </div>
                       <div>
                         <h4 className="font-semibold text-gray-900 mb-1">Defendant</h4>
-                        <p className="text-gray-600 text-sm">{caseItem.defendant}</p>
+                        <p className="text-gray-600 text-sm">{caseItem.defendant || "Amit Singh"}</p>
                       </div>
                     </div>
 
@@ -288,11 +295,13 @@ const CaseList = () => {
                           <span>Add Parties</span>
                         </button>
                       </Link>
-                      <button className="flex-1 bg-webprimary hover:bg-active text-white font-medium py-2 px-4 rounded-lg transition-colors flex items-center justify-center space-x-2 text-sm"
-                      >
-                        <FaPlus size={14} />
-                        <span>Case Profiling</span>
-                      </button>
+                      <Link to={`/admin/case-portfolio/case-profiling`}>
+                        <button className="flex-1 bg-webprimary hover:bg-active text-white font-medium py-2 px-4 rounded-lg transition-colors flex items-center justify-center space-x-2 text-sm"
+                        >
+                          <FaPlus size={14} />
+                          <span>Case Profiling</span>
+                        </button>
+                      </Link>
                     </div>
                   </div>
 
@@ -300,34 +309,34 @@ const CaseList = () => {
                   <div className="px-2 py-3 bg-gray-50">
                     <div className="p-2 py-3 border border-gray-200 rounded-lg mb-4">
                       <h4 className="font-bold text-gray-900 mb-2">Court Name</h4>
-                      <p className="text-sm text-gray-700 ">{caseItem.courtName}</p>
+                      <p className="text-sm text-gray-700 ">{caseItem.court || caseItem.courtName || 'District Court of Noida, Uttar Pradesh'}</p>
                     </div>
 
                     <div className="grid grid-cols-2 gap-4 mb-4">
                       <div className="p-2 py-3 border border-gray-200 rounded-lg ">
                         <p className="text-xs font-semibold text-gray-900 mb-1">Status</p>
-                        <p className="text-sm text-gray-600">{caseItem.status}</p>
+                        <p className="text-sm text-gray-600">{caseItem.status || caseItem.caseStatus || 'Pending'}</p>
                       </div>
                       <div className="p-2 py-3 border border-gray-200 rounded-lg ">
                         <p className="text-xs font-semibold text-gray-900 mb-1">Case Type</p>
-                        <p className="text-sm text-gray-600">{caseItem.caseType}</p>
+                        <p className="text-sm text-gray-600">{caseItem.caseType || 'Criminal (Murder)'}</p>
                       </div>
                     </div>
 
                     <div className="grid grid-cols-2 gap-4 mb-4">
                       <div className="p-2 py-3 border border-gray-200 rounded-lg ">
                         <p className="text-xs font-semibold text-gray-900 mb-1">Last Hearing Date</p>
-                        <p className="text-sm text-gray-600">{new Date(caseItem.lastHearingDate).toLocaleDateString()}</p>
+                        <p className="text-sm text-gray-600">{caseItem.lastHearingDate ? new Date(caseItem.lastHearingDate).toLocaleDateString() : '1/10/2025'}</p>
                       </div>
                       <div className="p-2 py-3 border border-gray-200 rounded-lg ">
                         <p className="text-xs font-semibold text-gray-900 mb-1">Next Hearing Date</p>
-                        <p className="text-sm text-gray-600">{new Date(caseItem.nextHearingDate).toLocaleDateString()}</p>
+                        <p className="text-sm text-gray-600">{caseItem.nextHearingDate ? new Date(caseItem.nextHearingDate).toLocaleDateString() : '1/15/2025'}</p>
                       </div>
                     </div>
 
                     <div className="p-2 py-3 border border-gray-200 rounded-lg mb-4">
                       <p className="text-xs font-semibold text-gray-900 mb-1">Expected Judgement Cycle</p>
-                      <p className="text-sm text-gray-600">{caseItem.expectedJudgement}</p>
+                      <p className="text-sm text-gray-600">{caseItem.expectedJudgement || "2 years 8 months"}</p>
                     </div>
 
                     {/* Compliance Score */}
@@ -337,7 +346,7 @@ const CaseList = () => {
                         {["useless", "worth", "not-good", "good", "better"].map((score) => (
                           <div
                             key={score}
-                            className={`flex-1 py-2 text-center text-xs font-semibold rounded ${caseItem.complianceScore === score
+                            className={`flex-1 py-2 text-center text-xs font-semibold rounded ${(caseItem.complianceScore || "good") === score
                               ? getComplianceColor(score)
                               : "bg-gray-300 text-gray-500"
                               }`}
@@ -350,12 +359,16 @@ const CaseList = () => {
 
                     {/* Action Buttons */}
                     <div className="grid grid-cols-2 gap-2">
-                      <button className="bg-webprimary hover:bg-active text-white font-semibold py-2 px-4 rounded-lg transition-colors text-sm">
-                        Open Case Journey
-                      </button>
-                      <button className="border-2 border-webprimary text-webprimary hover:bg-webprimary hover:text-white font-semibold py-2 px-4 rounded-lg transition-colors text-sm">
-                        Start Case Trial
-                      </button>
+                      <Link to={`/admin/case-portfolio/case-profile`}>
+                        <button className="bg-webprimary hover:bg-active text-white font-semibold py-2 px-4 rounded-lg transition-colors text-sm">
+                          Open Case Journey
+                        </button>
+                      </Link>
+                      <Link to={`/admin/case-portfolio/case-progress`}>
+                        <button className="border-2 border-webprimary text-webprimary hover:bg-webprimary hover:text-white font-semibold py-2 px-4 rounded-lg transition-colors text-sm">
+                          Start Case Trial
+                        </button>
+                      </Link>
                     </div>
                   </div>
                 </div>

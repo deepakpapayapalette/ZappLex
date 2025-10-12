@@ -1,11 +1,11 @@
 import React from 'react'
-import CasePortfolio from '../../components/admin/case-portfolio/CasePortfolio'
 import CaseList from '../../components/admin/case-portfolio/CaseList'
+import CaseRegistration from '../../components/admin/case-portfolio/CaseRegistration'
 
 const CasePortfolioPage = () => {
   return (
     <>
-      <CasePortfolio />
+      <CaseRegistration />
       <CaseList />
     </>
   )

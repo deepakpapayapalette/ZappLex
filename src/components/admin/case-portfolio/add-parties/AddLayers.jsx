@@ -51,11 +51,7 @@ const AddLayers = ({ onDataSend, closeValue }) => {
   };
 
   const handleSubmit = (e) => {
-
     e.preventDefault();
-
-
-
     // Validate form data
     if (!formData.lawyer || !formData.lawyer_registration || !formData.mobile) {
       alert('Please fill in all required fields');

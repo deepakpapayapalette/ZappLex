@@ -1,8 +1,35 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import FormInput from '../../common/FormInput'
 import FormButton from '../../common/FormButton';
 
-const CasePortfolio = () => {
+const legalCasesArr = [
+  { _id: 1, label: "Murder (IPC 302)", lookup_value: "murder-ipc-302" },
+  { _id: 2, label: "Rape (IPC 376)", lookup_value: "rape-ipc-376" },
+  { _id: 3, label: "Kidnapping, Robbery, Dacoity", lookup_value: "kidnapping-robbery-dacoity" },
+  { _id: 4, label: "Corruption, Terrorism cases", lookup_value: "corruption-terrorism" },
+  { _id: 5, label: "Defamation (IPC 499)", lookup_value: "defamation-ipc-499" },
+  { _id: 6, label: "Minor hurt/threats", lookup_value: "minor-hurt-threats" },
+  { _id: 7, label: "Public nuisance", lookup_value: "public-nuisance" },
+  { _id: 8, label: "Cyber crimes, fraud, money laundering", lookup_value: "cyber-crimes-fraud-money-laundering" },
+  { _id: 9, label: "Ownership dispute", lookup_value: "ownership-dispute" },
+  { _id: 10, label: "Partition suit (family property)", lookup_value: "partition-suit-family-property" },
+  { _id: 11, label: "Eviction suit (landlord vs tenant)", lookup_value: "eviction-suit" },
+  { _id: 12, label: "Breach of contract", lookup_value: "breach-of-contract" },
+  { _id: 13, label: "Business agreements", lookup_value: "business-agreements" },
+  { _id: 14, label: "Loan recovery cases", lookup_value: "loan-recovery" }
+];
+
+const caseStatusArr = [
+  { _id: 1, lookup_value: "pending" },
+  { _id: 2, lookup_value: "trial" }
+];
+
+const caseTypesArr = [
+  { _id: 1, label: "Criminal", lookup_value: "criminal" },
+  { _id: 2, label: "Civil", lookup_value: "civil" }
+];
+
+const CaseRegistration = () => {
   const [formData, setFormData] = useState({
     court: "",
     caseNumber: "",
@@ -11,20 +38,59 @@ const CasePortfolio = () => {
     caseType: "",
     caseSubType: "",
   });
+  const [regCase, setRegCase] = useState([]);
+
+
+  const resetForm = () => {
+    setFormData({
+      court: "",
+      caseNumber: "",
+      dateOfFiling: "",
+      caseStatus: "",
+      caseType: "",
+      caseSubType: "",
+    });
+  }
+
+
 
   const onChange = (e) => {
     const { name, value } = e.target;
+
     setFormData(prev => ({
       ...prev,
       [name]: value
     }));
+
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Handle form submission here, using formData
+    //registrer case with unique entry
+    const newCase = {
+      id: Date.now(), // Simple ID generation using timestamp
+      court: formData.court,
+      caseNumber: formData.caseNumber,
+      dateOfFiling: formData.dateOfFiling,
+      caseStatus: formData.caseStatus,
+      caseType: formData.caseType,
+      caseSubType: formData.caseSubType,
+      dateAdded: new Date().toISOString()
+    };
+
+    // Add to regCase array
+    const updatedRegCase = [...regCase, newCase];
+    setRegCase(updatedRegCase);
+    // localStorage.setItem("regCase", JSON.stringify(regCase));
+    resetForm();
   };
-  // console.log(formData, "formData")
+  //store regCase in local storage
+
+  useEffect(() => {
+    localStorage.setItem("regCase", JSON.stringify(regCase));
+  }, [regCase]);
+
+  console.log(regCase, "regCase")
   return (
     <section className='pt-6 lg:pt-12 '>
       <div className="container">
@@ -69,11 +135,10 @@ const CasePortfolio = () => {
                   value={formData.caseStatus}
                   onChange={onChange}
                   type="select"
-                  options={[
-                    { value: "", label: "Choose" },
-                    // Add more status options
-                  ]}
+                  options={caseStatusArr}
                 />
+
+
 
                 <FormInput
                   label="Case Type"
@@ -82,10 +147,7 @@ const CasePortfolio = () => {
                   value={formData.caseType}
                   onChange={onChange}
                   type="select"
-                  options={[
-                    { value: "", label: "Choose" },
-                    // Add more type options
-                  ]}
+                  options={caseTypesArr}
                 />
 
                 <FormInput
@@ -95,10 +157,7 @@ const CasePortfolio = () => {
                   value={formData.caseSubType}
                   onChange={onChange}
                   type="select"
-                  options={[
-                    { value: "", label: "Choose" },
-                    // Add more sub type options
-                  ]}
+                  options={legalCasesArr}
                 />
               </div>
               <div className='mt-4'>
@@ -115,4 +174,4 @@ const CasePortfolio = () => {
   )
 }
 
-export default CasePortfolio
+export default CaseRegistration

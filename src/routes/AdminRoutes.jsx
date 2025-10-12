@@ -1,36 +1,24 @@
 import { Route, Routes } from "react-router-dom";
-import AdminConfigOutlet from "../pages/admin/configrations/AdminConfigOutlet";
-import UnitType from "../pages/admin/configrations/UnitType";
 import ErrorPage from "../pages/ErrorPage";
 import AdminLayout from "../layouts/AdminLayout";
 import Home from "../pages/admin/Home";
-import LegalEntityType from "../pages/admin/configrations/LegalEntityType";
-import BrandType from "../pages/admin/configrations/BrandType";
-import IndustrySector from "../pages/admin/configrations/IndustrySector";
-import SubSector from "../pages/admin/configrations/SubSector";
-import ProductCategory from "../pages/admin/configrations/ProductCategory";
-import ProductSubcategory from "../pages/admin/configrations/ProductSubcategory";
-import PanchtatvaLevel1 from "../pages/admin/configrations/PanchtatvaLevel1";
-import PanchtatvaLevel2 from "../pages/admin/configrations/PanchtatvaLevel2";
-import PanchtatvaLevel3 from "../pages/admin/configrations/PanchtatvaLevel3";
-import OrganizerType from "../pages/admin/configrations/OrganizerType";
-import ZatraType from "../pages/admin/configrations/ZatraType";
-import VerificationChecklistType from "../pages/admin/configrations/VerificationChecklistType";
-import VerifierName from "../pages/admin/configrations/VerifierName";
-import DiseaseType from "../pages/admin/configrations/DiseaseType";
-import CasePortfolioPage from "../pages/admin/CasePortfolioPage";
-
-// import AddLayers from "../components/admin/case-portfolio/add-parties/AddLayers";
 import AddParties from "../components/admin/case-portfolio/add-parties/AddParties";
-// import PleadingsForm from "../components/admin/case-portfolio/add-parties/PleadingsForm";
+import CasePortfolioPage from "../pages/admin/CasePortfolioPage";
+import CaseProfiling from "../components/admin/case-portfolio/case-profiling/CaseProfiling";
+import CaseProfile from "../components/admin/case-portfolio/case-profile/CaseProfile";
+import CaseProgressDashboard from "../components/admin/case-portfolio/case-pogress/CaseProgressDashboard";
+import DetailedCaseRecords from "../components/admin/case-portfolio/case-pogress/DetailedCaseRecords";
 
 const AdminRoutes = () => (
   <Routes>
     <Route path="/" element={<AdminLayout />}>
       <Route index element={<Home />} />
-      <Route path="case-portfolio/" element={<CasePortfolioPage />} />
+      <Route path="case-portfolio" element={<CasePortfolioPage />} />
       <Route path="add-parties/" element={<AddParties />} />
-      {/* <Route path=" pleadings/" element={<PleadingsForm />} /> */}
+      <Route path="case-portfolio/case-profiling/" element={<CaseProfiling />} />
+      <Route path="case-portfolio/case-profile/" element={<CaseProfile />} />
+      <Route path="case-portfolio/case-progress/" element={<CaseProgressDashboard />} />
+      <Route path="case-portfolio/case-progress/case-records/" element={<DetailedCaseRecords />} />
 
 
       {/* <Route path="configuration/" element={<AdminConfigOutlet />}>
