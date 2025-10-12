@@ -43,7 +43,7 @@ const crossExaminationData = [
     answer: "No, he never communicated any such request to me before or after issuing the cheque."
   }
 ];
-const CrossExamPopup = (setCrossExamination) => {
+const CrossExamPopup = () => {
 
 
   return (
@@ -52,11 +52,11 @@ const CrossExamPopup = (setCrossExamination) => {
         {/* Modal header with close "X" */}
         <div className="flex justify-between items-start mb-2">
           <h1 className="text-2xl font-bold">Cross-Examination</h1>
-          <button className="text-gray-500 hover:text-gray-700"
-            onClick={() => setCrossExamination(false)}
+          {/* <button className="text-gray-500 hover:text-gray-700"
+          onClick={() => setCrossExamination(false)}
           >
             <X className="w-6 h-6" />
-          </button>
+          </button> */}
         </div>
         <ol className="mt-4">
           {crossExaminationData.map((item, idx) => (

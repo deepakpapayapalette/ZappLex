@@ -272,7 +272,7 @@ const CaseProgressDashboard = () => {
       <Dialog
         open={CrossExamination}
         onClose={() => setCrossExamination(false)}
-        aria-describedby="witness-testimony-tab"
+        aria-describedby="crossExamPopup"
         sx={{
           "& .MuiDialog-container": {
             "& .MuiPaper-root": {
@@ -282,8 +282,8 @@ const CaseProgressDashboard = () => {
           },
         }}
       >
-        <div id="witness-testimony-tab">
-          <CrossExamPopup setCrossExamination={setCrossExamination} />
+        <div id="crossExamPopup">
+          <CrossExamPopup />
         </div>
       </Dialog>
 
