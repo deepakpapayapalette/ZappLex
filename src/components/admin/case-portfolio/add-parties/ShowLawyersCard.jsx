@@ -1,17 +1,87 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { FaUser, FaPhone } from 'react-icons/fa';
 import { FiEdit2, FiTrash2 } from 'react-icons/fi'; // Use these for Edit and Delete icons
 import { FaFilePdf, FaImage } from 'react-icons/fa'; // For document and image icons
+import FormInput from '../../../common/FormInput';
+import FormButton from '../../../common/FormButton';
 
 const ShowLawyersCard = ({ lawyerRecord, closeValue }) => {
-  console.log("Lawyer Record:", lawyerRecord);
+
+  const [lawyersLocal, setLawyersLocal] = useState([]);
+  const [editingLawyer, setEditingLawyer] = useState(null);
+  const [editFormData, setEditFormData] = useState({
+
+    lawyer: '',
+    mobile: '',
+    lawyer_registration: ''
+  });
+
+  //get lawyer record from local storage if exists
+  useEffect(() => {
+    const storedLawyers = localStorage.getItem('lawyers');
+    if (storedLawyers) {
+      setLawyersLocal(JSON.parse(storedLawyers));
+    }
+
+  }, []);
+
+
+  console.log(lawyersLocal, "lawyersLocal");
+  // Delete lawyer function
+  const handleDeleteLawyer = (lawyerId) => {
+    if (window.confirm('Are you sure you want to delete this lawyer?')) {
+      const updatedLawyers = lawyersLocal.filter(lawyer => lawyer.id !== lawyerId);
+      setLawyersLocal(updatedLawyers);
+      localStorage.setItem('lawyers', JSON.stringify(updatedLawyers));
+      alert('Lawyer deleted successfully');
+    }
+  };
+
+  // Edit lawyer function
+  const handleEditLawyer = (lawyer) => {
+    setEditingLawyer(lawyer.id);
+    setEditFormData({
+      lawyer: lawyer.lawyer || '',
+      mobile: lawyer.mobile || '',
+      lawyer_registration: lawyer.lawyer_registration || ''
+    });
+  };
+
+  // Save edited lawyer
+  const handleSaveEdit = () => {
+    const updatedLawyers = lawyersLocal.map(lawyer =>
+      lawyer.id === editingLawyer
+        ? { ...lawyer, ...editFormData }
+        : lawyer
+    );
+    setLawyersLocal(updatedLawyers);
+    localStorage.setItem('lawyers', JSON.stringify(updatedLawyers));
+    setEditingLawyer(null);
+    setEditFormData({ lawyer: '', mobile: '', lawyer_registration: '' });
+    console.log('Lawyer updated successfully');
+  };
+
+  // Cancel edit
+  const handleCancelEdit = () => {
+    setEditingLawyer(null);
+    setEditFormData({ lawyer: '', mobile: '', lawyer_registration: '' });
+  };
+
+  // Handle form input changes
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setEditFormData(prev => ({
+      ...prev,
+      [name]: value
+    }));
+  };
 
   // Handle case when no data is provided or data is empty
   if (!lawyerRecord || lawyerRecord.length === 0) {
     return (
       <>
         <div className=' '>
-          {lawyerRecord.map((lawyer, index) => (
+          {lawyerRecord.map(() => (
             <div className="bg-white rounded-xl shadow p-5 w-[500px] font-sans flex flex-col gap-3 relative">
               <div className="text-center text-gray-500 py-8">
                 <FaUser className="mx-auto mb-3 text-gray-300" size={48} />
@@ -34,11 +104,24 @@ const ShowLawyersCard = ({ lawyerRecord, closeValue }) => {
     );
   }
 
+  if (lawyersLocal.length === 0) {
+    return (
+      <div className=' '>
+        <div className="text-center text-gray-500 py-8">
+          <FaUser className="mx-auto mb-3 text-gray-300" size={48} />
+          <p>No lawyers added yet</p>
+          <p className="text-sm">Add lawyers from the form to see them here</p>
+        </div>
+      </div>
+    );
+  };
+
+
   return (
     <div className='grid grid-cols-2 gap-6 p-4'>
-      {lawyerRecord.map((lawyer, index) => (
-        <div className="space-y-4">
-          <div key={lawyer.id || index} className="bg-white rounded-xl shadow-card p-4 w-[500px] font-sans flex flex-col gap-3 relative">
+      {lawyersLocal.map((lawyer, index) => (
+        <div className="space-y-4" key={lawyer.id || index}>
+          <div className="bg-white rounded-xl shadow-card p-4 w-[500px] font-sans flex flex-col gap-3 relative">
             {/* Top Row - Title and Actions */}
             <div className="flex justify-between items-start">
               <div className="flex items-center gap-2">
@@ -46,8 +129,18 @@ const ShowLawyersCard = ({ lawyerRecord, closeValue }) => {
                 <span className="font-bold text-lg">{lawyer.lawyer || 'Unknown Lawyer'}</span>
               </div>
               <div className="flex gap-3">
-                <FiEdit2 className="text-gray-700 cursor-pointer" size={22} title="Edit" />
-                <FiTrash2 className="text-red-500 cursor-pointer" size={22} title="Delete" />
+                <FiEdit2
+                  className="text-gray-700 cursor-pointer hover:text-blue-600"
+                  size={22}
+                  title="Edit"
+                  onClick={() => handleEditLawyer(lawyer)}
+                />
+                <FiTrash2
+                  className="text-red-500 cursor-pointer hover:text-red-700"
+                  size={22}
+                  title="Delete"
+                  onClick={() => handleDeleteLawyer(lawyer.id)}
+                />
               </div>
             </div>
 
@@ -95,6 +188,56 @@ const ShowLawyersCard = ({ lawyerRecord, closeValue }) => {
             <div className="text-gray-400 text-xs border-t pt-2 mt-2">
               Added: {lawyer.dateAdded ? new Date(lawyer.dateAdded).toLocaleString() : 'Unknown date'}
             </div>
+
+            {/* Edit Form - Show when editing this lawyer */}
+            {editingLawyer === lawyer.id && (
+              <div className="border-t pt-4 mt-4 bg-gray-50 p-4 rounded-lg">
+                <h3 className="font-semibold text-gray-800 mb-3">Edit Lawyer Information</h3>
+                <div className="space-y-3">
+                  <FormInput
+                    label="Lawyer Name"
+                    name="lawyer"
+                    value={editFormData.lawyer}
+                    onChange={handleInputChange}
+                    type="text"
+                    placeholder="Enter lawyer name"
+                  />
+                  <FormInput
+                    label="Mobile Number"
+                    name="mobile"
+                    value={editFormData.mobile}
+                    onChange={handleInputChange}
+                    type="text"
+                    placeholder="Enter mobile number"
+                  />
+                  <FormInput
+                    label="Registration Number"
+                    name="lawyer_registration"
+                    value={editFormData.lawyer_registration}
+                    onChange={handleInputChange}
+                    type="text"
+                    placeholder="Enter registration number"
+                  />
+                  <div className="flex gap-2 pt-2">
+                    <FormButton
+                      type="button"
+                      onClick={handleSaveEdit}
+                      className="bg-green-600 hover:bg-green-700"
+                    >
+                      Save Changes
+                    </FormButton>
+                    <FormButton
+                      type="button"
+                      variant="outlined"
+                      onClick={handleCancelEdit}
+                      className="border-gray-400 text-gray-600 hover:bg-gray-100"
+                    >
+                      Cancel
+                    </FormButton>
+                  </div>
+                </div>
+              </div>
+            )}
           </div>
         </div>
       ))}

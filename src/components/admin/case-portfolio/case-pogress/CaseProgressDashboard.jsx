@@ -11,6 +11,7 @@ import OpeningStatements from "./OpeningStatements";
 import WitnessSanctityTab from "./witness-popup/WitnessSanctityTab";
 import PlaintiffSummary from "./witness-popup/PlaintiffSummary";
 import CrossExamPopup from "./witness-popup/CrossExamPopup";
+import WitnessTestimonyTab from "./witness-popup/WitnessTestimonyTab";
 
 
 const StatementsBtns = ["Add Opening Statements",
@@ -262,12 +263,12 @@ const CaseProgressDashboard = () => {
         }}
       >
         <div id="witness-testimony-tab">
-          <CrossExamPopup closePopup={setWitnessTestimony} />
+          <WitnessTestimonyTab closePopup={setWitnessTestimony} />
         </div>
       </Dialog>
 
 
-      { /* =================witness-testimony-popup================ */}
+      { /* =================CrossExamPopup-popup================ */}
       <Dialog
         open={CrossExamination}
         onClose={() => setCrossExamination(false)}
@@ -282,12 +283,12 @@ const CaseProgressDashboard = () => {
         }}
       >
         <div id="witness-testimony-tab">
-          <CrossExaminationPopup closePopup={setCrossExamination} />
+          <CrossExamPopup setCrossExamination={setCrossExamination} />
         </div>
       </Dialog>
 
 
-      { /* =================witness-testimony-popup================ */}
+      { /* =================witness-Sanctity-popup================ */}
       <Dialog
         open={WitnessSanctityState}
         onClose={() => setWitnessSanctitystate(false)}

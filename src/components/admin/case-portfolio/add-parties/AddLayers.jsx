@@ -3,8 +3,8 @@ import FormInput from '../../../common/FormInput';
 import FormButton from '../../../common/FormButton';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import { Button } from '@mui/material';
-import { BorderColor } from '@mui/icons-material';
 import { IoMdClose } from "react-icons/io";
+import { FiEdit2, FiTrash2 } from 'react-icons/fi';
 
 // const VisuallyHiddenInput = styled('input')({
 //   clip: 'rect(0 0 0 0)',
@@ -60,7 +60,7 @@ const AddLayers = ({ onDataSend, closeValue }) => {
 
     // Create new lawyer entry with unique ID and timestamp
     const newLawyer = {
-      id: Date.now(), // Simple ID generation using timestamp
+      // id: Date.now(),
       lawyer: formData.lawyer,
       lawyer_registration: formData.lawyer_registration,
       mobile: formData.mobile,
@@ -68,9 +68,22 @@ const AddLayers = ({ onDataSend, closeValue }) => {
       dateAdded: new Date().toISOString()
     };
 
-    // Add to lawyers array
+
+    // Get existing data from localStorage
+    const existingData = JSON.parse(localStorage.getItem('lawyers')) || [];
+
+    // Add new lawyer to existing data
+    const updatedLawyersData = [...existingData, newLawyer];
+
+    // Save updated data to localStorage
+    localStorage.setItem('lawyers', JSON.stringify(updatedLawyersData));
+
+    // Update state with new lawyer
+    setLawyers(updatedLawyersData);
+
+    // Update lawyers state with new lawyer
     const updatedLawyers = [...lawyers, newLawyer];
-    setLawyers(updatedLawyers);
+
 
     // Send updated lawyers array to parent component
     if (onDataSend) {
@@ -78,8 +91,8 @@ const AddLayers = ({ onDataSend, closeValue }) => {
     }
 
     // Log the updated lawyers array
-    console.log('New lawyer added:', newLawyer);
-    console.log('All lawyers:', updatedLawyers);
+    // console.log('New lawyer added:', newLawyer);
+    // console.log('All lawyers:', updatedLawyers);
 
     // Reset form after successful submission
     resetForm();
@@ -89,11 +102,10 @@ const AddLayers = ({ onDataSend, closeValue }) => {
   };
 
   // Add more function to reset form for new entry
-  const handleAddMore = () => {
-    if (onDataSend && lawyers.length > 0) {
-      onDataSend(lawyers);
-    }
+  const handleSave = () => {
+    handleSubmit();
     resetForm();
+    alert('Lawyer added successfully!');
   };
 
 
@@ -155,14 +167,15 @@ const AddLayers = ({ onDataSend, closeValue }) => {
                     variant='outlined'
                     className="hover:bg-webprimary hover:text-white w-full "
                     sx={{ textTransform: 'capitalize', borderWidth: '2px', borderColor: 'var(--web-primary)', color: 'var(--web-primary)' }}
-                    type="button"
-                    onClick={handleAddMore}
-
+                    // onClick={handleAddMore}
+                    type="submit"
                   >
                     + Add More
                   </FormButton>
                   <FormButton className="hover:bg-active w-full" sx={{ textTransform: 'capitalize', Width: "100%" }}
-                    type="submit"
+                    // type="submit"
+                    onClick={handleSave}
+
                   >
                     Save
                   </FormButton>
@@ -178,8 +191,8 @@ const AddLayers = ({ onDataSend, closeValue }) => {
               <div className='mt-6'>
                 <h4 className='text-lg font-semibold mb-3'>Added Lawyers ({lawyers.length})</h4>
                 <div className='space-y-3'>
-                  {lawyers.map((lawyer) => (
-                    <div key={lawyer.id} className='p-4 border rounded-lg bg-gray-50'>
+                  {lawyers.map((lawyer, index) => (
+                    <div key={index} className='p-4 border rounded-lg bg-gray-50'>
                       <div className='grid grid-cols-1 md:grid-cols-3 gap-2'>
                         <div><strong>Name:</strong> {lawyer.lawyer}</div>
                         <div><strong>Registration:</strong> {lawyer.lawyer_registration}</div>
@@ -190,8 +203,21 @@ const AddLayers = ({ onDataSend, closeValue }) => {
                           <strong>Files:</strong> {lawyer.files.map(f => f.name).join(', ')}
                         </div>
                       )}
-                      <div className='text-sm text-gray-500 mt-1'>
-                        Added: {new Date(lawyer.dateAdded).toLocaleString()}
+                      <div className='flex justify-between'>
+
+                        <div className='text-sm text-gray-500 mt-1'>
+                          Added: {new Date(lawyer.dateAdded).toLocaleString()}
+                        </div>
+                        <div className='flex gap-2'>
+                          <FiEdit2 className="text-webprimary cursor-pointer hover:text-blue-700" size={16}
+                            title="Edit"
+                          />
+                          <FiTrash2
+                            className="text-red-500 cursor-pointer hover:text-red-700"
+                            size={16}
+                            title="Delete"
+                          />
+                        </div>
                       </div>
                     </div>
                   ))}
