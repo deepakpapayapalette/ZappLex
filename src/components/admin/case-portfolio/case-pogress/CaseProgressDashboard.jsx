@@ -9,9 +9,9 @@ import { Dialog } from '@mui/material';
 import DetailedWitnessHistory from "./DetailedWitnessHistory";
 import ClosingStatements from "./ClosingStatements";
 import OpeningStatements from "./OpeningStatements";
-import WitnessTestimony from "./witness-popup/WitnessTestimonyTab";
+// import WitnessTestimony from "./witness-popup/WitnessTestimonyTab";
 import WitnessTestimonyTab from "./witness-popup/WitnessTestimonyTab";
-// import CrossExaminationTab from "./witness-popup/crossExaminationTab";
+import CrossExaminationTab from "./witness-popup/crossExaminationTab";
 import WitnessSanctityTab from "./witness-popup/WitnessSanctityTab";
 import PlaintiffSummary from "./witness-popup/PlaintiffSummary";
 
@@ -287,7 +287,6 @@ const CaseProgressDashboard = () => {
       >
         <div id="witness-testimony-tab">
           <CrossExaminationTab closePopup={setCrossExamination} />
-
         </div>
       </Dialog>
 

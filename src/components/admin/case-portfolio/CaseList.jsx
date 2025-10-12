@@ -43,7 +43,7 @@ const CaseList = () => {
 
     // Listen for storage events (when localStorage changes in other tabs)
     window.addEventListener('storage', handleStorageChange);
-    
+
     // Also listen for custom events (when localStorage changes in same tab)
     window.addEventListener('caseAdded', handleStorageChange);
 
@@ -115,7 +115,7 @@ const CaseList = () => {
     <section className="space-top">
       <div className="container mx-auto px-4">
         {/* Header */}
-        <div className=" rounded-lg py-4 mb-6">
+        <div className=" rounded-lg py-4 mb-3">
           <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-4">
             <h1 className="text-2xl sm:text-3xl font-semibold text-gray-900">Case List</h1>
 
@@ -177,16 +177,16 @@ const CaseList = () => {
 
         {/* Results Count */}
         <div className="mb-1">
-          <p className="text-webprimary text-sm">
+          <p className="text-webprimary text-xs">
             Showing <span className="font-semibold">{filteredCases.length}</span> case(s)
             {activeFilter === "today" && " from today"}
             {activeFilter === "week" && " from this week"}
             {activeFilter === "month" && " from this month"}
           </p>
-          <p className="text-gray-500 text-xs">
-            Total cases in localStorage: {getCaseLocal.length} | 
+          {/* <p className="text-gray-500 text-xs">
+            Total cases in localStorage: {getCaseLocal.length} |
             Filtered cases: {filteredCases.length}
-          </p>
+          </p> */}
         </div>
 
         {/* Cases Grid */}
