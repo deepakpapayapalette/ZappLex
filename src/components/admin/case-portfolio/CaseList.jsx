@@ -1,99 +1,14 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { FaUserPlus, FaPlus, FaSearch } from "react-icons/fa";
 import Carousel from "react-multi-carousel"
 import "react-multi-carousel/lib/styles.css"
 import { Link } from "react-router-dom";
-const allCases = [
-  {
-    id: 1,
-    caseNo: "CIV-2025-0456",
-    plaintiff: "Rajesh Kumar",
-    defendant: "Amit Singh",
-    courtName: "District Court of Noida, Uttar Pradesh",
-    status: "Pending",
-    caseType: "Criminal (Murder)",
-    lastHearingDate: "2025-01-10",
-    nextHearingDate: "2025-01-15",
-    expectedJudgement: "2 years 8 months",
-    complianceScore: "good",
-    dateCreated: "2025-10-12"
-
-  },
-  {
-    id: 2,
-    caseNo: "CIV-2025-0457",
-    plaintiff: "Priya Sharma",
-    defendant: "Vijay Patel",
-    courtName: "District Court of Delhi, Delhi",
-    status: "Active",
-    caseType: "Civil (Property)",
-    lastHearingDate: "2025-01-08",
-    nextHearingDate: "2025-01-20",
-    expectedJudgement: "1 year 4 months",
-    complianceScore: "better",
-    dateCreated: "2025-10-12"
-  },
-  {
-    id: 3,
-    caseNo: "CIV-2025-0458",
-    plaintiff: "Suresh Reddy",
-    defendant: "Lakshmi Devi",
-    courtName: "High Court of Mumbai, Maharashtra",
-    status: "Pending",
-    caseType: "Criminal (Fraud)",
-    lastHearingDate: "2025-01-05",
-    nextHearingDate: "2025-11-8",
-    expectedJudgement: "3 years 2 months",
-    complianceScore: "worth",
-    dateCreated: "2025-10-10"
-  },
-  {
-    id: 4,
-    caseNo: "CIV-2024-1234",
-    plaintiff: "Meera Nair",
-    defendant: "Ramesh Kumar",
-    courtName: "District Court of Bangalore, Karnataka",
-    status: "Closed",
-    caseType: "Civil (Divorce)",
-    lastHearingDate: "2025-10-10",
-    nextHearingDate: "2025-10-10",
-    expectedJudgement: "6 months",
-    complianceScore: "not-good",
-    dateCreated: "2025-10-11"
-  },
-  {
-    id: 5,
-    caseNo: "CIV-2025-0459",
-    plaintiff: "Arjun Verma",
-    defendant: "Sneha Gupta",
-    courtName: "District Court of Noida, Uttar Pradesh",
-    status: "Pending",
-    caseType: "Criminal (Assault)",
-    lastHearingDate: "2025-01-09",
-    nextHearingDate: "2025-01-18",
-    expectedJudgement: "1 year 10 months",
-    complianceScore: "useless",
-    dateCreated: "2025-10-13"
-  },
-  {
-    id: 6,
-    caseNo: "CIV-2025-0460",
-    plaintiff: "Kavita Joshi",
-    defendant: "Manoj Tiwari",
-    courtName: "District Court of Chennai, Tamil Nadu",
-    status: "Active",
-    caseType: "Civil (Contract)",
-    lastHearingDate: "2025-01-07",
-    nextHearingDate: "2025-01-22",
-    expectedJudgement: "2 years 3 months",
-    complianceScore: "good",
-    dateCreated: "2025-10-10"
-  }
-];
+// Removed unused allCases array as we now use localStorage data
 
 const CaseList = () => {
   const [activeFilter, setActiveFilter] = useState("today");
   const [searchTerm, setSearchTerm] = useState("");
+  const [getCaseLocal, setgetCaseLocal] = useState([]);
   const responsive = {
     desktop: {
       breakpoint: { max: 3000, min: 1024 },
@@ -112,21 +27,37 @@ const CaseList = () => {
     },
   }
 
-  //getting data from localstorage
-  const regCase = JSON.parse(localStorage.getItem("regCase")) || [];
+  useEffect(() => {
+    const storedLocalData = JSON.parse(localStorage.getItem("regCase")) || [];
+    setgetCaseLocal(storedLocalData);
+    console.log("Loaded cases from localStorage:", storedLocalData);
+  }, [])
 
-  // console.log(regCase, "localsorge CaseList");
+  // Add a function to refresh data when localStorage changes
+  useEffect(() => {
+    const handleStorageChange = () => {
+      const storedLocalData = JSON.parse(localStorage.getItem("regCase")) || [];
+      setgetCaseLocal(storedLocalData);
+      console.log("Storage changed, reloaded cases:", storedLocalData);
+    };
 
-  // Sample case data with different dates
+    // Listen for storage events (when localStorage changes in other tabs)
+    window.addEventListener('storage', handleStorageChange);
+    
+    // Also listen for custom events (when localStorage changes in same tab)
+    window.addEventListener('caseAdded', handleStorageChange);
 
-
-
+    return () => {
+      window.removeEventListener('storage', handleStorageChange);
+      window.removeEventListener('caseAdded', handleStorageChange);
+    };
+  }, [])
   // Filter cases based on selected time period
   const getFilteredCases = () => {
     const today = new Date();
     today.setHours(0, 0, 0, 0);
 
-    return allCases.filter(caseItem => {
+    return getCaseLocal.filter(caseItem => {
       const caseDate = new Date(caseItem.dateAdded || caseItem.dateCreated);
       caseDate.setHours(0, 0, 0, 0);
 
@@ -252,6 +183,10 @@ const CaseList = () => {
             {activeFilter === "week" && " from this week"}
             {activeFilter === "month" && " from this month"}
           </p>
+          <p className="text-gray-500 text-xs">
+            Total cases in localStorage: {getCaseLocal.length} | 
+            Filtered cases: {filteredCases.length}
+          </p>
         </div>
 
         {/* Cases Grid */}
@@ -289,13 +224,13 @@ const CaseList = () => {
                     </div>
 
                     <div className="flex gap-2">
-                      <Link to={`/admin/add-parties`}>
+                      <Link to={`/admin/case-portfolio/add-parties/`} onClick={() => console.log('Navigating to Add Parties')}>
                         <button className="flex-1 border-2 border-webprimary text-webprimary hover:bg-webprimary2  font-medium py-2 px-4 rounded-lg transition-colors flex items-center justify-center space-x-2 text-sm">
                           <FaUserPlus size={14} />
                           <span>Add Parties</span>
                         </button>
                       </Link>
-                      <Link to={`/admin/case-portfolio/case-profiling`}>
+                      <Link to={`/admin/case-portfolio/case-profiling/`} onClick={() => console.log('Navigating to Case Profiling')}>
                         <button className="flex-1 bg-webprimary hover:bg-active text-white font-medium py-2 px-4 rounded-lg transition-colors flex items-center justify-center space-x-2 text-sm"
                         >
                           <FaPlus size={14} />
@@ -359,12 +294,12 @@ const CaseList = () => {
 
                     {/* Action Buttons */}
                     <div className="grid grid-cols-2 gap-2">
-                      <Link to={`/admin/case-portfolio/case-profile`}>
+                      <Link to={`/admin/case-portfolio/case-profile/`} onClick={() => console.log('Navigating to Case Profile')}>
                         <button className="bg-webprimary hover:bg-active text-white font-semibold py-2 px-4 rounded-lg transition-colors text-sm">
                           Open Case Journey
                         </button>
                       </Link>
-                      <Link to={`/admin/case-portfolio/case-progress`}>
+                      <Link to={`/admin/case-portfolio/case-progress/`} onClick={() => console.log('Navigating to Case Progress')}>
                         <button className="border-2 border-webprimary text-webprimary hover:bg-webprimary hover:text-white font-semibold py-2 px-4 rounded-lg transition-colors text-sm">
                           Start Case Trial
                         </button>

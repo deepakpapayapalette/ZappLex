@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import FormInput from '../../../common/FormInput'
 import FormButton from '../../../common/FormButton';
 import Carousel from "react-multi-carousel"
@@ -11,33 +11,14 @@ import { Add } from '@mui/icons-material';
 import AddLayers from './AddLayers';
 import ShowLawyersCard from './ShowLawyersCard';
 import PleadingsForm from './PleadingsForm';
+import { Link } from 'react-router-dom';
 
-const plaintiffData = [
-  {
-    id: 1,
-    title: "Plaintiff",
-    subtitle: "Plaintiff",
-  },
-  {
-    id: 2,
-    title: "Defendant",
-    subtitle: "Defendant",
-  },
-  {
-    id: 3,
-    title: "Witness",
-    subtitle: "Witness",
-  },
-  {
-    id: 4,
-    title: "Witness",
-    subtitle: "Witness",
-  }
-]
+// Removed unused plaintiffData array as we now use localStorage data
 const roles = [
   { value: "", label: "Choose" },
   { _id: 'plaintiff', lookup_value: "plaintiff", },
-  { _id: "Defendant", lookup_value: "defendant", },
+  { _id: "defendant", lookup_value: "defendant", },
+  // { _id: "witness", lookup_value: "witness", },
   // Add more roles as needed
 ];
 
@@ -56,11 +37,9 @@ const AddParties = () => {
   const [showPleadings, setShowPleadings] = useState(false);
 
   const handleChildData = (data) => {
-    console.log("Received data from AddLayers:", data);
+    // console.log("Received data from AddLayers:", data);
     setChildData(data);
   };
-
-  console.log("Current childData state in AddParties:", childData);
 
   const [formData, setFormData] = useState({
     name: "",
@@ -74,10 +53,70 @@ const AddParties = () => {
     postalCode: "",
   });
 
+  const [partyLocalData, setPartyLocalData] = useState([]);
+  const [getPartyLocalData, setGetPartyLocalData] = useState([])
+
+
+  console.log(partyLocalData, "partyLocalData");
+  console.log(getPartyLocalData, "getPartyLocalData");
+
+  // store form date in local storage permanent
+  const storeFormData = () => {
+    const data = {
+      name: formData.name,
+      role: formData.role,
+      aadhaar: formData.aadhaar,
+      mobile: formData.mobile,
+      address1: formData.address1,
+      address2: formData.address2,
+      state: formData.state,
+      city: formData.city,
+      postalCode: formData.postalCode,
+    };
+    let updatedFormData = [...partyLocalData, data];
+    setPartyLocalData(updatedFormData);
+    localStorage.setItem("Parties_localData", JSON.stringify(updatedFormData));
+  }
+
+
+
+
+  // get form data from local storage updated
+  useEffect(() => {
+    const storedData = localStorage.getItem("Parties_localData");
+    if (storedData) {
+      setGetPartyLocalData(JSON.parse(storedData));
+    }
+  }, []);
+
+
+
+
+  const resetForm = () => {
+    setFormData({
+      name: "",
+      role: "",
+      aadhaar: "",
+      mobile: "",
+      address1: "",
+      address2: "",
+      state: "",
+      city: "",
+      postalCode: "",
+    });
+
+  }
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Handle form submission here, using formData
+    storeFormData();
+    console.log("Form Data:", formData);
+
+
+    resetForm();
+
   };
+
   const onChange = (e) => {
     const { name, value } = e.target;
     setFormData(prev => ({
@@ -92,13 +131,10 @@ const AddParties = () => {
   const handleVerifyMobile = () => {
     // Mobile verification logic here
   };
-  const handleAddMore = () => {
-    alert("Add more  here");
-  };
-  const handleNext = (e) => {
-    e.preventDefault();
-    // Logic for Next step
-  };
+  // const handleAddMore = () => {
+  //   alert("Add more  here");
+  // };
+  // Removed unused handleNext function
   const responsive = {
     desktop: {
       breakpoint: { max: 3000, min: 1024 },
@@ -238,8 +274,12 @@ const AddParties = () => {
                 </div>
 
                 <div className='mt-5 flex  gap-4'>
-                  <FormButton size="large" type="button" onClick={handleAddMore} variant='outlined' >Add More</FormButton>
-                  <FormButton size="large" type="submit" >Next</FormButton>
+                  <FormButton size="large" type="submit" variant='outlined' className='md:w-[200px]' >Add More</FormButton>
+                  <Link to="/admin/case-portfolio/case-profiling/" className='md:w-[200px]'>
+                    <FormButton size="large" type="button"
+                      sx={{}}
+                    >Next</FormButton>
+                  </Link>
                 </div>
               </form>
             </div>
@@ -262,13 +302,22 @@ const AddParties = () => {
               renderButtonGroupOutside={false}
               partialVisible
             >
-              {plaintiffData.map((item, index) => (
-                <AdminCard1 key={index}
-                  setLayerOpen={setLayerOpen}
-                  setLawyerShow={setLawyerShow}
-                  setShowPleadings={setShowPleadings}
-                />
-              ))}
+              {getPartyLocalData
+                .filter(party => party.role === 'plaintiff')
+                .map((party, index) => (
+                  <AdminCard1
+                    key={index}
+                    partyData={party}
+                    setLayerOpen={setLayerOpen}
+                    setLawyerShow={setLawyerShow}
+                    setShowPleadings={setShowPleadings}
+                  />
+                ))}
+              {getPartyLocalData.filter(party => party.role === 'plaintiff').length === 0 && (
+                <div className="text-center text-gray-500 py-8">
+                  No Plaintiff data found. Please add a party with Plaintiff role.
+                </div>
+              )}
             </Carousel>
           </div>
         </div>
@@ -289,16 +338,27 @@ const AddParties = () => {
               renderButtonGroupOutside={false}
               partialVisible
             >
-              {plaintiffData.map((item, index) => (
-                <AdminCard1 key={index}
-                  setLayerOpen={setLayerOpen}
-                  setLawyerShow={setLawyerShow}
-                  setShowPleadings={setShowPleadings}
-                />
-              ))}
+              {getPartyLocalData
+                .filter(party => party.role === 'defendant')
+                .map((party, index) => (
+                  <AdminCard1
+                    key={index}
+                    partyData={party}
+                    setLayerOpen={setLayerOpen}
+                    setLawyerShow={setLawyerShow}
+                    setShowPleadings={setShowPleadings}
+                  />
+                ))}
+              {getPartyLocalData.filter(party => party.role === 'defendant').length === 0 && (
+                <div className="text-center text-gray-500 py-8">
+                  No Defendant data found. Please add a party with Defendant role.
+                </div>
+              )}
             </Carousel>
           </div>
         </div>
+
+
 
         <div className="container">
 

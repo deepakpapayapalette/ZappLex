@@ -20,13 +20,13 @@ const legalCasesArr = [
 ];
 
 const caseStatusArr = [
-  { _id: 1, lookup_value: "pending" },
-  { _id: 2, lookup_value: "trial" }
+  { _id: 'pending', lookup_value: "pending" },
+  { _id: 'trial', lookup_value: "trial" }
 ];
 
 const caseTypesArr = [
-  { _id: 1, label: "Criminal", lookup_value: "criminal" },
-  { _id: 2, label: "Civil", lookup_value: "civil" }
+  { _id: "criminal", label: "Criminal", lookup_value: "criminal" },
+  { _id: "criminal", label: "Civil", lookup_value: "civil" }
 ];
 
 const CaseRegistration = () => {
@@ -38,7 +38,7 @@ const CaseRegistration = () => {
     caseType: "",
     caseSubType: "",
   });
-  const [regCase, setRegCase] = useState([]);
+  const [, setRegCase] = useState([]);
 
 
   const resetForm = () => {
@@ -66,7 +66,7 @@ const CaseRegistration = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    //registrer case with unique entry
+
     const newCase = {
       id: Date.now(), // Simple ID generation using timestamp
       court: formData.court,
@@ -75,22 +75,43 @@ const CaseRegistration = () => {
       caseStatus: formData.caseStatus,
       caseType: formData.caseType,
       caseSubType: formData.caseSubType,
-      dateAdded: new Date().toISOString()
+      dateAdded: new Date().toISOString(),
+      // Add fields that CaseList expects
+      caseNo: formData.caseNumber,
+      courtName: formData.court,
+      status: formData.caseStatus,
+      plaintiff: "To be added", // Placeholder until parties are added
+      defendant: "To be added", // Placeholder until parties are added
+      lastHearingDate: formData.dateOfFiling,
+      nextHearingDate: formData.dateOfFiling,
+      expectedJudgement: "To be determined",
+      complianceScore: "good"
     };
 
-    // Add to regCase array
-    const updatedRegCase = [...regCase, newCase];
+    // Get existing data from localStorage
+    const existingData = JSON.parse(localStorage.getItem("regCase")) || [];
+
+    // Add new case to existing data
+    const updatedRegCase = [...existingData, newCase];
+
+    // Update state and localStorage
     setRegCase(updatedRegCase);
-    // localStorage.setItem("regCase", JSON.stringify(regCase));
+    localStorage.setItem("regCase", JSON.stringify(updatedRegCase));
+
+    // Dispatch custom event to notify other components
+    window.dispatchEvent(new CustomEvent('caseAdded', { detail: newCase }));
+
     resetForm();
+    alert("Case registered successfully!");
   };
-  //store regCase in local storage
 
+  // Load existing data from localStorage on component mount
   useEffect(() => {
-    localStorage.setItem("regCase", JSON.stringify(regCase));
-  }, [regCase]);
+    const existingData = JSON.parse(localStorage.getItem("regCase")) || [];
+    setRegCase(existingData);
+  }, []);
 
-  console.log(regCase, "regCase")
+  // console.log(regCase, "regCase")
   return (
     <section className='pt-6 lg:pt-12 '>
       <div className="container">
@@ -137,9 +158,6 @@ const CaseRegistration = () => {
                   type="select"
                   options={caseStatusArr}
                 />
-
-
-
                 <FormInput
                   label="Case Type"
                   name="caseType"
