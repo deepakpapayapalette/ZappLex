@@ -50,7 +50,7 @@ export default function CaseLifecycleOverview() {
 
   const renderCustomLabel = ({ cx, cy, midAngle, innerRadius, outerRadius, name }) => {
     const RADIAN = Math.PI / 180;
-    const radius = innerRadius + (outerRadius - innerRadius) * 0.2;
+    const radius = innerRadius + (outerRadius - innerRadius) * 0.1;
     const x = cx + radius * Math.cos(-midAngle * RADIAN);
     const y = cy + radius * Math.sin(-midAngle * RADIAN);
 
@@ -83,7 +83,7 @@ export default function CaseLifecycleOverview() {
               ? 'bg-webprimary text-white hove:text-white'
               : ' hover:text-white  hover:bg-active'
               }`}
-            
+
           >
             {stage.name}({stage.count})
           </FormButton>

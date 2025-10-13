@@ -32,7 +32,7 @@ export default function DelaysDueUnnecessary() {
       </h2>
       <table className="w-full border-collapse">
         <thead>
-          <tr className="bg-blue-700">
+          <tr className="bg-webprimary rounded-tl-lg">
             {headers.map((header, i) => (
               <th
                 key={i}
