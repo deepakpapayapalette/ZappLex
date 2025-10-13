@@ -26,7 +26,7 @@ const ShowLawyersCard = ({ lawyerRecord, closeValue }) => {
   }, []);
 
 
-  console.log(lawyersLocal, "lawyersLocal");
+  console.log(lawyersLocal.length, "lawyersLocal");
   // Delete lawyer function
   const handleDeleteLawyer = (lawyerId) => {
     if (window.confirm('Are you sure you want to delete this lawyer?')) {
@@ -76,8 +76,8 @@ const ShowLawyersCard = ({ lawyerRecord, closeValue }) => {
     }));
   };
 
-  // Handle case when no data is provided or data is empty
-  if (!lawyerRecord || lawyerRecord.length === 0) {
+  // if no lawyer record return this section
+  if (!lawyerRecord || lawyersLocal.length === 0) {
     return (
       <>
         <div className=' '>
@@ -104,7 +104,7 @@ const ShowLawyersCard = ({ lawyerRecord, closeValue }) => {
     );
   }
 
-  if (lawyersLocal.length === 0) {
+  if (lawyersLocal.length == 0) {
     return (
       <div className=' '>
         <div className="text-center text-gray-500 py-8">
@@ -113,8 +113,10 @@ const ShowLawyersCard = ({ lawyerRecord, closeValue }) => {
           <p className="text-sm">Add lawyers from the form to see them here</p>
         </div>
       </div>
-    );
-  };
+    )
+  }
+
+
 
 
   return (

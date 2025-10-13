@@ -1,9 +1,10 @@
 import React, { useState } from "react";
+import { X } from 'lucide-react';
 
 import FormInput from '../../../common/FormInput'
 import FormButton from '../../../common/FormButton';
 
-const PleadingsForm = () => {
+const PleadingsForm = ({ closePopup }) => {
   const [formData, setFormData] = useState({
     party: "",
     facts: "",
@@ -65,7 +66,14 @@ const PleadingsForm = () => {
 
   return (
     <div className="bg-white  p-4 lg:p-8 rounded-2xl shadow">
-      <h2 className="text-xl font-semibold mb-4">Pleadings</h2>
+      <div className="flex justify-between">
+        <h2 className="text-xl font-semibold mb-4">Pleadings</h2>
+        <button className="text-gray-500 hover:text-gray-700"
+          onClick={() => closePopup(false)}
+        >
+          <X className="w-6 h-6" />
+        </button>
+      </div>
 
       <form onSubmit={handleSubmit} className="space-y-6">
         {/* Party Selection */}

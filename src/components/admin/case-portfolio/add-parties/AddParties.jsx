@@ -35,6 +35,21 @@ const AddParties = () => {
   const [childData, setChildData] = React.useState([]);
   const [lawyerShow, setLawyerShow] = useState(false);
   const [showPleadings, setShowPleadings] = useState(false);
+  const [PleadingState, setPleadingsState] = useState(false);
+
+  // Verification popup states
+  const [aadhaarVerifyOpen, setAadhaarVerifyOpen] = useState(false);
+  const [mobileVerifyOpen, setMobileVerifyOpen] = useState(false);
+  const [verificationStatus, setVerificationStatus] = useState({
+    aadhaar: false,
+    mobile: false
+  });
+
+  // OTP states
+  const [aadhaarOtp, setAadhaarOtp] = useState('');
+  const [mobileOtp, setMobileOtp] = useState('');
+  const [otpSent, setOtpSent] = useState({ aadhaar: false, mobile: false });
+  const [isVerifying, setIsVerifying] = useState({ aadhaar: false, mobile: false });
 
   const handleChildData = (data) => {
     // console.log("Received data from AddLayers:", data);
@@ -78,9 +93,6 @@ const AddParties = () => {
     localStorage.setItem("Parties_localData", JSON.stringify(updatedFormData));
   }
 
-
-
-
   // get form data from local storage updated
   useEffect(() => {
     const storedData = localStorage.getItem("Parties_localData");
@@ -88,9 +100,6 @@ const AddParties = () => {
       setGetPartyLocalData(JSON.parse(storedData));
     }
   }, []);
-
-
-
 
   const resetForm = () => {
     setFormData({
@@ -124,12 +133,112 @@ const AddParties = () => {
       [name]: value
     }));
   };
-  // Stub handlers for verify buttons
+  // Verification handlers
   const handleVerifyAadhaar = () => {
-    // Aadhaar verification logic here
+    if (!formData.aadhaar || formData.aadhaar.length !== 12) {
+      alert('Please enter a valid 12-digit Aadhaar number');
+      return;
+    }
+    setAadhaarVerifyOpen(true);
   };
+
   const handleVerifyMobile = () => {
-    // Mobile verification logic here
+    if (!formData.mobile || formData.mobile.length !== 10) {
+      alert('Please enter a valid 10-digit mobile number');
+      return;
+    }
+    setMobileVerifyOpen(true);
+  };
+
+  // Send OTP functions
+  const sendAadhaarOtp = async () => {
+    setIsVerifying(prev => ({ ...prev, aadhaar: true }));
+    try {
+      // Simulate API call
+      await new Promise(resolve => setTimeout(resolve, 2000));
+      setOtpSent(prev => ({ ...prev, aadhaar: true }));
+      alert('OTP sent to your registered mobile number');
+    } catch (error) {
+      alert('Failed to send OTP. Please try again.');
+    } finally {
+      setIsVerifying(prev => ({ ...prev, aadhaar: false }));
+    }
+  };
+
+  const sendMobileOtp = async () => {
+    setIsVerifying(prev => ({ ...prev, mobile: true }));
+    try {
+      // Simulate API call
+      await new Promise(resolve => setTimeout(resolve, 2000));
+      setOtpSent(prev => ({ ...prev, mobile: true }));
+      alert(`OTP sent to ${formData.mobile}`);
+    } catch (error) {
+      alert('Failed to send OTP. Please try again.');
+    } finally {
+      setIsVerifying(prev => ({ ...prev, mobile: false }));
+    }
+  };
+
+  // Verify OTP functions
+  const verifyAadhaarOtp = async () => {
+    if (!aadhaarOtp || aadhaarOtp.length !== 6) {
+      alert('Please enter a valid 6-digit OTP');
+      return;
+    }
+
+    setIsVerifying(prev => ({ ...prev, aadhaar: true }));
+    try {
+      // Simulate API call
+      await new Promise(resolve => setTimeout(resolve, 2000));
+
+      // For demo, accept any 6-digit OTP
+      setVerificationStatus(prev => ({ ...prev, aadhaar: true }));
+      setAadhaarVerifyOpen(false);
+      setAadhaarOtp('');
+      setOtpSent(prev => ({ ...prev, aadhaar: false }));
+      alert('Aadhaar verified successfully!');
+    } catch (error) {
+      alert('Invalid OTP. Please try again.');
+    } finally {
+      setIsVerifying(prev => ({ ...prev, aadhaar: false }));
+    }
+  };
+
+  const verifyMobileOtp = async () => {
+    if (!mobileOtp || mobileOtp.length !== 6) {
+      alert('Please enter a valid 6-digit OTP');
+      return;
+    }
+
+    setIsVerifying(prev => ({ ...prev, mobile: true }));
+    try {
+      // Simulate API call
+      await new Promise(resolve => setTimeout(resolve, 2000));
+
+      // For demo, accept any 6-digit OTP
+      setVerificationStatus(prev => ({ ...prev, mobile: true }));
+      setMobileVerifyOpen(false);
+      setMobileOtp('');
+      setOtpSent(prev => ({ ...prev, mobile: false }));
+      alert('Mobile number verified successfully!');
+    } catch (error) {
+      alert('Invalid OTP. Please try again.');
+    } finally {
+      setIsVerifying(prev => ({ ...prev, mobile: false }));
+    }
+  };
+
+  // Close popup handlers
+  const closeAadhaarPopup = () => {
+    setAadhaarVerifyOpen(false);
+    setAadhaarOtp('');
+    setOtpSent(prev => ({ ...prev, aadhaar: false }));
+  };
+
+  const closeMobilePopup = () => {
+    setMobileVerifyOpen(false);
+    setMobileOtp('');
+    setOtpSent(prev => ({ ...prev, mobile: false }));
   };
   // const handleAddMore = () => {
   //   alert("Add more  here");
@@ -195,15 +304,14 @@ const AddParties = () => {
                         right: 8,
                         bottom: "30%",
                         transform: "translateY(50%)",
-                        // background: "#fff",
-
                         padding: "2px 10px",
                         fontSize: 12,
-                        color: "#006DDB",
-                        cursor: "pointer"
+                        color: verificationStatus.aadhaar ? "#28a745" : "#006DDB",
+                        cursor: "pointer",
+                        fontWeight: verificationStatus.aadhaar ? "bold" : "normal"
                       }}
                       onClick={handleVerifyAadhaar}
-                    >Verify</button>
+                    >{verificationStatus.aadhaar ? "✓ Verified" : "Verify"}</button>
                   </div>
                   <div style={{ position: "relative", flexGrow: 1 }}>
                     <FormInput
@@ -221,15 +329,14 @@ const AddParties = () => {
                         right: 8,
                         bottom: "30%",
                         transform: "translateY(50%)",
-                        // background: "#fff",
-
                         padding: "2px 10px",
                         fontSize: 12,
-                        color: "#006DDB",
-                        cursor: "pointer"
+                        color: verificationStatus.mobile ? "#28a745" : "#006DDB",
+                        cursor: "pointer",
+                        fontWeight: verificationStatus.mobile ? "bold" : "normal"
                       }}
                       onClick={handleVerifyMobile}
-                    >Verify</button>
+                    >{verificationStatus.mobile ? "✓ Verified" : "Verify"}</button>
                   </div>
                   <FormInput
                     label="Address 1"
@@ -310,7 +417,7 @@ const AddParties = () => {
                     partyData={party}
                     setLayerOpen={setLayerOpen}
                     setLawyerShow={setLawyerShow}
-                    setShowPleadings={setShowPleadings}
+                    setPleadingsState={setPleadingsState}
                   />
                 ))}
               {getPartyLocalData.filter(party => party.role === 'plaintiff').length === 0 && (
@@ -346,7 +453,7 @@ const AddParties = () => {
                     partyData={party}
                     setLayerOpen={setLayerOpen}
                     setLawyerShow={setLawyerShow}
-                    setShowPleadings={setShowPleadings}
+                    setPleadingsState={setPleadingsState}
                   />
                 ))}
               {getPartyLocalData.filter(party => party.role === 'defendant').length === 0 && (
@@ -385,17 +492,173 @@ const AddParties = () => {
           </Dialog>
           {/* ==================pleading-Popup================== */}
           <Dialog
-            open={showPleadings}
-            onClose={() => setShowPleadings(false)}
+            open={PleadingState}
+            onClose={() => setPleadingsState(false)}
             aria-describedby="pleading-form"
             fullWidth
             maxWidth="lg"
           >
             <div id="pleading-form" className=' '>
               <PleadingsForm
-              // closeValue={setLawyerShow}
+                closePopup={setPleadingsState}
               // lawyerRecord={childData}
               />
+            </div>
+          </Dialog>
+
+          {/* ==================Aadhaar-Verification-Popup================== */}
+          <Dialog
+            open={aadhaarVerifyOpen}
+            onClose={closeAadhaarPopup}
+            aria-describedby="aadhaar-verification"
+            maxWidth="sm"
+            fullWidth
+          >
+            <div id="aadhaar-verification" className='p-6'>
+              <div className="text-center mb-6">
+                <h3 className="text-xl font-semibold mb-2">Aadhaar Verification</h3>
+                <p className="text-gray-600">Aadhaar Number: {formData.aadhaar}</p>
+              </div>
+
+              {!otpSent.aadhaar ? (
+                <div className="text-center">
+                  <p className="mb-4 text-gray-700">Click the button below to send OTP to your registered mobile number</p>
+                  <div className="flex justify-center gap-4">
+                    <button
+                      onClick={sendAadhaarOtp}
+                      disabled={isVerifying.aadhaar}
+                      className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:bg-blue-300 disabled:cursor-not-allowed"
+                    >
+                      {isVerifying.aadhaar ? 'Sending...' : 'Send OTP'}
+                    </button>
+                    <button
+                      onClick={closeAadhaarPopup}
+                      className="px-6 py-2 bg-gray-500 text-white rounded-lg hover:bg-gray-600"
+                    >
+                      Cancel
+                    </button>
+                  </div>
+                </div>
+              ) : (
+                <div>
+                  <div className="mb-4">
+                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                      Enter 6-digit OTP
+                    </label>
+                    <input
+                      type="text"
+                      maxLength="6"
+                      value={aadhaarOtp}
+                      onChange={(e) => setAadhaarOtp(e.target.value.replace(/\D/g, ''))}
+                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-center text-lg tracking-widest"
+                      placeholder="000000"
+                    />
+                  </div>
+
+                  <div className="flex justify-center gap-4">
+                    <button
+                      onClick={verifyAadhaarOtp}
+                      disabled={isVerifying.aadhaar || aadhaarOtp.length !== 6}
+                      className="px-6 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 disabled:bg-green-300 disabled:cursor-not-allowed"
+                    >
+                      {isVerifying.aadhaar ? 'Verifying...' : 'Verify OTP'}
+                    </button>
+                    <button
+                      onClick={() => {
+                        setOtpSent(prev => ({ ...prev, aadhaar: false }));
+                        setAadhaarOtp('');
+                      }}
+                      className="px-6 py-2 bg-yellow-600 text-white rounded-lg hover:bg-yellow-700"
+                    >
+                      Resend OTP
+                    </button>
+                    <button
+                      onClick={closeAadhaarPopup}
+                      className="px-6 py-2 bg-gray-500 text-white rounded-lg hover:bg-gray-600"
+                    >
+                      Cancel
+                    </button>
+                  </div>
+                </div>
+              )}
+            </div>
+          </Dialog>
+
+          {/* ==================Mobile-Verification-Popup================== */}
+          <Dialog
+            open={mobileVerifyOpen}
+            onClose={closeMobilePopup}
+            aria-describedby="mobile-verification"
+            maxWidth="sm"
+            fullWidth
+          >
+            <div id="mobile-verification" className='p-6'>
+              <div className="text-center mb-6">
+                <h3 className="text-xl font-semibold mb-2">Mobile Verification</h3>
+                <p className="text-gray-600">Mobile Number: {formData.mobile}</p>
+              </div>
+
+              {!otpSent.mobile ? (
+                <div className="text-center">
+                  <p className="mb-4 text-gray-700">Click the button below to send OTP to your mobile number</p>
+                  <div className="flex justify-center gap-4">
+                    <button
+                      onClick={sendMobileOtp}
+                      disabled={isVerifying.mobile}
+                      className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:bg-blue-300 disabled:cursor-not-allowed"
+                    >
+                      {isVerifying.mobile ? 'Sending...' : 'Send OTP'}
+                    </button>
+                    <button
+                      onClick={closeMobilePopup}
+                      className="px-6 py-2 bg-gray-500 text-white rounded-lg hover:bg-gray-600"
+                    >
+                      Cancel
+                    </button>
+                  </div>
+                </div>
+              ) : (
+                <div>
+                  <div className="mb-4">
+                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                      Enter 6-digit OTP
+                    </label>
+                    <input
+                      type="text"
+                      maxLength="6"
+                      value={mobileOtp}
+                      onChange={(e) => setMobileOtp(e.target.value.replace(/\D/g, ''))}
+                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-center text-lg tracking-widest"
+                      placeholder="000000"
+                    />
+                  </div>
+
+                  <div className="flex justify-center gap-4">
+                    <button
+                      onClick={verifyMobileOtp}
+                      disabled={isVerifying.mobile || mobileOtp.length !== 6}
+                      className="px-6 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 disabled:bg-green-300 disabled:cursor-not-allowed"
+                    >
+                      {isVerifying.mobile ? 'Verifying...' : 'Verify OTP'}
+                    </button>
+                    <button
+                      onClick={() => {
+                        setOtpSent(prev => ({ ...prev, mobile: false }));
+                        setMobileOtp('');
+                      }}
+                      className="px-6 py-2 bg-yellow-600 text-white rounded-lg hover:bg-yellow-700"
+                    >
+                      Resend OTP
+                    </button>
+                    <button
+                      onClick={closeMobilePopup}
+                      className="px-6 py-2 bg-gray-500 text-white rounded-lg hover:bg-gray-600"
+                    >
+                      Cancel
+                    </button>
+                  </div>
+                </div>
+              )}
             </div>
           </Dialog>
         </div>

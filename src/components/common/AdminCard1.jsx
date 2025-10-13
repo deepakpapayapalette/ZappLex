@@ -5,7 +5,7 @@ import { FiPhoneCall } from "react-icons/fi";
 import FormButton from './FormButton';
 import { Link } from 'react-router-dom';
 
-const AdminCard1 = ({ partyData, setLayerOpen, setLawyerShow, setShowPleadings }) => {
+const AdminCard1 = ({ partyData, setLayerOpen, setLawyerShow, setPleadingsState }) => {
   // Use partyData if available, otherwise show default/placeholder data
   const displayData = partyData || {
     name: "No Data",
@@ -34,7 +34,7 @@ const AdminCard1 = ({ partyData, setLayerOpen, setLawyerShow, setShowPleadings }
       displayData.state,
       displayData.postalCode
     ].filter(part => part && part !== "N/A" && part.trim() !== "");
-    
+
     return parts.length > 0 ? parts.join(", ") : "Address not provided";
   };
 
@@ -89,7 +89,7 @@ const AdminCard1 = ({ partyData, setLayerOpen, setLawyerShow, setShowPleadings }
           endIcon={<IoMdCheckmarkCircleOutline className="ml-1 text-green-500 w-full " size={20} />}
           sx={{ textTransform: 'capitalize', paddingBlock: '8px', fontWeight: 'bold' }}
 
-          onClick={() => setShowPleadings(true)}
+          onClick={() => setPleadingsState(true)}
         >
           Add Pleading
         </FormButton>

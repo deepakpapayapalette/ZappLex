@@ -1,13 +1,14 @@
 import { Phone, Calendar, User, MapPin, CheckCircle, Download } from 'lucide-react';
 import { IoMdCheckmarkCircleOutline } from "react-icons/io";
 import FormButton from '../../../common/FormButton';
-import { useNavigate } from 'react-router-dom';
+// import { useNavigate } from 'react-router-dom';
 
 export default function WitnessCard({
   setDetailCaseRecord,
   setWitnessRecordHistory,
   setWitnessTestimony,
-  setCrossExamination,
+  // setCrossExamination,
+  setExaminationState,
   setWitnessSanctitystate,
   setPlaintiffSummaryState
 }) {
@@ -148,7 +149,8 @@ export default function WitnessCard({
           Witness Testimony
         </FormButton>
         <FormButton
-          onClick={() => setCrossExamination(true)}
+          // onClick={() => setCrossExamination(true)}
+          onClick={() => setExaminationState(true)}
           variant='outlined'
           sx={{ paddingBlock: '10px' }} className="bg-white text-webprimary border-2 border-webprimary py-3 rounded-lg font-medium hover:bg-blue-50">
           Cross-Examination

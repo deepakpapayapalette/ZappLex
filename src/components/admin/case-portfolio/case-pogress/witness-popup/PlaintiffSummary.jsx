@@ -6,7 +6,7 @@ const PlaintiffSummary = ({ closePopup }) => {
       <div className="bg-white rounded-xl shadow-md p-7  mx-auto">
         {/* Modal header with close "X" */}
         <div className="flex justify-between items-start mb-2">
-          <h1 className="text-2xl font-bold">Cross-Examination</h1>
+          <h1 className="text-2xl font-bold">Summary</h1>
           <button className="text-gray-500 hover:text-gray-700"
             onClick={() => closePopup(false)}
           >
