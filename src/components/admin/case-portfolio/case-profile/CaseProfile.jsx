@@ -1,7 +1,19 @@
-import React from "react";
+import React, { useState } from "react";
 import FormButton from "../../../common/FormButton";
+import QuestionsPopup from "./popup/QuestionsPopup";
+import { Dialog } from "@mui/material";
+import ProposedEvidencesPopup from "./popup/ProposedEvidencesPopup";
+import InvestigationPlanPopup from "./popup/InvestigationPlanPopup";
+import GanttChartRecharts from "./popup/GanttChartRecharts";
 
 const CaseProfile = () => {
+
+  const [QuestionState, setQuestionState] = useState(false);
+  const [ProposedEvidencesState, setProposedEvidencesState] = useState(false);
+  const [InvestigationState, setInvestigationState] = useState(false);
+  const [InvestigationTrackerState, setInvestigationTrackerState] = useState(false);
+  const [GanttChartRechartsState, setGanttChartRechartsState] = useState(false);
+
   return (
     <div className="container p-8">
       <h2 className="text-2xl font-semibold my-4 text-gray-800">
@@ -132,18 +144,74 @@ const CaseProfile = () => {
 
         {/* Buttons */}
         <div className="flex flex-wrap gap-3 justify-center">
-          {["Question List", "Proposed Evidences", "Investigation Plan", "Investigation Tracker"].map(
-            (label, i) => (
-              <FormButton
-                key={i}
-                className="px-4 py-2  hover:bg-active transition"
-              >
-                {label}
-              </FormButton>
-            )
-          )}
+
+
+          <FormButton className="px-4 py-2  hover:bg-active transition"
+            onClick={() => setQuestionState(true)}
+          >
+            Question List
+          </FormButton>
+          <FormButton className="px-4 py-2  hover:bg-active transition"
+            onClick={() => setProposedEvidencesState(true)}
+          >
+            Proposed Evidences
+          </FormButton>
+          <FormButton className="px-4 py-2  hover:bg-active transition"
+            onClick={() => setInvestigationState(true)}
+          >
+            Investigation Plan
+          </FormButton>
+          <FormButton className="px-4 py-2  hover:bg-active transition"
+            onClick={() => setGanttChartRechartsState(true)}
+          >
+            Investigation Tracker
+          </FormButton>
         </div>
       </div>
+
+      <Dialog
+        open={QuestionState}
+        onClose={() => setQuestionState(false)}
+        aria-describedby="witness-record-history"
+        maxWidth="md"
+      >
+        <div id="witness-record-history">
+          <QuestionsPopup onClose={setQuestionState} />
+        </div>
+      </Dialog>
+
+      <Dialog
+        open={ProposedEvidencesState}
+        onClose={() => setProposedEvidencesState(false)}
+        aria-describedby="witness-record-history"
+        maxWidth="md"
+      >
+        <div id="witness-record-history">
+          <ProposedEvidencesPopup onClose={setProposedEvidencesState} />
+        </div>
+      </Dialog>
+
+      <Dialog
+        open={InvestigationState}
+        onClose={() => setInvestigationState(false)}
+        aria-describedby="witness-record-history"
+        maxWidth="md"
+      >
+        <div id="witness-record-history">
+          <InvestigationPlanPopup onClose={setInvestigationState} />
+        </div>
+      </Dialog>
+
+      <Dialog
+        open={GanttChartRechartsState}
+        onClose={() => setGanttChartRechartsState(false)}
+        aria-describedby="witness-record-history"
+        maxWidth='w-[800px]'
+      >
+        <div id="witness-record-history">
+          <GanttChartRecharts onClose={setGanttChartRechartsState} />
+        </div>
+      </Dialog>
     </div>
   );
 };

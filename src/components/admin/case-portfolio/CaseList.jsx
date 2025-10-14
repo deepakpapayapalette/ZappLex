@@ -9,6 +9,7 @@ const CaseList = () => {
   const [activeFilter, setActiveFilter] = useState("today");
   const [searchTerm, setSearchTerm] = useState("");
   const [getCaseLocal, setgetCaseLocal] = useState([]);
+  const [relevancy, setRelevancy] = useState(4);
   const responsive = {
     desktop: {
       breakpoint: { max: 3000, min: 1024 },
@@ -89,27 +90,34 @@ const CaseList = () => {
 
   const filteredCases = getFilteredCases();
 
-  const getComplianceColor = (score) => {
-    const colors = {
-      "useless": "bg-red-600 text-white",
-      "worth": "bg-yellow-500 text-white",
-      "not-good": "bg-orange-500 text-white",
-      "good": "bg-green-500 text-white",
-      "better": "bg-green-700 text-white"
-    };
-    return colors[score] || "bg-gray-300 text-gray-700";
-  };
+  // const getComplianceColor = (score) => {
+  //   const colors = {
+  //     "useless": "bg-red-600 text-white",
+  //     "worth": "bg-yellow-500 text-white",
+  //     "not-good": "bg-orange-500 text-white",
+  //     "good": "bg-green-500 text-white",
+  //     "better": "bg-green-700 text-white"
+  //   };
+  //   return colors[score] || "bg-gray-300 text-gray-700";
+  // };
 
-  const getComplianceLabel = (score) => {
-    const labels = {
-      "useless": "1",
-      "worth": "2",
-      "not-good": "3",
-      "good": "4",
-      "better": "5"
-    };
-    return labels[score] || score;
-  };
+  // const getComplianceLabel = (score) => {
+  //   const labels = {
+  //     "useless": "1",
+  //     "worth": "2",
+  //     "not-good": "3",
+  //     "good": "4",
+  //     "better": "5"
+  //   };
+  //   return labels[score] || score;
+  // };
+  const scores = [
+    { id: 1, color: "bg-[#c00000]" },
+    { id: 2, color: "bg-[#ffc001]" },
+    { id: 3, color: "bg-[#feff99]" },
+    { id: 4, color: "bg-[#92d14f]" },
+    { id: 5, color: "bg-[#107c42]" },
+  ];
 
   return (
     <section className="space-top">
@@ -277,18 +285,18 @@ const CaseList = () => {
                     {/* Compliance Score */}
                     <div className="mb-4">
                       <p className="text-xs font-semibold text-gray-900 mb-2">ZAPPLEX Compliance Score</p>
-                      <div className="flex gap-1">
-                        {["useless", "worth", "not-good", "good", "better"].map((score) => (
-                          <div
-                            key={score}
-                            className={`flex-1 py-2 text-center text-xs font-semibold rounded ${(caseItem.complianceScore || "good") === score
-                              ? getComplianceColor(score)
-                              : "bg-gray-300 text-gray-500"
+                      <div className="flex  relative">
+                        {scores.map((score) => (
+                          <button
+                            key={score.id}
+                            className={` relative flex-1 py-2 text-center text-xs text-white font-bold ${score.color} ${relevancy === score.id ? "indicator" : ""
                               }`}
+                            onClick={() => setRelevancy(score.id)}
                           >
-                            {getComplianceLabel(score)}
-                          </div>
+                            {`0${score.id}`}
+                          </button>
                         ))}
+
                       </div>
                     </div>
 
@@ -321,3 +329,8 @@ const CaseList = () => {
 };
 
 export default CaseList;
+
+// const indicatorStyle = `
+//     {
+// }
+// `;
