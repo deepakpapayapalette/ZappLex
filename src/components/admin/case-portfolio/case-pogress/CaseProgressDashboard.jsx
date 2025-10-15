@@ -16,6 +16,7 @@ import ExaminationPopup from "./witness-popup/ExaminationPopup";
 import DefendantCard from "./DefendantCard";
 import PlaintiffCard from "./PlaintiffCard";
 import NextHearingsPopup from "./NextHearingsPopup";
+import AdjournmentPopup from "./AdjournmentPopup";
 
 
 const StatementsBtns = ["Add Opening Statements",
@@ -37,6 +38,7 @@ const hearingsData = [
 const CaseProgressDashboard = () => {
   const [scrollIndex, setScrollIndex] = useState(0);
   const [nextHearingsState, setNextHearingsState] = useState(false);
+  const [adjournmentState, setAdjournmentState] = useState(false);
   const handleScroll = (direction) => {
     setScrollIndex((prev) =>
       direction === "left" ? Math.max(prev - 1, 0) : Math.min(prev + 1, hearingsData.length - 1)
@@ -75,6 +77,7 @@ const CaseProgressDashboard = () => {
         </FormButton>
         <FormButton className=" hover:bg-active hover:text-white  transition"
           variant="outlined"
+          onClick={() => setAdjournmentState(true)}
         >
           Adjournment
         </FormButton>
@@ -159,6 +162,16 @@ const CaseProgressDashboard = () => {
       >
         <div>
           <NextHearingsPopup onClose={setNextHearingsState} />
+        </div>
+      </Dialog>
+
+      <Dialog
+        open={adjournmentState}
+        onClose={() => setAdjournmentState(false)}
+        sx={{ "& .MuiDialog-paper": { maxWidth: '800px', } }}
+      >
+        <div>
+          <AdjournmentPopup onClose={setAdjournmentState} />
         </div>
       </Dialog>
 

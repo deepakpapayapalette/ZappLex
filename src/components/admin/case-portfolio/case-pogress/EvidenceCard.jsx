@@ -135,6 +135,7 @@ const EvidenceCard = () => {
       <Dialog
         open={EvidenceSanctityState}
         onClose={() => setEvidenceSanctityState(false)}
+        sx={{ "& .MuiDialog-paper": { width: "100%" } }}
       >
         <div>
           <EvidenceSanctity onClose={setEvidenceSanctityState} />
