@@ -1,6 +1,7 @@
 import { Phone, Calendar, User, MapPin, CheckCircle, Download } from 'lucide-react';
 import { IoMdCheckmarkCircleOutline } from "react-icons/io";
 import FormButton from '../../../common/FormButton';
+import { useState } from 'react';
 // import { useNavigate } from 'react-router-dom';
 
 export default function WitnessCard({
@@ -13,6 +14,15 @@ export default function WitnessCard({
   setPlaintiffSummaryState
 }) {
 
+  const [relevancy, setRelevancy] = useState(4);
+
+  const scores = [
+    { id: 1, color: "bg-[#c00000]" },
+    { id: 2, color: "bg-[#ffc001]" },
+    { id: 3, color: "bg-[#feff99]" },
+    { id: 4, color: "bg-[#92d14f]" },
+    { id: 5, color: "bg-[#107c42]" },
+  ];
 
 
 
@@ -119,24 +129,19 @@ export default function WitnessCard({
       <div className="bg-white rounded-lg p-4 mb-4 shadow-sm">
         <p className="font-semibold mb-3">Relevancy Score</p>
         <div className="relative">
-          <div className="flex h-12 rounded overflow-hidden">
-            <div className="bg-red-700 flex-1 flex items-center justify-center text-white font-semibold">
-              01
-            </div>
-            <div className="bg-orange-400 flex-1 flex items-center justify-center text-white font-semibold">
-              02
-            </div>
-            <div className="bg-yellow-300 flex-1 flex items-center justify-center text-gray-700 font-semibold">
-              03
-            </div>
-            <div className="bg-green-300 flex-1 flex items-center justify-center text-gray-700 font-semibold">
-              04
-            </div>
-            <div className="bg-green-700 flex-1 flex items-center justify-center text-white font-semibold">
-              05
-            </div>
+          <div className="flex  relative">
+            {scores.map((score) => (
+              <button
+                key={score.id}
+                className={` relative flex-1 py-2 text-center text-xs text-white font-bold ${score.color} ${relevancy === score.id ? "indicator" : ""
+                  }`}
+              // onClick={() => setRelevancy(score.id)}
+              >
+                {`0${score.id}`}
+              </button>
+            ))}
+
           </div>
-          <div className="absolute top-0 right-16 bottom-0 w-1 bg-gray-900"></div>
         </div>
       </div>
 

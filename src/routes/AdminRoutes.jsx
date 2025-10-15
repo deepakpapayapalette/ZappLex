@@ -13,12 +13,13 @@ const AdminRoutes = () => (
   <Routes>
     <Route path="/" element={<AdminLayout />}>
       <Route index element={<Home />} />
-      <Route path="case-portfolio" element={<CasePortfolioPage />} />
+      <Route path="case-portfolio/" element={<CasePortfolioPage />} />
       <Route path="case-portfolio/add-parties/" element={<AddParties />} />
       <Route path="case-portfolio/case-profiling/" element={<CaseProfiling />} />
       <Route path="case-portfolio/case-profile/" element={<CaseProfile />} />
       <Route path="case-portfolio/case-progress/" element={<CaseProgressDashboard />} />
       <Route path="case-portfolio/case-progress/case-records/" element={<DetailedCaseRecords />} />
+      {/* </Route> */}
 
 
       {/* <Route path="configuration/" element={<AdminConfigOutlet />}>

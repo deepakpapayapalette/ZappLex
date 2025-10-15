@@ -77,32 +77,32 @@ const ShowLawyersCard = ({ lawyerRecord, closeValue }) => {
   };
 
   // if no lawyer record return this section
-  if (!lawyerRecord || lawyersLocal.length === 0) {
-    return (
-      <>
-        <div className=' '>
-          {lawyerRecord.map(() => (
-            <div className="bg-white rounded-xl shadow p-5 w-[500px] font-sans flex flex-col gap-3 relative">
-              <div className="text-center text-gray-500 py-8">
-                <FaUser className="mx-auto mb-3 text-gray-300" size={48} />
-                <p>No lawyers added yet</p>
-                <p className="text-sm">Add lawyers from the form to see them here</p>
-              </div>
-              {closeValue && (
-                <button
-                  onClick={() => closeValue(false)}
-                  className="mt-4 px-4 py-2 bg-gray-500 text-white rounded hover:bg-gray-600 transition-colors"
-                >
-                  Close
-                </button>
-              )}
-            </div>
-          ))}
-        </div>
-      </>
+  // if (!lawyerRecord || lawyersLocal.length === 0) {
+  //   return (
+  //     <>
+  //       <div className=' '>
+  //         {lawyerRecord.map(() => (
+  //           <div className="bg-white rounded-xl shadow p-5 w-[500px] font-sans flex flex-col gap-3 relative">
+  //             <div className="text-center text-gray-500 py-8">
+  //               <FaUser className="mx-auto mb-3 text-gray-300" size={48} />
+  //               <p>No lawyers added yet</p>
+  //               <p className="text-sm">Add lawyers from the form to see them here</p>
+  //             </div>
+  //             {closeValue && (
+  //               <button
+  //                 onClick={() => closeValue(false)}
+  //                 className="mt-4 px-4 py-2 bg-gray-500 text-white rounded hover:bg-gray-600 transition-colors"
+  //               >
+  //                 Close
+  //               </button>
+  //             )}
+  //           </div>
+  //         ))}
+  //       </div>
+  //     </>
 
-    );
-  }
+  //   );
+  // }
 
   if (lawyersLocal.length == 0) {
     return (

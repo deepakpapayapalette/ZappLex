@@ -231,15 +231,15 @@ const CaseList = () => {
                       </div>
                     </div>
 
-                    <div className="flex gap-2">
-                      <Link to={`/admin/case-portfolio/add-parties/`} onClick={() => console.log('Navigating to Add Parties')}>
-                        <button className="flex-1 border-2 border-webprimary text-webprimary hover:bg-webprimary2  font-medium py-2 px-4 rounded-lg transition-colors flex items-center justify-center space-x-2 text-sm">
+                    <div className="flex flex-wrap gap-4 justify-between">
+                      <Link className="max-w-full" to={`/admin/case-portfolio/add-parties/`} onClick={() => console.log('Navigating to Add Parties')}>
+                        <button className="flex-1 border-2 border-webprimary text-webprimary hover:bg-webprimary2  font-medium py-2 px-4 rounded-md transition-colors flex items-center justify-center space-x-2 text-sm w-full">
                           <FaUserPlus size={14} />
                           <span>Add Parties</span>
                         </button>
                       </Link>
-                      <Link to={`/admin/case-portfolio/case-profiling/`} onClick={() => console.log('Navigating to Case Profiling')}>
-                        <button className="flex-1 bg-webprimary hover:bg-active text-white font-medium py-2 px-4 rounded-lg transition-colors flex items-center justify-center space-x-2 text-sm"
+                      <Link className="max-w-full" to={`/admin/case-portfolio/case-profiling/`} onClick={() => console.log('Navigating to Case Profiling')}>
+                        <button className="border-2 border-webprimary flex-1 bg-webprimary hover:bg-active text-white font-medium py-2 px-4 rounded-md transition-colors flex items-center justify-center space-x-2 text-sm w-full"
                         >
                           <FaPlus size={14} />
                           <span>Case Profiling</span>
@@ -252,7 +252,7 @@ const CaseList = () => {
                   <div className="px-2 py-3 bg-gray-50">
                     <div className="p-2 py-3 border border-gray-200 rounded-lg mb-4">
                       <h4 className="font-bold text-gray-900 mb-2">Court Name</h4>
-                      <p className="text-sm text-gray-700 ">{caseItem.court || caseItem.courtName || 'District Court of Noida, Uttar Pradesh'}</p>
+                      <p className="text-sm text-black bg-[#def7ff] py-2 px-3">{caseItem.court || caseItem.courtName || 'District Court of Noida, Uttar Pradesh'}</p>
                     </div>
 
                     <div className="grid grid-cols-2 gap-4 mb-4">
@@ -301,14 +301,14 @@ const CaseList = () => {
                     </div>
 
                     {/* Action Buttons */}
-                    <div className="grid grid-cols-2 gap-4">
-                      <Link className="w-full" to={`/admin/case-portfolio/case-profile/`} >
-                        <button className="w-full bg-webprimary hover:bg-active text-white font-semibold py-2 px-4 rounded-sm transition-colors text-sm">
+                    <div className="flex flex-wrap gap-4 justify-between">
+                      <Link className="max-w-full" to={`/admin/case-portfolio/case-profile/`} >
+                        <button className="max-w-full border-2 border-webprimary bg-webprimary hover:bg-active text-white  py-2 px-3 rounded-sm transition-colors text-sm">
                           Open Case Journey
                         </button>
                       </Link>
-                      <Link className="w-full" to={`/admin/case-portfolio/case-progress/`} >
-                        <button className="w-full border-2 border-webprimary text-webprimary hover:bg-webprimary hover:text-white font-semibold py-2 px-4 rounded-sm transition-colors text-sm">
+                      <Link className="" to={`/admin/case-portfolio/case-progress/`} >
+                        <button className="w-full border-2 border-webprimary text-webprimary hover:bg-webprimary hover:text-white  py-2 px-4 rounded-sm transition-colors text-sm">
                           Start Case Trial
                         </button>
                       </Link>

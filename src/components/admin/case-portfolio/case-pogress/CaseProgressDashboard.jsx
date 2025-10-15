@@ -1,18 +1,7 @@
 import React, { useState } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import FormButton from "../../../common/FormButton";
-import EvidenceCard from "./EvidenceCard";
-import WitnessCard from "./WitnessCard";
-import DetailedCaseRecords from "./DetailedCaseRecords";
 import { Dialog } from '@mui/material';
-import DetailedWitnessHistory from "./DetailedWitnessHistory";
-import ClosingStatements from "./ClosingStatements";
-import OpeningStatements from "./OpeningStatements";
-import WitnessSanctityTab from "./witness-popup/WitnessSanctityTab";
-import PlaintiffSummary from "./witness-popup/PlaintiffSummary";
-
-import WitnessTestimonyTab from "./witness-popup/WitnessTestimonyTab";
-import ExaminationPopup from "./witness-popup/ExaminationPopup";
 import DefendantCard from "./DefendantCard";
 import PlaintiffCard from "./PlaintiffCard";
 import NextHearingsPopup from "./NextHearingsPopup";
@@ -30,7 +19,7 @@ const hearingsData = [
   { date: "12/03/2025", day: "Monday", status: "Hearing", color: "bg-green-600" },
   { date: "20/04/2025", day: "Monday", status: "Strike", color: "bg-blue-600" },
   { date: "20/05/2025", day: "Monday", status: "Hearing", color: "bg-green-600" },
-  { date: "20/04/2025", day: "Monday", status: "Strike", color: "bg-blue-600" },
+  { date: "30/04/2025", day: "Monday", status: "Strike", color: "bg-blue-600" },
 
 ];
 
@@ -39,11 +28,13 @@ const CaseProgressDashboard = () => {
   const [scrollIndex, setScrollIndex] = useState(0);
   const [nextHearingsState, setNextHearingsState] = useState(false);
   const [adjournmentState, setAdjournmentState] = useState(false);
+  const [ActiveDate, setActiveDate] = useState(null);
   const handleScroll = (direction) => {
     setScrollIndex((prev) =>
       direction === "left" ? Math.max(prev - 1, 0) : Math.min(prev + 1, hearingsData.length - 1)
     );
   };
+
 
   return (
     <div className="container mx-auto p-6 bg-white rounded-2xl shadow-md my-10 space-y-8">
@@ -93,26 +84,28 @@ const CaseProgressDashboard = () => {
         </button>
         <div className="overflow-x-auto w-full px-10">
           <div
-            className="flex   items-center justify-between transition-transform duration-300 py-2 relative"
+            className="flex-wrap flex   items-center justify-between transition-transform duration-300 py-2 relative"
             style={{ transform: `translateX(-${scrollIndex * 180}px)` }}
           >
             {hearingsData.map((item, i) => (
               <div key={i + 1} className="flex gap-4">
-                <div className="flex  items-center relative py-2 px-3  rounded-lg shadow-card w-full" >
-                  <div className="bg-white   space-y-1 ">
-                    <div className={`w-4 h-4 ${item.color} rounded-full border-2 border-white shadow `}  ></div>
-                    <p className="font-semibold text-sm">{item.date}</p>
-                    <div className="flex gap-3">
 
-                      <p className="text-xs text-gray-500">{item.day}</p>
-                      <div className=" ps-2 text-xs text-gray-500"><p> 24 days </p></div>
-                    </div>
+                <button className={`py-2 px-3 rounded-lg shadow-card  space-y-1 w-full
+                    ${ActiveDate === item.date
+                    ? 'bg-webprimary text-white border-primary'
+                    : 'bg-white text-webprimary border-webprimary'
+                  }
+
+                    `} onClick={() => setActiveDate(item.date)}>
+                  <div className={`w-4 h-4 ${item.color} rounded-full border-2 border-white shadow `}  ></div>
+                  <p className="font-semibold text-sm">{item.date}</p>
+                  <div className="flex gap-3"> 
+                    <p className="text-xs ">{item.day}</p>
+                    <div className=" ps-2 text-xs "><p> 24 days </p></div>
                   </div>
-                  {i !== hearingsData.length - 1 && (
-                    <>
-                      {/* <div className="hidden lg:block absolute top-[50%] left-[100%] w-[80px] h-[1px] bg-active z-0"></div> */}
-                    </>)}
-                </div>
+                </button>
+
+
               </div>))}
           </div>
         </div>

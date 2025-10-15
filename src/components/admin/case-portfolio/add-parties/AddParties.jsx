@@ -68,6 +68,9 @@ const AddParties = () => {
     postalCode: "",
   });
 
+  //write script for mobile number max 10 number
+
+
   const [partyLocalData, setPartyLocalData] = useState([]);
   const [getPartyLocalData, setGetPartyLocalData] = useState([])
 
@@ -120,6 +123,7 @@ const AddParties = () => {
     e.preventDefault();
     storeFormData();
     console.log("Form Data:", formData);
+    alert('Party added successfully!');
 
 
     resetForm();
@@ -294,6 +298,7 @@ const AddParties = () => {
                       name="aadhaar"
                       placeholder="Aadhaar no."
                       value={formData.aadhaar}
+                      length={12}
                       onChange={onChange}
                       type="text"
                     />
@@ -382,6 +387,7 @@ const AddParties = () => {
 
                 <div className='mt-5 flex  gap-4'>
                   <FormButton size="large" type="submit" variant='outlined' className='md:w-[200px]' >Add More</FormButton>
+
                   <Link to="/admin/case-portfolio/case-profiling/" className='md:w-[200px]'>
                     <FormButton size="large" type="button"
                       sx={{}}
@@ -527,7 +533,7 @@ const AddParties = () => {
                     <button
                       onClick={sendAadhaarOtp}
                       disabled={isVerifying.aadhaar}
-                      className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:bg-blue-300 disabled:cursor-not-allowed"
+                      className="px-6 py-2 bg-webprimary text-white rounded-lg hover:bg-blue-700 disabled:bg-blue-300 disabled:cursor-not-allowed"
                     >
                       {isVerifying.aadhaar ? 'Sending...' : 'Send OTP'}
                     </button>
@@ -605,7 +611,7 @@ const AddParties = () => {
                     <button
                       onClick={sendMobileOtp}
                       disabled={isVerifying.mobile}
-                      className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:bg-blue-300 disabled:cursor-not-allowed"
+                      className="px-6 py-2 bg-webprimary text-white rounded-lg hover:bg-blue-700 disabled:bg-blue-300 disabled:cursor-not-allowed"
                     >
                       {isVerifying.mobile ? 'Sending...' : 'Send OTP'}
                     </button>
