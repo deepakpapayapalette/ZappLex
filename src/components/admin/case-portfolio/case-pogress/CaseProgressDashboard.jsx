@@ -51,7 +51,7 @@ const CaseProgressDashboard = () => {
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
         <div className="bg-blue-700 text-white p-4 rounded-xl lg:py-[25px]">
           <p className="text-lg font-medium">Case Lifecycle</p>
-          <h3 className="text-2xl font-semibold mt-1">4Y, 3Months</h3>
+          <h3 className="text-2xl font-semibold mt-1">28 Months <br />(2 Yrs 4 Months)</h3>
         </div>
         <div className="bg-green-600 text-white p-4 rounded-xl lg:py-[25px]">
           <p className="text-lg font-medium">Total Hearings</p>
