@@ -6,20 +6,27 @@ const ProposedEvidencesPopup = ({ onClose }) => {
     {
       description:
         "Original Cheque (Cheque No. 123456, dated April 15, 2025, XYZ Bank)",
-      purpose: "To prove the cheque was issued by the accused to the complainant.",
-      status: "Submitted",
+      purpose:
+        "To prove the cheque was issued by the accused to the complainant.",
+      status:
+        "Physical original + certified copy",
+      relevance: "Establishes issuance of the cheque for ₹5,00,000, a key element under Section 138."
     },
     {
-      description:
-        "Cheque Return Memo (Dated April 20, 2025, issued by XYZ Bank)",
-      purpose: 'To confirm dishonor of the cheque due to "Insufficient Funds".',
-      status: "Submitted",
+      description: "Cheque Return Memo (Dated April 20, 2025, issued by XYZ Bank)",
+      purpose:
+        'To confirm dishonor of the cheque due to “Insufficient Funds”.',
+      status:
+        "Certified copy from bank",
+      relevance: "Proves dishonor, a statutory requirement for Section 138 liability."
     },
     {
       description: "Legal Demand Notice (Dated April 25, 2025)",
       purpose:
         "To demonstrate compliance with the mandatory notice requirement.",
-      status: "Copy Filed",
+      status:
+        "Copy of notice + affidavit",
+      relevance: "Shows demand for payment within 15 days, as required under Section 138."
     },
   ];
 
@@ -28,13 +35,17 @@ const ProposedEvidencesPopup = ({ onClose }) => {
       witness: "Mr. Rajesh Sharma (Complainant)",
       role: "Proprietor of Sharma Grocery Store",
       testimony:
-        "To confirm supply of goods worth ₹5,00,000, issuance of the cheque by Mr. Kumar, dishonor, and compliance with notice requirements.",
+        "To confirm supply of goods worth ₹5,00,000, issuance of the cheque by Mr. Kumar, dishonor, and compliance with notice requirements. | Establishes all elements of Section 138 offense. | Testimony via affidavit (Section 145, NI Act) to reduce court time; oral cross-examination only if required.",
+      speedyTrial: "estimony via affidavit (Section 145, NI Act) to reduce court time; oral cross-examination only if required.",
+      purpose: "Establishes all elements of Section 138 offense"
     },
     {
       witness: "Mr. Vikram Singh (Employee)",
       role: "Employee at Sharma Grocery Store",
       testimony:
-        "To verify delivery of goods and discussions with Mr. Kumar regarding payment.",
+        "To verify delivery of goods and discussions with Mr. Kumar regarding payment. | Corroborates the transaction and counters defense claims of non-delivery or security cheque. | Affidavit-based testimony; defense may challenge credibility due to criminal history (WH-001, WH-003) and prior cases (CW-003, CW-004), but limited scope to expedite.",
+      speedyTrial: "Affidavit-based testimony; defense may challenge credibility due to criminal history (WH-001, WH-003) and prior cases (CW-003, CW-004), but limited scope to expedite.",
+      purpose: "Corroborates the transaction and counters defense claims of non-delivery or security cheque."
     },
   ];
 
@@ -44,14 +55,19 @@ const ProposedEvidencesPopup = ({ onClose }) => {
         "Correspondence Records (Emails/Letters between Mr. Sharma and Mr. Kumar)",
       purpose:
         "To demonstrate acknowledgment of the debt or transaction by the accused.",
-      status: "Copies Filed",
+      status:
+        "Copies of emails/letters + affidavit",
+      relevance: "Counters defense claim that the cheque was for security, not a debt."
     },
     {
       description:
         "Witness Criminal History Report (NCRB records for Mr. Vikram Singh)",
       purpose:
         "To address defense challenges to Mr. Singh’s credibility proactively.",
-      status: "Certified Copy",
+      status:
+        "Certified NCRB extract (if admissible)",
+      relevance: " Preempts cross-examination by acknowledging Mr. Singh’s history (WH-001, WH-003) while emphasizing his limited role."
+
     },
   ];
 
@@ -63,7 +79,7 @@ const ProposedEvidencesPopup = ({ onClose }) => {
           <thead>
             <tr className="bg-webprimary text-white">
               {headers.map((h, i) => (
-                <th key={i} className="px-4 py-2 font-medium  border-gray-200">
+                <th key={i} className="px-2 py-2 font-medium border-gray-200">
                   {h}
                 </th>
               ))}
@@ -73,11 +89,11 @@ const ProposedEvidencesPopup = ({ onClose }) => {
             {data.map((row, i) => (
               <tr
                 key={i}
-                className={` hover:bg-gray-50 ${i % 2 === 0 ? "bg-white" : "bg-gray-50"
+                className={`hover:bg-gray-50 ${i % 2 === 0 ? "bg-white" : "bg-gray-50"
                   }`}
               >
                 {fields.map((f, j) => (
-                  <td key={j} className="px-4 py-2 align-top text-gray-700">
+                  <td key={j} className="px-2 py-2 align-top text-gray-700">
                     {row[f]}
                   </td>
                 ))}
@@ -105,23 +121,33 @@ const ProposedEvidencesPopup = ({ onClose }) => {
         {/* Content Sections */}
         <TableSection
           title="A. Documentary Evidence"
-          headers={["Evidence Description", "Purpose", "Status"]}
+          headers={[
+            "Evidence Description",
+            "Purpose",
+            "Submission Format",
+            "Relevance to Case"
+          ]}
           data={documentaryEvidence}
-          fields={["description", "purpose", "status"]}
+          fields={["description", "purpose", "status", "relevance"]}
         />
 
         <TableSection
           title="B. Testimonial Evidence"
-          headers={["Witness", "Role", "Proposed Testimony"]}
+          headers={["Witness", "Role", "Proposed Testimony", "Purpose", "Speedy Trial Consideration"]}
           data={testimonialEvidence}
-          fields={["witness", "role", "testimony"]}
+          fields={["witness", "role", "testimony", "purpose", "speedyTrial"]}
         />
 
         <TableSection
           title="C. Additional Supporting Evidence (If Required)"
-          headers={["Evidence Description", "Purpose", "Status"]}
+          headers={[
+            "Evidence Description",
+            "Purpose",
+            "Submission Format",
+            "Relevance to Case"
+          ]}
           data={supportingEvidence}
-          fields={["description", "purpose", "status"]}
+          fields={["description", "purpose", "status", "relevance"]}
         />
       </div>
     </div>

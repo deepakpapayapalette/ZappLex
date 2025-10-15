@@ -283,7 +283,7 @@ const CaseList = () => {
                     </div>
 
                     {/* Compliance Score */}
-                    <div className="mb-4">
+                    <div className="mb-6">
                       <p className="text-xs font-semibold text-gray-900 mb-2">ZAPPLEX Compliance Score</p>
                       <div className="flex  relative">
                         {scores.map((score) => (
@@ -291,7 +291,7 @@ const CaseList = () => {
                             key={score.id}
                             className={` relative flex-1 py-2 text-center text-xs text-white font-bold ${score.color} ${relevancy === score.id ? "indicator" : ""
                               }`}
-                            onClick={() => setRelevancy(score.id)}
+                          // onClick={() => setRelevancy(score.id)}
                           >
                             {`0${score.id}`}
                           </button>
@@ -301,14 +301,14 @@ const CaseList = () => {
                     </div>
 
                     {/* Action Buttons */}
-                    <div className="grid grid-cols-2 gap-2">
-                      <Link to={`/admin/case-portfolio/case-profile/`} onClick={() => console.log('Navigating to Case Profile')}>
-                        <button className="bg-webprimary hover:bg-active text-white font-semibold py-2 px-4 rounded-lg transition-colors text-sm">
+                    <div className="grid grid-cols-2 gap-4">
+                      <Link className="w-full" to={`/admin/case-portfolio/case-profile/`} >
+                        <button className="w-full bg-webprimary hover:bg-active text-white font-semibold py-2 px-4 rounded-sm transition-colors text-sm">
                           Open Case Journey
                         </button>
                       </Link>
-                      <Link to={`/admin/case-portfolio/case-progress/`} onClick={() => console.log('Navigating to Case Progress')}>
-                        <button className="border-2 border-webprimary text-webprimary hover:bg-webprimary hover:text-white font-semibold py-2 px-4 rounded-lg transition-colors text-sm">
+                      <Link className="w-full" to={`/admin/case-portfolio/case-progress/`} >
+                        <button className="w-full border-2 border-webprimary text-webprimary hover:bg-webprimary hover:text-white font-semibold py-2 px-4 rounded-sm transition-colors text-sm">
                           Start Case Trial
                         </button>
                       </Link>

@@ -177,7 +177,7 @@ const QuestionsPopup = ({ onClose }) => {
         <div className="space-y-8">
           {sections.map((section, i) => (
             <div key={i}>
-              <h3 className="text-lg font-semibold text-webprimary mb-3">
+              <h3 className="text-lg font-semibold text-black mb-3">
                 {section.title}
               </h3>
               {section.subSections.map((sub, j) => (

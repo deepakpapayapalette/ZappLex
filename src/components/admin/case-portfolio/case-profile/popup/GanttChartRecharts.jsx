@@ -1,130 +1,42 @@
 import React from 'react';
-import './chart-style.css';
-import {
-  BarChart,
-  Bar,
-  XAxis,
-  YAxis,
-  CartesianGrid,
-  Tooltip,
-  ResponsiveContainer,
-  ReferenceLine,
-} from 'recharts';
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Cell, ResponsiveContainer } from 'recharts';
+import { X } from 'lucide-react';
 
+const GanttChartRecharts = ({ onClose }) => {
+  // Define the date range (Oct 10 - Oct 15)
+  const startDate = new Date('2024-10-10');
+  const dates = ['Oct 10', 'Oct 11', 'Oct 12', 'Oct 13', 'Oct 14', 'Oct 15', 'Oct 16'];
 
-// Function to transform task data for Recharts BarChart
-const transformTasksForRecharts = (tasks, days) => {
-  const transformedData = [];
-  const startDayOffset = 10; // Corresponds to Oct 10
-
-  tasks.forEach((task, index) => {
-    // Each task will have a series of segments if it spans multiple days
-    // Or a single segment if it fits within one day or is represented as such
-    const daySegments = [];
-    let currentStart = task.start;
-    const taskEnd = task.start + task.duration;
-
-    // Create segments for each day the task spans
-    for (let i = 0; i < days.length; i++) {
-      const dayIndex = startDayOffset + i;
-      const dayStart = dayIndex;
-      const dayEnd = dayIndex + 1;
-
-      const segmentStart = Math.max(currentStart, dayStart);
-      const segmentEnd = Math.min(taskEnd, dayEnd);
-
-      if (segmentEnd > segmentStart) {
-        // We need to represent the "empty" space before the bar starts on a given day
-        // And the actual bar segment
-        const segmentDuration = segmentEnd - segmentStart;
-        const segmentOffset = segmentStart - dayStart; // How far into the day the segment starts
-
-        daySegments.push({
-          name: task.name,
-          day: days[i],
-          // This represents the "empty" space before the bar starts in this day's cell
-          // Recharts will stack these.
-          offset: segmentOffset,
-          // This is the actual duration of the bar segment within this day's cell
-          duration: segmentDuration,
-          color: task.color,
-          yAxisLabel: task.name, // To map to Y-axis
-        });
-      } else {
-        // If no segment for this day, still push an empty one to keep data consistent for stacking
-        daySegments.push({
-          name: task.name,
-          day: days[i],
-          offset: 1, // Full empty
-          duration: 0,
-          color: 'transparent',
-          yAxisLabel: task.name,
-        });
-      }
-    }
-    transformedData.push(...daySegments);
-  });
-
-  return transformedData;
-};
-
-
-const GanttChartRecharts = () => {
+  // Task data with start day (0-based) and duration in days
   const tasks = [
-    { id: 'Task1', name: 'Cheque', start: 10, duration: 5, color: '#4CAF50' },
-    { id: 'Task2', name: 'Return Memo', start: 10, duration: 5, color: '#4CAF50' },
-    { id: 'Task3', name: 'Demand Notice', start: 11, duration: 4, color: '#4CAF50' },
-    { id: 'Task4', name: 'Invoices', start: 12, duration: 3, color: '#4CAF50' },
-    { id: 'Task5', name: 'Bank Statement', start: 13, duration: 2, color: '#4CAF50' },
-    { id: 'Task7', name: 'Complainant Aff', start: 14, duration: 1.5, color: '#4CAF50' },
-    { id: 'Task8', name: 'Witness Aff.', start: 14.5, duration: 0.5, color: '#4CAF50' },
-    { id: 'Task9', name: 'Bank Official', start: 15, duration: 0.5, color: '#4CAF50' },
+    { name: 'Task1: Cheque', start: 0, duration: 6, color: '#078428' },
+    { name: 'Task2: Return Memo', start: 0, duration: 5, color: '#16a34a' },
+    { name: 'Task3: Demand Notice', start: 2, duration: 4, color: '#15803d' },
+    { name: 'Task4: Invoices', start: 3, duration: 3, color: '#16a34a' },
+    { name: 'Task5: Bank Statement', start: 4, duration: 2, color: '#15803d' },
+    { name: 'Task 7: Complainant Aff', start: 5, duration: 1, color: '#16a34a' },
+    { name: 'Task 8: Witness Aff.', start: 6, duration: 0.5, color: '#15803d' },
+    { name: 'Task 9: Bank Official', start: -1, duration: 0, color: '#e5e7eb' }
   ];
 
-  const days = ['Oct 10', 'Oct 11', 'Oct 12', 'Oct 13', 'Oct 14', 'Oct 15'];
-  const startDayIndex = 10; // Corresponds to Oct 10
+  // Transform data for Recharts
+  const chartData = tasks.map(task => ({
+    name: task.name,
+    start: task.start,
+    duration: task.duration,
+    color: task.color
+  }));
 
-  // We need a unique list of task names for the YAxis
-  const taskNames = tasks.map(task => task.name);
-
-  // Recharts needs data structured per Y-axis category, with segments
-  // This transformation is more complex for a true Gantt view.
-  // A common approach is to treat each task as a Y-axis item, and use two Bars per task:
-  // one for the "start offset" and one for the "duration".
-  const rechartsData = tasks.map(task => {
-    return {
-      name: task.name,
-      // The 'start' is the "empty" duration before the task actually begins on the chart
-      startOffset: task.start - startDayIndex,
-      // The 'duration' is the actual length of the task
-      duration: task.duration,
-      color: task.color
-    };
-  });
-
-  // Custom Tick for YAxis to align labels
-  const CustomYAxisTick = (props) => {
-    const { x, y, payload } = props;
-    return (
-      <g transform={`translate(${x},${y})`}>
-        <text x={0} y={0} dy={-4} textAnchor="end" fill="#666" fontSize="0.9em">
-          {payload.value}
-        </text>
-      </g>
-    );
-  };
-
-  // Custom Tooltip for better display
-  const CustomTooltip = ({ active, payload, label }) => {
+  const CustomTooltip = ({ active, payload }) => {
     if (active && payload && payload.length) {
-      const task = payload[0].payload;
+      const data = payload[0].payload;
+      const startDay = Math.floor(data.start);
+      const endDay = Math.floor(data.start + data.duration);
       return (
-        <div className="custom-tooltip-recharts">
-          <p className="label">{`${task.name}`}</p>
-          <p className="intro" style={{ color: task.color }}>
-            Duration: {task.duration} days
-          </p>
-          <p className="desc">Starts day: {task.start}</p>
+        <div className="bg-white p-3 border border-gray-300 rounded shadow-lg">
+          <p className="font-semibold">{data.name}</p>
+          <p className="text-sm">Start: {dates[startDay] || 'N/A'}</p>
+          <p className="text-sm">End: {dates[endDay] || 'N/A'}</p>
         </div>
       );
     }
@@ -132,81 +44,58 @@ const GanttChartRecharts = () => {
   };
 
   return (
-    <div className="gantt-chart-container-recharts">
-      <div className="gantt-chart-header-recharts">
-        <h2>Gantt Chart for Evidence Plan in Cheque Bounce Case</h2>
-        <button className="close-button-recharts">×</button>
-      </div>
-      <ResponsiveContainer width="100%" height={tasks.length * 40 + 100}>
-        <BarChart
-          layout="horizontal"
-          data={rechartsData}
-          margin={{
-            top: 20,
-            right: 30,
-            left: 20,
-            bottom: 5,
-          }}
-          barCategoryGap="20%" // Adjust gap between bars
-          barGap={0}
-        >
-          <CartesianGrid strokeDasharray="3 3" horizontal={false} />
-          <XAxis
-            type="number"
-            dataKey="duration"
-            domain={[0, startDayIndex + days.length - startDayIndex]} // Range from 0 to total days covered
-            tickFormatter={(value) => {
-              const dayOffset = startDayIndex + value;
-              const date = new Date(2023, 9, dayOffset); // Assuming Oct 2023 for dates
-              return `Oct ${date.getDate()}`;
-            }}
-            interval={0} // Show all day ticks
-            ticks={Array.from({ length: days.length + 1 }, (_, i) => i)} // 0 to 6 for 6 days
-            padding={{ left: 10, right: 10 }}
-          />
-          <YAxis
-            type="category"
-            dataKey="name"
-            tick={<CustomYAxisTick />}
-            width={120}
-          />
-          <Tooltip content={<CustomTooltip />} />
-          {/* Loop through each task and create two bars: one for offset, one for duration */}
-          {tasks.map((task, index) => (
-            <Bar
-              key={`bar-offset-${task.id}`}
-              dataKey="startOffset"
-              stackId={task.id} // Stack on the same ID
-              fill="transparent" // Make the offset bar transparent
-              isAnimationActive={false} // Disable animation for a static Gantt view
-            />
-          ))}
-          {tasks.map((task, index) => (
-            <Bar
-              key={`bar-duration-${task.id}`}
-              dataKey="duration"
-              stackId={task.id} // Stack on the same ID
-              fill={task.color}
-              // This is a bit of a hack: Recharts' Bar component doesn't directly support borderRadius on the bar itself,
-              // but you can often achieve it via custom shapes if needed. For simplicity, we omit it here.
-              isAnimationActive={false}
-            />
-          ))}
+    <div className="w-full h-screen ">
+      <div className="bg-white rounded-lg shadow-lg p-6 h-full flex flex-col">
+        <div className="flex justify-between items-center mb-6">
+          <h2 className="text-xl lg:text-3xl font-semibold md:pe-10">Gantt Chart for Evidence Plan in Cheque Bounce Case</h2>
+          <button onClick={() => onClose(false)}>
+            <X size={22} className="text-gray-600 hover:text-gray-800" />
+          </button>
+        </div>
 
-          {/* Add vertical lines for each day to mimic the grid from the original image */}
-          {Array.from({ length: days.length + 1 }, (_, i) => {
-            const dayValue = i; // Represents the day index from startDayIndex
-            return (
-              <ReferenceLine
-                key={`day-line-${i}`}
-                x={dayValue}
-                stroke="#e0e0e0"
-                strokeDasharray="3 3"
+        <div className="flex-1">
+          <ResponsiveContainer width="100%" height="100%">
+            <BarChart
+              layout="vertical"
+              data={chartData}
+              margin={{ top: 20, right: 30, left: 10, bottom: 20 }}
+            >
+              <CartesianGrid strokeDasharray="3 3" horizontal={true} vertical={true} />
+              <XAxis
+                type="number"
+                domain={[0, 7]}
+                ticks={[0, 1, 2, 3, 4, 5, 6]}
+                tickFormatter={(value) => dates[value] || ''}
+                orientation="top"
               />
-            );
-          })}
-        </BarChart>
-      </ResponsiveContainer>
+              <YAxis
+                type="category"
+                dataKey="name"
+                width={180}
+                tick={{ fontSize: 14 }}
+              />
+              <Tooltip content={<CustomTooltip />} />
+              <Bar dataKey="duration" stackId="a">
+                {chartData.map((entry, index) => (
+                  <Cell key={`cell-${index}`} fill={entry.color} />
+                ))}
+              </Bar>
+              <Bar dataKey="start" stackId="a" fill="transparent" />
+            </BarChart>
+          </ResponsiveContainer>
+        </div>
+
+        <div className="mt-4 flex gap-4 justify-center">
+          <div className="flex items-center gap-2">
+            <div className="w-4 h-4 bg-green-500 rounded"></div>
+            <span className="text-sm">In Progress</span>
+          </div>
+          <div className="flex items-center gap-2">
+            <div className="w-4 h-4 bg-green-700 rounded"></div>
+            <span className="text-sm">Completed</span>
+          </div>
+        </div>
+      </div>
     </div>
   );
 };

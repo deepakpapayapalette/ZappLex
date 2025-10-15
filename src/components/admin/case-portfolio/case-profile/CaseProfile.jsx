@@ -15,11 +15,11 @@ const CaseProfile = () => {
   const [GanttChartRechartsState, setGanttChartRechartsState] = useState(false);
 
   return (
-    <div className="container p-8">
+    <div className="container p-6">
       <h2 className="text-2xl font-semibold my-4 text-gray-800">
         Case Profile: Cheque Bounce Case (Pre-Trial Stage)
       </h2>
-      <div className=" mx-auto bg-white p-8 rounded-2xl shadow-card my-10">
+      <div className=" mx-auto bg-white p-6 rounded-lg shadow-md mt-10 mb-4">
         {/* Case Details */}
         <section className="mb-8">
           <h2 className="text-lg font-semibold mb-2 text-gray-800 pb-1">
@@ -172,10 +172,8 @@ const CaseProfile = () => {
       <Dialog
         open={QuestionState}
         onClose={() => setQuestionState(false)}
-        aria-describedby="witness-record-history"
-        maxWidth="md"
       >
-        <div id="witness-record-history">
+        <div>
           <QuestionsPopup onClose={setQuestionState} />
         </div>
       </Dialog>
@@ -183,10 +181,9 @@ const CaseProfile = () => {
       <Dialog
         open={ProposedEvidencesState}
         onClose={() => setProposedEvidencesState(false)}
-        aria-describedby="witness-record-history"
-        maxWidth="md"
+
       >
-        <div id="witness-record-history">
+        <div >
           <ProposedEvidencesPopup onClose={setProposedEvidencesState} />
         </div>
       </Dialog>
@@ -194,10 +191,8 @@ const CaseProfile = () => {
       <Dialog
         open={InvestigationState}
         onClose={() => setInvestigationState(false)}
-        aria-describedby="witness-record-history"
-        maxWidth="md"
       >
-        <div id="witness-record-history">
+        <div>
           <InvestigationPlanPopup onClose={setInvestigationState} />
         </div>
       </Dialog>
@@ -205,10 +200,9 @@ const CaseProfile = () => {
       <Dialog
         open={GanttChartRechartsState}
         onClose={() => setGanttChartRechartsState(false)}
-        aria-describedby="witness-record-history"
-        maxWidth='w-[800px]'
+        maxWidth='w-[900px]'
       >
-        <div id="witness-record-history">
+        <div>
           <GanttChartRecharts onClose={setGanttChartRechartsState} />
         </div>
       </Dialog>

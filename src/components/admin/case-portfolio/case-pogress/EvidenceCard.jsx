@@ -1,15 +1,25 @@
 import React, { useState } from "react";
 import { CalendarDays, FileImage } from "lucide-react";
+import EvedenceQA from "./evidence-popup/EvedenceQA";
+import { Dialog } from "@mui/material";
+import EvidenceLog from "./evidence-popup/EvidenceLog";
+import EvidenceSanctity from "./evidence-popup/EvidenceSanctity";
+import EvidenceSummary from "./evidence-popup/EvidenceSummary";
 
 const EvidenceCard = () => {
-  const [relevancy, setRelevancy] = useState(4);
+  const [relevancy, setRelevancy] = useState(5);
+  const [EvSummaryState, setEvSummaryState] = useState(false);
+  const [EvidenceLogState, setEvidenceLogState] = useState(false);
+  const [EvidenceSanctityState, setEvidenceSanctityState] = useState(false);
+  const [EvedenceQAState, setEvedenceQAState] = useState(false);
+
 
   const scores = [
-    { id: 1, color: "bg-red-600" },
-    { id: 2, color: "bg-orange-400" },
-    { id: 3, color: "bg-yellow-300" },
-    { id: 4, color: "bg-green-300" },
-    { id: 5, color: "bg-green-600" },
+    { id: 1, color: "bg-[#c00000]" },
+    { id: 2, color: "bg-[#ffc001]" },
+    { id: 3, color: "bg-[#feff99]" },
+    { id: 4, color: "bg-[#92d14f]" },
+    { id: 5, color: "bg-[#107c42]" },
   ];
 
   const handleOpen = () => {
@@ -32,7 +42,7 @@ const EvidenceCard = () => {
       {/* Physical Evidence */}
       <div>
         <p className="font-medium text-gray-700 mb-2">Physical Evidence</p>
-        <div className="flex items-center justify-between bg-white rounded-lg p-2 shadow-sm
+        <div className="flex items-center justify-between
         ">
           <div className="flex items-center gap-3">
             <div className="w-10 h-10 bg-gray-100 flex items-center justify-center rounded-lg border">
@@ -59,13 +69,13 @@ const EvidenceCard = () => {
       {/* Relevancy Score */}
       <div>
         <p className="font-medium text-gray-700 mb-2">Relevancy Score</p>
-        <div className="relative flex overflow-hidden rounded-md shadow-sm">
+        <div className="relative flex overflow-hidden rounded-md shadow-sm py-1">
           {scores.map((score) => (
             <button
               key={score.id}
-              className={`flex-1 py-2 text-center text-xs text-white font-bold ${score.color} ${relevancy === score.id ? "ring-2 ring-black" : ""
+              className={` relative flex-1 py-2 text-center text-xs text-white font-bold ${score.color} ${relevancy === score.id ? "indicator" : ""
                 }`}
-              onClick={() => setRelevancy(score.id)}
+            // onClick={() => setRelevancy(score.id)}
             >
               {`0${score.id}`}
             </button>
@@ -76,20 +86,70 @@ const EvidenceCard = () => {
 
       {/* Action Buttons */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-3 pt-2">
-        {[
-          "Summary",
-          "Doc Log(20)",
-          "Evidence Sanctity Compliance",
-          "Q&A",
-        ].map((btn, i) => (
-          <button
-            key={i}
-            className="px-3 py-2 bg-white border border-blue-200 rounded-lg text-sm text-webprimary font-medium hover:bg-blue-100 transition"
-          >
-            {btn}
-          </button>
-        ))}
+        <button
+          className="px-3 py-2  border border-webprimary rounded-lg text-sm text-webprimary hover:bg-webprimary hover:text-white transition"
+          onClick={() => setEvSummaryState(true)}
+        >
+          Summary
+        </button>
+        <button
+          className="px-3 py-2  border border-webprimary rounded-lg text-sm text-webprimary hover:bg-webprimary hover:text-white transition"
+          onClick={() => setEvidenceLogState(true)}
+        >
+          Doc Log(20)
+        </button>
+        <button
+          className="px-3 py-2  border border-webprimary rounded-lg text-sm text-webprimary hover:bg-webprimary hover:text-white transition"
+          onClick={() => setEvidenceSanctityState(true)}
+        >
+          Evidence Sanctity Compliance
+        </button>
+        <button
+          className="px-3 py-2  border border-webprimary rounded-lg text-sm text-webprimary hover:bg-webprimary hover:text-white transition"
+          onClick={() => setEvedenceQAState(true)}
+        >
+          Q&A
+        </button>
       </div>
+
+
+
+      <Dialog
+        open={EvSummaryState}
+        onClose={() => setEvSummaryState(false)}
+      >
+        <div>
+          <EvidenceSummary onClose={setEvSummaryState} />
+        </div>
+      </Dialog>
+
+      <Dialog
+        open={EvidenceLogState}
+        onClose={() => setEvidenceLogState(false)}
+      >
+        <div>
+          <EvidenceLog onClose={setEvidenceLogState} />
+        </div>
+      </Dialog>
+
+      <Dialog
+        open={EvidenceSanctityState}
+        onClose={() => setEvidenceSanctityState(false)}
+      >
+        <div>
+          <EvidenceSanctity onClose={setEvidenceSanctityState} />
+        </div>
+      </Dialog>
+
+      <Dialog
+        open={EvedenceQAState}
+        onClose={() => setEvedenceQAState(false)}
+      >
+        <div>
+          <EvedenceQA onClose={setEvedenceQAState} />
+        </div>
+      </Dialog>
+
     </div>
   );
 };

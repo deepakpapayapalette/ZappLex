@@ -15,6 +15,7 @@ import WitnessTestimonyTab from "./witness-popup/WitnessTestimonyTab";
 import ExaminationPopup from "./witness-popup/ExaminationPopup";
 import DefendantCard from "./DefendantCard";
 import PlaintiffCard from "./PlaintiffCard";
+import NextHearingsPopup from "./NextHearingsPopup";
 
 
 const StatementsBtns = ["Add Opening Statements",
@@ -35,6 +36,7 @@ const hearingsData = [
 
 const CaseProgressDashboard = () => {
   const [scrollIndex, setScrollIndex] = useState(0);
+  const [nextHearingsState, setNextHearingsState] = useState(false);
   const handleScroll = (direction) => {
     setScrollIndex((prev) =>
       direction === "left" ? Math.max(prev - 1, 0) : Math.min(prev + 1, hearingsData.length - 1)
@@ -65,7 +67,10 @@ const CaseProgressDashboard = () => {
 
       {/* Next Hearing Buttons */}
       <div className="flex justify-end gap-4">
-        <FormButton className="px-6 py-2 hover:bg-active transition">
+        <FormButton className="px-6 py-2 hover:bg-active transition"
+
+          onClick={() => setNextHearingsState(true)}
+        >
           Next Hearing
         </FormButton>
         <FormButton className=" hover:bg-active hover:text-white  transition"
@@ -145,7 +150,18 @@ const CaseProgressDashboard = () => {
       <div className="grid lg:grid-cols-2 gap-6">
         <PlaintiffCard />
         <DefendantCard />
-      </div> 
+      </div>
+
+
+      <Dialog
+        open={nextHearingsState}
+        onClose={() => setNextHearingsState(false)}
+      >
+        <div>
+          <NextHearingsPopup onClose={setNextHearingsState} />
+        </div>
+      </Dialog>
+
     </div>
   );
 };
