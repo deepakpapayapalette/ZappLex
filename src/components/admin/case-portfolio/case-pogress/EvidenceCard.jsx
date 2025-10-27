@@ -6,7 +6,7 @@ import EvidenceLog from "./evidence-popup/EvidenceLog";
 import EvidenceSanctity from "./evidence-popup/EvidenceSanctity";
 import EvidenceSummary from "./evidence-popup/EvidenceSummary";
 
-const EvidenceCard = () => {
+const EvidenceCard = ({ checkName, checkFile, checkFileName, setCheckFileModal  }) => {
   const [relevancy, setRelevancy] = useState(5);
   const [EvSummaryState, setEvSummaryState] = useState(false);
   const [EvidenceLogState, setEvidenceLogState] = useState(false);
@@ -22,8 +22,20 @@ const EvidenceCard = () => {
     { id: 5, color: "bg-[#107c42]" },
   ];
 
+  const handleDownload = () => {
+    const link = document.createElement("a");
+    link.href = checkFile;
+    link.download = "image.jpg";
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  }
   const handleOpen = () => {
-    alert("Opening file: Blood-Stained Knife.png");
+
+    // handleDownload();
+    // setCheckModal(true);
+    setCheckFileModal(true);
+
   };
 
   return (
@@ -50,10 +62,10 @@ const EvidenceCard = () => {
             </div>
             <div>
               <p className="text-webprimary font-semibold text-sm hover:underline cursor-pointer">
-                Blood-Stained Knife.png
+                {checkName || null}
               </p>
               <p className="text-xs text-gray-500">
-                16 Sep 2025 at 02:30 PM • 4.8mb
+                {checkFileName}
               </p>
             </div>
           </div>
@@ -150,6 +162,8 @@ const EvidenceCard = () => {
           <EvedenceQA onClose={setEvedenceQAState} />
         </div>
       </Dialog>
+
+
 
     </div>
   );

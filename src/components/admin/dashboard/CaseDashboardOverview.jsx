@@ -60,32 +60,65 @@ export default function CaseDashboardOverview() {
       textColor: 'text-white'
     },
     {
-      title: 'Pending Cases',
-      count: '120',
-      bgColor: 'bg-[#d4cd00]',
+      title: 'Cases exceeding timelines',
+      count: '20',
+      bgColor: 'bg-[#f39a0b]',
       textColor: 'text-white'
     },
     {
-      title: 'Cases Past Statutory Timeline',
+      title: 'Cases eligible for expedited trials',
       count: '30',
       bgColor: 'bg-[#10bceb]',
       textColor: 'text-white'
     },
     {
-      title: 'Adjournments in Last 30 Days',
+      title: 'Cases involving excessive or unjustified adjournments',
       count: '50',
       bgColor: 'bg-green-600',
       textColor: 'text-white'
-    }
+    },
+    {
+      title: 'Cases with inadequate evidence presentation',
+      count: '42',
+      bgColor: 'bg-teal-600',
+      textColor: 'text-white'
+    },
+    {
+      title: 'Cases involving unreliable witness testimonies',
+      count: '48',
+      bgColor: 'bg-orange-600',
+      textColor: 'text-white'
+    },
+    {
+      title: 'Cases with unfinished investigations',
+      count: '38',
+      bgColor: 'bg-blue-600',
+      textColor: 'text-white'
+    },
+    {
+      title: 'Cases with substandard quality of investigation',
+      count: '40',
+      bgColor: 'bg-pink-700',
+      textColor: 'text-white'
+    },
   ];
 
+  //Current date in this 11-Oct-2025 script
+
+  const getCurrentDate = () => {
+    const today = new Date();
+    const day = today.getDate();
+    const month = today.toLocaleString("en-GB", { month: "short" });
+    const year = today.getFullYear();
+    return `${day < 10 ? "0" + day : day}-${month}-${year}`;
+  };
   return (
     <div className="space-top">
       {/* Header */}
       <div className="flex items-center justify-between mb-6">
         <div className="flex items-center gap-2">
           <Calendar className="w-8 h-8" />
-          <span className="text-2xl font-bold">11-Oct-2025</span>
+          <span className="text-2xl font-bold">{getCurrentDate()}</span>
         </div>
         <button
           onClick={() => setFilterPopupOpen(true)}
@@ -111,7 +144,7 @@ export default function CaseDashboardOverview() {
         ))}
       </div>
 
-  
+
 
       {/* Filter Popup Overlay */}
       {filterPopupOpen && (
@@ -143,11 +176,10 @@ export default function CaseDashboardOverview() {
                     <button
                       key={type}
                       onClick={() => toggleFilter('caseType', type)}
-                      className={`px-4 py-2 rounded-lg border-2 font-medium transition-colors ${
-                        filters.caseType.includes(type)
-                          ? 'bg-blue-500 text-white border-blue-500'
-                          : 'bg-white text-blue-500 border-blue-500 hover:bg-blue-50'
-                      }`}
+                      className={`px-4 py-2 rounded-lg border-2 font-medium transition-colors ${filters.caseType.includes(type)
+                        ? 'bg-blue-500 text-white border-blue-500'
+                        : 'bg-white text-blue-500 border-blue-500 hover:bg-blue-50'
+                        }`}
                     >
                       {type}
                     </button>
@@ -163,11 +195,10 @@ export default function CaseDashboardOverview() {
                     <button
                       key={status}
                       onClick={() => toggleFilter('caseStatus', status)}
-                      className={`px-4 py-2 rounded-lg border-2 font-medium transition-colors ${
-                        filters.caseStatus.includes(status)
-                          ? 'bg-blue-500 text-white border-blue-500'
-                          : 'bg-white text-blue-500 border-blue-500 hover:bg-blue-50'
-                      }`}
+                      className={`px-4 py-2 rounded-lg border-2 font-medium transition-colors ${filters.caseStatus.includes(status)
+                        ? 'bg-blue-500 text-white border-blue-500'
+                        : 'bg-white text-blue-500 border-blue-500 hover:bg-blue-50'
+                        }`}
                     >
                       {status}
                     </button>
@@ -183,11 +214,10 @@ export default function CaseDashboardOverview() {
                     <button
                       key={priority}
                       onClick={() => toggleFilter('priority', priority)}
-                      className={`px-4 py-2 rounded-lg border-2 font-medium transition-colors ${
-                        filters.priority.includes(priority)
-                          ? 'bg-blue-500 text-white border-blue-500'
-                          : 'bg-white text-blue-500 border-blue-500 hover:bg-blue-50'
-                      }`}
+                      className={`px-4 py-2 rounded-lg border-2 font-medium transition-colors ${filters.priority.includes(priority)
+                        ? 'bg-blue-500 text-white border-blue-500'
+                        : 'bg-white text-blue-500 border-blue-500 hover:bg-blue-50'
+                        }`}
                     >
                       {priority}
                     </button>

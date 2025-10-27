@@ -1,8 +1,15 @@
+import { Dialog } from '@mui/material';
 import { ChevronDown } from 'lucide-react';
 import { useState } from 'react';
+import PlaintiffCard from '../case-portfolio/case-pogress/PlaintiffCard';
+import EvidenceCard from '../case-portfolio/case-pogress/EvidenceCard';
+import checkImg from '../../../assets/images/check.jpg'
+import { IoClose } from "react-icons/io5";
 
 export default function IrrelevantEvidenceTracker() {
   const [selectedCase, setSelectedCase] = useState('Choose Case');
+  const [evidenceModalState, setEvidenceModalState] = useState(false);
+  const [checkModal, setCheckModal] = useState(false);
 
   const headers = ['Case Number', 'Case Title', 'Evidence Submitted', 'Relevance Status', 'Next Action'];
 
@@ -63,7 +70,7 @@ export default function IrrelevantEvidenceTracker() {
               <tr key={i} className={i % 2 === 0 ? 'bg-white' : 'bg-blue-50'}>
                 <td className="border-t border-r border-gray-200" style={tdStyle}>{row.caseNumber}</td>
                 <td className="border-t border-r border-gray-200" style={tdStyle}>{row.caseTitle}</td>
-                <td className="border-t border-r border-gray-200" style={tdStyle}>{row.evidenceSubmitted}</td>
+                <td className="border-t border-r border-gray-200" style={tdStyle} onClick={() => setEvidenceModalState(true)}><span className='underline text-blue-700 cursor-pointer'>{row.evidenceSubmitted}</span></td>
                 <td className="border-t border-r border-gray-200" style={tdStyle}>{row.relevanceStatus}</td>
                 <td className="border-t border-gray-200 text-center" style={{ padding: '24px' }}>
                   <button className="text-webprimary font-semibold hover:text-active hover:underline" style={{ fontSize: '14px' }}>
@@ -75,6 +82,33 @@ export default function IrrelevantEvidenceTracker() {
           </tbody>
         </table>
       </div>
+
+      <Dialog
+        open={evidenceModalState}
+        onClose={() => setEvidenceModalState(false)}
+      >
+        <div>
+          <EvidenceCard onClose={setEvidenceModalState}
+            checkName="Cheque, Return Memo, Notice, Invoices, Affidavits (Tasks 1–9 from evidence plan)."
+            // checkFile={checkImg || null}
+            setCheckModal={setCheckModal}
+          />
+        </div>
+      </Dialog>
+
+      <Dialog
+        open={checkModal}
+        onClose={() => setCheckfile(false)}
+      >
+        <div>
+          <div onClick={() => setCheckModal(false)} className='flex justify-end p-4'>
+            <IoClose />
+          </div>
+          <div className='flex justify-center p-12'  >
+            <img src={checkImg || null} alt="img" className='w-full h-auto' />
+          </div>
+        </div>
+      </Dialog>
     </div>
   );
 }

@@ -30,15 +30,15 @@ const AdminTopbar = ({ show, toggleShow }) => {
         <div className="flex items-center space-x-6 pe-lg-5">
           <div className="items-center space-x-1 hidden lg:flex cursor-pointer language-input">
             <img src={languageIcon} alt="translate" className="w-5 me-2" />
-            <span className="text-sm text-gray-700">English</span>
-            <svg xmlns="http://www.w3.org/2000/svg"
+            <span className="text-sm text-gray-700">Court No</span>
+            {/* <svg xmlns="http://www.w3.org/2000/svg"
               className="h-4 w-4 text-gray-500"
               fill="none"
               viewBox="0 0 24 24"
               stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2"
                 d="M19 9l-7 7-7-7" />
-            </svg>
+            </svg> */}
           </div>
           <div className="relative hidden lg:block cursor-pointer">
             <Bell className='text-muted-foreground' />

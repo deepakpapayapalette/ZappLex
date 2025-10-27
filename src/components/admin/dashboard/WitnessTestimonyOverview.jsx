@@ -2,6 +2,9 @@ import React from 'react'
 import Carousel from "react-multi-carousel"
 import "react-multi-carousel/lib/styles.css"
 import { ChevronDown } from 'lucide-react';
+import WitnessCard from '../case-portfolio/case-pogress/WitnessCard';
+import { Dialog } from '@mui/material';
+import PlaintiffCard from '../case-portfolio/case-pogress/PlaintiffCard';
 
 const casesArr = [
   {
@@ -10,7 +13,7 @@ const casesArr = [
     status: "Scheduled",
     bgColor: '#d4cd00',
     title: 'Rajesh Sharma v. Anil Kumar',
-    witnesses: 'Affidavit ready, awaiting trial',
+    witnesses: 'Witness: Amit Tiwari',
     onView: () => alert('View Case File clicked')
   },
   {
@@ -19,7 +22,7 @@ const casesArr = [
     status: "Delayed/Unavailable",
     bgColor: '#ea0e0e',
     title: 'State v. Sanjay Verma',
-    witnesses: 'Witness statements recorded',
+    witnesses: 'Witness: Ramesh Patel',
     onView: () => alert('View Case File clicked')
   },
   {
@@ -28,7 +31,7 @@ const casesArr = [
     status: "Delayed/Unavailable",
     bgColor: '#ea0e0e',
     title: 'Priya Singh v. Mumbai Municipal Corporation',
-    witnesses: 'Expert witness deposition pending',
+    witnesses: 'Witness: Meena Joshi',
     onView: () => alert('View Case File clicked')
   },
   {
@@ -37,7 +40,7 @@ const casesArr = [
     status: "Testimony Completed",
     bgColor: '#238206',
     title: 'Rohit Gupta v. Neha Sharma & Ors.',
-    witnesses: 'All witnesses examined',
+    witnesses: 'Witness: Suresh Nair',
     onView: () => alert('View Case File clicked')
   },
   {
@@ -46,7 +49,7 @@ const casesArr = [
     status: "Scheduled",
     bgColor: '#d4cd00',
     title: 'Sunita Devi v. Land Development Authority',
-    witnesses: 'Key witness unavailable',
+    witnesses: 'Witness: Kavita Menon',
     onView: () => alert('View Case File clicked')
   },
   {
@@ -55,10 +58,11 @@ const casesArr = [
     status: "Testimony Completed",
     bgColor: '#238206',
     title: 'Vikram Mehta v. State Bank of India',
-    witnesses: 'Bank officials to testify',
+    witnesses: 'Witness: Deepak Reddy',
     onView: () => alert('View Case File clicked')
   }
 ];
+
 
 
 const responsive = {
@@ -81,6 +85,11 @@ const responsive = {
 const WitnessTestimonyOverview = () => {
   const [selectedCase, setSelectedCase] = React.useState('Choose Case');
 
+  const [witnessState, setWitnessState] = React.useState(false);
+
+  // function witnessesView() {
+  //   <WitnessCard />
+  // }
 
   return (
     <div className='w-full space-top'>
@@ -145,7 +154,7 @@ const WitnessTestimonyOverview = () => {
 
                   <div className="pt-2">
                     <button
-                      onClick={item.onView}
+                      onClick={() => setWitnessState(true)}
                       className="w-full inline-flex items-center justify-center  px-4 py-2 rounded-lg border-2 border-webprimary text-webprimary  text-base hover:bg-active hover:border-active hover:text-white transition"
                       aria-label="View case file"
                     >
@@ -158,6 +167,21 @@ const WitnessTestimonyOverview = () => {
           ))}
         </Carousel>
       </div>
+
+      <Dialog
+        open={witnessState}
+        onClose={() => setWitnessState(false)}
+        // fullWidth
+        // maxWidth="lg"
+        fullWidth={true}
+        sx={{
+
+        }}
+      >
+        <div >
+          <PlaintiffCard onClose={setWitnessState} />
+        </div>
+      </Dialog>
 
 
     </div>

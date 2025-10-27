@@ -1,22 +1,27 @@
 import { AlertCircle } from 'lucide-react';
-
+import CaseDelayBarChart from './CaseDelayBarChart';
+import { useState } from 'react';
+import { IoClose } from "react-icons/io5";
 export default function DelaysDueUnnecessary() {
-  const headers = ['Case Number', 'Case Title', 'Hearing Date', 'No. of Adjournments', 'Reason for Last Adjournment', 'Next Action'];
+  const [showDelayChart, setShowDelayChart] = useState('Choose Case');
+  const headers = ['Case Number', 'Case Title', "Case Lifecycle", 'Hearing Date', 'No. of Adjournments', 'Reason for Last Adjournment', 'Next Action'];
 
   const caseData = [
     {
       caseNumber: 'CR/138/2025/DEL/056',
       caseTitle: 'Rajesh Sharma v. Anil Kumar',
+      caseLifecycle: " 3 Years 4 Months",
       hearingDate: 'June 10, 2025',
-      adjournments: '0 (pre-trial stage)',
+      adjournments: '30',
       reason: 'N/A (summons issuance pending)',
       iconColor: '#DC2626'
     },
     {
       caseNumber: 'CR/138/2025/DEL/056',
       caseTitle: 'Rajesh Sharma v. Anil Kumar',
+      caseLifecycle: " 2 Years 6 Months",
       hearingDate: 'June 10, 2025',
-      adjournments: '0 (pre-trial stage)',
+      adjournments: '24',
       reason: 'N/A (summons issuance pending)',
       iconColor: '#CDDC39'
     }
@@ -57,8 +62,9 @@ export default function DelaysDueUnnecessary() {
                 </div>
               </td>
               <td className="border-t border-gray-200" style={tdStyle}>{row.caseTitle}</td>
+              <td className="border-t border-gray-200" style={tdStyle}>{row.caseLifecycle}</td>
               <td className="border-t border-gray-200" style={tdStyle}>{row.hearingDate}</td>
-              <td className="border-t border-gray-200" style={tdStyle}>{row.adjournments}</td>
+              <td className="border-t border-gray-200" style={tdStyle} onClick={() => setShowDelayChart(true)}><span className='cursor-pointer underline '> {row.adjournments}</span></td>
               <td className="border-t border-gray-200" style={tdStyle}>{row.reason}</td>
               <td className="border-t border-gray-200 text-center" style={tdStyle}>
                 <button className="text-blue-600 font-bold hover:text-blue-800 hover:underline">
@@ -69,6 +75,18 @@ export default function DelaysDueUnnecessary() {
           ))}
         </tbody>
       </table>
+
+      <div className='pt-8'>
+        {showDelayChart && <>
+          <div className='flex justify-end p-5 text-2xl font-semibold cursor-pointer' onClick={() => setShowDelayChart(false)}>
+            <IoClose size={28} />
+          </div>
+          {<CaseDelayBarChart />}
+
+
+        </>
+        }
+      </div>
     </div>
   );
 }

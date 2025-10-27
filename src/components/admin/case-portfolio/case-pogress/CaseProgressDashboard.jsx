@@ -6,6 +6,8 @@ import DefendantCard from "./DefendantCard";
 import PlaintiffCard from "./PlaintiffCard";
 import NextHearingsPopup from "./NextHearingsPopup";
 import AdjournmentPopup from "./AdjournmentPopup";
+import checkImg from "../../../../assets/images/check.jpg"
+import { IoClose } from "react-icons/io5";
 
 
 const StatementsBtns = ["Add Opening Statements",
@@ -29,6 +31,7 @@ const CaseProgressDashboard = () => {
   const [nextHearingsState, setNextHearingsState] = useState(false);
   const [adjournmentState, setAdjournmentState] = useState(false);
   const [ActiveDate, setActiveDate] = useState(null);
+  const [checkFileModal, setCheckFileModal] = useState(false);
   const handleScroll = (direction) => {
     setScrollIndex((prev) =>
       direction === "left" ? Math.max(prev - 1, 0) : Math.min(prev + 1, hearingsData.length - 1)
@@ -99,7 +102,7 @@ const CaseProgressDashboard = () => {
                     `} onClick={() => setActiveDate(item.date)}>
                   <div className={`w-4 h-4 ${item.color} rounded-full border-2 border-white shadow `}  ></div>
                   <p className="font-semibold text-sm">{item.date}</p>
-                  <div className="flex gap-3"> 
+                  <div className="flex gap-3">
                     <p className="text-xs ">{item.day}</p>
                     <div className=" ps-2 text-xs "><p> 24 days </p></div>
                   </div>
@@ -144,8 +147,10 @@ const CaseProgressDashboard = () => {
 
       {/* ====================plaintiff-difenderCard============== */}
       <div className="grid lg:grid-cols-2 gap-6">
-        <PlaintiffCard />
-        <DefendantCard />
+        <PlaintiffCard setCheckFileModal={setCheckFileModal} checkFileName={"Cheque, Return Memo, Notice, Invoices, Affidavits (Tasks 1–9 from evidence plan)"}  />
+        <DefendantCard
+          setCheckFileModal={setCheckFileModal} checkFileName={"Cheque, Return Memo, Notice, Invoices, Affidavits (Tasks 1–9 from evidence plan)"}
+        />
       </div>
 
 
@@ -165,6 +170,20 @@ const CaseProgressDashboard = () => {
       >
         <div>
           <AdjournmentPopup onClose={setAdjournmentState} />
+        </div>
+      </Dialog>
+
+      <Dialog
+        open={checkFileModal}
+        onClose={() => setCheckFileModal(false)}
+      >
+        <div>
+          <div onClick={() => setCheckFileModal(false)} className='flex justify-end p-4'>
+            <IoClose size={24} />
+          </div>
+          <div className='flex justify-center p-12'  >
+            <img src={checkImg || null} alt="img" className='w-full h-auto' />
+          </div>
         </div>
       </Dialog>
 
