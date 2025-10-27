@@ -1,6 +1,7 @@
 import { Phone, Calendar, User, MapPin, CheckCircle, Download } from 'lucide-react';
 import { IoMdCheckmarkCircleOutline } from "react-icons/io";
 import FormButton from '../../../common/FormButton';
+import { IoClose } from "react-icons/io5";
 import { useState } from 'react';
 // import { useNavigate } from 'react-router-dom';
 
@@ -11,7 +12,9 @@ export default function WitnessCard({
   // setCrossExamination,
   setExaminationState,
   setWitnessSanctitystate,
-  setPlaintiffSummaryState
+  setPlaintiffSummaryState,
+
+
 }) {
 
   const [relevancy, setRelevancy] = useState(4);
@@ -28,6 +31,7 @@ export default function WitnessCard({
 
   return (
     <div className=" mx-auto bg-[#ecf3fb] rounded-lg p-3">
+
       {/* Header Section */}
       <div className="bg-white rounded-lg p-4 mb-4 shadow-sm">
         <div className="flex gap-4">
@@ -174,7 +178,7 @@ export default function WitnessCard({
         </FormButton>
       </div>
 
-      
+
     </div>
   );
 }

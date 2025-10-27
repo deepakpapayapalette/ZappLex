@@ -2,9 +2,11 @@ import React from 'react'
 import Carousel from "react-multi-carousel"
 import "react-multi-carousel/lib/styles.css"
 import { ChevronDown } from 'lucide-react';
-import WitnessCard from '../case-portfolio/case-pogress/WitnessCard';
+
+import { IoClose } from "react-icons/io5";
 import { Dialog } from '@mui/material';
 import PlaintiffCard from '../case-portfolio/case-pogress/PlaintiffCard';
+import DefendantCard from '../case-portfolio/case-pogress/DefendantCard';
 
 const casesArr = [
   {
@@ -63,8 +65,6 @@ const casesArr = [
   }
 ];
 
-
-
 const responsive = {
   desktop: {
     breakpoint: { max: 3000, min: 1024 },
@@ -87,9 +87,7 @@ const WitnessTestimonyOverview = () => {
 
   const [witnessState, setWitnessState] = React.useState(false);
 
-  // function witnessesView() {
-  //   <WitnessCard />
-  // }
+
 
   return (
     <div className='w-full space-top'>
@@ -178,8 +176,13 @@ const WitnessTestimonyOverview = () => {
 
         }}
       >
-        <div >
-          <PlaintiffCard onClose={setWitnessState} />
+        <div className='px-3 pb-3'>
+          <div className='flex justify-end p-5'  >
+            <IoClose size={30} onClick={() => setWitnessState(false)} />
+          </div>
+
+          {/* <WitnessCard onClose={setWitnessState} /> */}
+          <DefendantCard onClose={setWitnessState} currentTabSection="witness" />
         </div>
       </Dialog>
 

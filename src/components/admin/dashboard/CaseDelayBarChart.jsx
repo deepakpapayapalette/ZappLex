@@ -8,6 +8,7 @@ import {
   Tooltip,
   ResponsiveContainer,
   Legend,
+  LabelList,
 } from "recharts";
 
 const data = [
@@ -43,7 +44,9 @@ const CaseDelayBarChart = () => {
           <YAxis />
           <Tooltip />
           <Legend />
-          <Bar dataKey="value" fill="#3b82f6" barSize={60} radius={[3, 3, 0, 0]} />
+          <Bar dataKey="value" fill="#3b82f6" barSize={60} radius={[3, 3, 0, 0]} >
+            <LabelList dataKey="value" position="top" className="text-xs" />
+          </Bar>
         </BarChart>
       </ResponsiveContainer>
     </div>

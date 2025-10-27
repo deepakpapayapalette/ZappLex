@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import FormButton from "../../../common/FormButton";
 import EvidenceCard from "./EvidenceCard";
@@ -37,7 +37,8 @@ const tabs = [
 ];
 
 
-const DefendantCard = ({ setCheckFileModal, checkFileName }) => {
+const DefendantCard = ({ setCheckFileModal, checkFileName, currentTabSection, }) => {
+  console.log(currentTabSection, "currentTabSection")
   const [activeTab, setActiveTab] = useState('opening');
   const [detailCaseRecord, setDetailCaseRecord] = useState(false);
   const [witnessRecordHistory, setWitnessRecordHistory] = useState(false);
@@ -48,11 +49,15 @@ const DefendantCard = ({ setCheckFileModal, checkFileName }) => {
 
 
   function renderContent() {
+    useEffect(() => {
+      setActiveTab(currentTabSection || "opening");
+    }, [])
+
     switch (activeTab) {
       case "opening":
         return <><OpeningStatements activeTab={activeTab} /> </>;
       case "evidence":
-        return <><EvidenceCard  setCheckFileModal={setCheckFileModal} checkFileName ={checkFileName}/> </>;
+        return <><EvidenceCard setCheckFileModal={setCheckFileModal} checkFileName={checkFileName} /> </>;
       case "witness":
         return <><WitnessCard
           setDetailCaseRecord={setDetailCaseRecord}

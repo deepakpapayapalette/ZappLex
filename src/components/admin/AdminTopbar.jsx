@@ -20,7 +20,7 @@ const AdminTopbar = ({ show, toggleShow }) => {
               placeholder="Search..."
               className="flex-grow px-4 py-1  text-webprimary outline-none bg-transparent"
             />
-            <button className="bg-[#0077B5]/70 hover:bg-webprimary transition-colors  flex items-center justify-center search-btn-style">
+            <button className="bg-webprimary hover:bg-blue-800 transition-colors  flex items-center justify-center search-btn-style">
               <Search className="text-white" size={25} />
             </button>
           </div>
@@ -29,7 +29,7 @@ const AdminTopbar = ({ show, toggleShow }) => {
 
         <div className="flex items-center space-x-6 pe-lg-5">
           <div className="items-center space-x-1 hidden lg:flex cursor-pointer language-input">
-            <img src={languageIcon} alt="translate" className="w-5 me-2" />
+            {/* <img src={languageIcon} alt="translate" className="w-5 me-2" /> */}
             <span className="text-sm text-gray-700">Court No</span>
             {/* <svg xmlns="http://www.w3.org/2000/svg"
               className="h-4 w-4 text-gray-500"
