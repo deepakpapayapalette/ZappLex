@@ -6,7 +6,7 @@ import EvidenceLog from "./evidence-popup/EvidenceLog";
 import EvidenceSanctity from "./evidence-popup/EvidenceSanctity";
 import EvidenceSummary from "./evidence-popup/EvidenceSummary";
 
-const EvidenceCard = ({ checkName, checkFile, checkFileName, setCheckFileModal  }) => {
+const EvidenceCard = ({ checkName, checkFile, checkFileName, setCheckFileModal, setCheckModal, evidanceType }) => {
   const [relevancy, setRelevancy] = useState(5);
   const [EvSummaryState, setEvSummaryState] = useState(false);
   const [EvidenceLogState, setEvidenceLogState] = useState(false);
@@ -30,12 +30,8 @@ const EvidenceCard = ({ checkName, checkFile, checkFileName, setCheckFileModal  
     link.click();
     document.body.removeChild(link);
   }
-  const handleOpen = () => {
-
-    // handleDownload();
-    // setCheckModal(true);
-    setCheckFileModal(true);
-
+  const handleOpen = (evidanceType) => {
+    evidanceType === "small" ? setCheckModal(true) : setCheckFileModal(true);
   };
 
   return (
@@ -70,7 +66,7 @@ const EvidenceCard = ({ checkName, checkFile, checkFileName, setCheckFileModal  
             </div>
           </div>
           <button
-            onClick={handleOpen}
+            onClick={() => handleOpen(evidanceType)}
             className="px-3 py-1 border border-webprimary text-webprimary text-sm rounded-md font-medium hover:bg-active hover:text-white transition"
           >
             Open

@@ -88,9 +88,15 @@ export default function IrrelevantEvidenceTracker() {
         onClose={() => setEvidenceModalState(false)}
       >
         <div>
-          <EvidenceCard onClose={setEvidenceModalState}
+          {evidenceModalState ?
+            <div onClick={() => setEvidenceModalState(false)} className='flex justify-end p-4'>
+              <IoClose size={30} />
+            </div>
+            : null}
+          <EvidenceCard onClose={setEvidenceModalState} evidanceType="small"
             checkName="Cheque, Return Memo, Notice, Invoices, Affidavits (Tasks 1–9 from evidence plan)."
-            // checkFile={checkImg || null}
+            checkFile={checkImg || null}
+            // setEvidenceModalState={setEvidenceModalState}
             setCheckModal={setCheckModal}
           />
         </div>
@@ -102,7 +108,7 @@ export default function IrrelevantEvidenceTracker() {
       >
         <div>
           <div onClick={() => setCheckModal(false)} className='flex justify-end p-4'>
-            <IoClose />
+            <IoClose size={30} />
           </div>
           <div className='flex justify-center p-12'  >
             <img src={checkImg || null} alt="img" className='w-full h-auto' />

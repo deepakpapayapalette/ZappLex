@@ -3,7 +3,7 @@ import CaseDelayBarChart from './CaseDelayBarChart';
 import { useState } from 'react';
 import { IoClose } from "react-icons/io5";
 export default function DelaysDueUnnecessary() {
-  const [showDelayChart, setShowDelayChart] = useState('Choose Case');
+  const [showDelayChart, setShowDelayChart] = useState(false);
   const headers = ['Case Number', 'Case Title', "Case Lifecycle", 'Hearing Date', 'No. of Adjournments', 'Reason for Last Adjournment', 'Next Action'];
 
   const caseData = [
