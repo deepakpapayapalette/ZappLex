@@ -3,7 +3,7 @@ import { useState } from 'react';
 
 export default function CaseDashboardOverview() {
   const [selectedFilter, setSelectedFilter] = useState('Choose');
-  
+
   // Filter popup state
   const [filterPopupOpen, setFilterPopupOpen] = useState(false);
   const [filters, setFilters] = useState({
@@ -19,23 +19,23 @@ export default function CaseDashboardOverview() {
     setFilters(prev => {
       const currentValues = prev[category];
       const isSelected = currentValues.includes(value);
-      
+
       return {
         ...prev,
-        [category]: isSelected 
+        [category]: isSelected
           ? currentValues.filter(item => item !== value)
           : [...currentValues, value]
       };
     });
   };
-  
+
   const updateDateFilter = (field, value) => {
     setFilters(prev => ({
       ...prev,
       [field]: value
     }));
   };
-  
+
   const resetFilters = () => {
     setFilters({
       caseType: [],
@@ -45,13 +45,13 @@ export default function CaseDashboardOverview() {
       hearingDate: '08-Oct-2025'
     });
   };
-  
+
   const applyFilters = () => {
     // Apply filter logic here
     console.log('Applying filters:', filters);
     setFilterPopupOpen(false);
   };
-  
+
   const stats = [
     {
       title: 'Total Cases',
@@ -87,7 +87,7 @@ export default function CaseDashboardOverview() {
           <Calendar className="w-8 h-8" />
           <span className="text-2xl font-bold">11-Oct-2025</span>
         </div>
-        <button 
+        <button
           onClick={() => setFilterPopupOpen(true)}
           className="bg-webprimary text-white px-6 py-3 rounded-lg flex items-center gap-2 hover:bg-webprimary font-semibold"
         >
@@ -111,37 +111,15 @@ export default function CaseDashboardOverview() {
         ))}
       </div>
 
-      {/* Speedy Trial Section */}
-      <div className="bg-white rounded-xl border-2 border-gray-300 p-6">
-        <div className="flex items-start justify-between mb-4">
-          <h2 className="text-xl font-bold">Speedy Trial Eligible Cases</h2>
-          <div className="relative">
-            <select
-              value={selectedFilter}
-              onChange={(e) => setSelectedFilter(e.target.value)}
-              className="appearance-none border-2 border-gray-300 rounded-lg px-4 py-2 pr-10 bg-white cursor-pointer hover:border-gray-400 focus:outline-none focus:border-blue-500"
-            >
-              <option>Choose</option>
-              <option>All Cases</option>
-              <option>Criminal Cases</option>
-              <option>Civil Cases</option>
-              <option>Section 143</option>
-            </select>
-            <ChevronDown className="w-5 h-5 absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none text-gray-600" />
-          </div>
-        </div>
-        <p className="text-xl font-bold">
-          40, Cheque bounce cases under Section 143, NI Act
-        </p>
-      </div>
-      
+  
+
       {/* Filter Popup Overlay */}
       {filterPopupOpen && (
-        <div 
+        <div
           className="fixed inset-0 bg-black bg-opacity-50 z-50"
           onClick={() => setFilterPopupOpen(false)}
         >
-          <div 
+          <div
             className="fixed right-0 top-0 h-full w-full max-w-md bg-white shadow-xl transform transition-transform duration-300 ease-in-out overflow-y-auto"
             onClick={(e) => e.stopPropagation()}
           >
@@ -149,14 +127,14 @@ export default function CaseDashboardOverview() {
               {/* Popup Header */}
               <div className="flex items-center justify-between mb-6">
                 <h2 className="text-2xl font-bold">Use Filter</h2>
-                <button 
+                <button
                   onClick={() => setFilterPopupOpen(false)}
                   className="p-2 hover:bg-gray-100 rounded-full"
                 >
                   <X className="w-6 h-6" />
                 </button>
               </div>
-              
+
               {/* Case Type Section */}
               <div className="mb-6">
                 <h3 className="text-lg font-semibold mb-3">Case Type</h3>
@@ -176,7 +154,7 @@ export default function CaseDashboardOverview() {
                   ))}
                 </div>
               </div>
-            
+
               {/* Case Status Section */}
               <div className="mb-6">
                 <h3 className="text-lg font-semibold mb-3">Case Status</h3>
@@ -196,7 +174,7 @@ export default function CaseDashboardOverview() {
                   ))}
                 </div>
               </div>
-            
+
               {/* Priority Section */}
               <div className="mb-6">
                 <h3 className="text-lg font-semibold mb-3">Priority</h3>
@@ -216,7 +194,7 @@ export default function CaseDashboardOverview() {
                   ))}
                 </div>
               </div>
-            
+
               {/* Date Range Section */}
               <div className="mb-8">
                 <h3 className="text-lg font-semibold mb-4">Date Range</h3>
@@ -241,7 +219,7 @@ export default function CaseDashboardOverview() {
                       />
                     </div>
                   </div>
-                  
+
                   {/* Hearing Date */}
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-2">
@@ -264,7 +242,7 @@ export default function CaseDashboardOverview() {
                   </div>
                 </div>
               </div>
-            
+
               {/* Action Buttons */}
               <div className="flex gap-3 justify-end">
                 <button

@@ -7,7 +7,7 @@ import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import LogoutIcon from '@mui/icons-material/Logout';
 import { toast } from "react-toastify";
 import useAdminSidebarLinks from "../../hooks/admin/useAdminSidebarLinks";
-import Logo from '../../assets/images/logo-web.png'
+import Logo from '../../assets/images/logo-white.png'
 // import { useAuth } from "../../context/AuthContext";
 const AdminSidebar = ({ show, toggleDrawer }) => {
   const { pathname } = useLocation();
@@ -27,8 +27,8 @@ const AdminSidebar = ({ show, toggleDrawer }) => {
       <div className="flex items-center justify-center pt-14 pb-10">
         <Typography variant="h5" className="font-bold my-4 text-primary-foreground">
           {show ?
-            // <Avatar variant="rounded" alt="brand" src={Logo} sx={{ width: 64, height: 64, objectFit: "contain" }} />
-            "ZappLex"
+            <Avatar variant="rounded" alt="brand" src={Logo} sx={{ width: "100%", height: 'auto', objectFit: "cover", padding: "10px 20px" }} />
+            // "ZappLex"
             : "Logo"}
         </Typography>
       </div>

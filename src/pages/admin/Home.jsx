@@ -12,6 +12,7 @@ import AlertsPanel from '../../components/admin/dashboard/AlertsPanel'
 import CaseDetailsDrillDown from '../../components/admin/dashboard/CaseDetailsDrillDown'
 import HearingForToday from '../../components/admin/dashboard/HearingForToday'
 import DelaysDueUnnecessary from '../../components/admin/dashboard/DelaysDueUnnecessary'
+import SpeedTrail from '../../components/admin/dashboard/SpeedTrail'
 
 const Home = () => {
   return (
@@ -19,6 +20,8 @@ const Home = () => {
       <section>
         <div className="container">
           <CaseDashboardOverview />
+          <HearingForToday />
+          <SpeedTrail />
           <CaseLifecycleOverview />
           {/* <DlaysDue /> */}
           <DelaysDueUnnecessary />
@@ -28,7 +31,7 @@ const Home = () => {
           <SpeedyTrialOverview />
           <AlertsPanel />
           <CaseDetailsDrillDown />
-          <HearingForToday />
+
         </div>
       </section>
     </>
