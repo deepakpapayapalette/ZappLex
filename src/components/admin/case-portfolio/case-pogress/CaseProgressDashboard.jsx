@@ -182,8 +182,9 @@ const CaseProgressDashboard = () => {
 
       {/* ====================plaintiff-difenderCard============== */}
       <div className="grid lg:grid-cols-2 gap-6">
-        <PlaintiffCard setCheckFileModal={setCheckFileModal} checkFileName={"Cheque, Return Memo, Notice, Invoices, Affidavits (Tasks 1–9 from evidence plan)"} />
+        <PlaintiffCard setCheckFileModal={setCheckFileModal} evidanceType={"plaintiffCheck"} checkFileName={"Cheque, Return Memo, Notice, Invoices, Affidavits (Tasks 1–9 from evidence plan)"} />
         <DefendantCard
+          evidanceType3={"defendantCheck"}
           setCheckFileModal={setCheckFileModal} checkFileName={"Cheque, Return Memo, Notice, Invoices, Affidavits (Tasks 1–9 from evidence plan)"}
         />
       </div>

@@ -6,7 +6,7 @@ import EvidenceLog from "./evidence-popup/EvidenceLog";
 import EvidenceSanctity from "./evidence-popup/EvidenceSanctity";
 import EvidenceSummary from "./evidence-popup/EvidenceSummary";
 
-const EvidenceCard = ({ checkName, checkFile, checkFileName, setCheckFileModal, setCheckModal, evidanceType }) => {
+const EvidenceCard = ({ checkName, checkFile, checkFileName, setCheckFileModal, setCheckModal, evidanceType, evidanceType2, evidanceType3 }) => {
   const [relevancy, setRelevancy] = useState(5);
   const [EvSummaryState, setEvSummaryState] = useState(false);
   const [EvidenceLogState, setEvidenceLogState] = useState(false);
@@ -31,7 +31,9 @@ const EvidenceCard = ({ checkName, checkFile, checkFileName, setCheckFileModal, 
     document.body.removeChild(link);
   }
   const handleOpen = (evidanceType) => {
-    evidanceType === "small" ? setCheckModal(true) : setCheckFileModal(true);
+    if (evidanceType === "small") setCheckModal(true);
+    if (evidanceType2 === "plaintiffCheck") setCheckFileModal(true);
+    if (evidanceType3 === "defendantCheck") setCheckFileModal(true);
   };
 
   return (

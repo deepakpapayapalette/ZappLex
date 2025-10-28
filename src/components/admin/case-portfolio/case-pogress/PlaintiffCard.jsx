@@ -37,7 +37,7 @@ const tabs = [
 ];
 
 
-const PlaintiffCard = ({ setCheckFileModal, checkFileName }) => {
+const PlaintiffCard = ({ setCheckFileModal, checkFileName, evidanceType }) => {
 
   const [activeTab, setActiveTab] = useState('opening');
   const [detailCaseRecord, setDetailCaseRecord] = useState(false);
@@ -53,7 +53,13 @@ const PlaintiffCard = ({ setCheckFileModal, checkFileName }) => {
       case "opening":
         return <><OpeningStatements activeTab={activeTab} /> </>;
       case "evidence":
-        return <><EvidenceCard setCheckFileModal={setCheckFileModal} checkFileName ={checkFileName}/> </>;
+        return <><EvidenceCard
+          setCheckFileModal={setCheckFileModal}
+          checkFileName={checkFileName}
+          evidanceType2={evidanceType}
+
+        />
+        </>;
       case "witness":
         return <><WitnessCard
           setDetailCaseRecord={setDetailCaseRecord}
