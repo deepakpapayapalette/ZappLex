@@ -3,10 +3,12 @@ import { FaUserPlus, FaPlus, FaSearch } from "react-icons/fa";
 import Carousel from "react-multi-carousel"
 import "react-multi-carousel/lib/styles.css"
 import { Link } from "react-router-dom";
+import { dummyCases } from "../Localdata/LocalData";
 // Removed unused allCases array as we now use localStorage data
 
 const CaseList = () => {
-  const [activeFilter, setActiveFilter] = useState("today");
+  dummyCases
+  const [activeFilter, setActiveFilter] = useState("month");
   const [searchTerm, setSearchTerm] = useState("");
   const [getCaseLocal, setgetCaseLocal] = useState([]);
   const [relevancy, setRelevancy] = useState(4);
@@ -29,17 +31,17 @@ const CaseList = () => {
   }
 
   useEffect(() => {
-    const storedLocalData = JSON.parse(localStorage.getItem("regCase")) || [];
+    const storedLocalData = JSON.parse(localStorage.getItem("regCase")) || dummyCases || [];
     setgetCaseLocal(storedLocalData);
-    console.log("Loaded cases from localStorage:", storedLocalData);
+    // console.log("Loaded cases from localStorage:", storedLocalData);
   }, [])
 
   // Add a function to refresh data when localStorage changes
   useEffect(() => {
     const handleStorageChange = () => {
-      const storedLocalData = JSON.parse(localStorage.getItem("regCase")) || [];
+      const storedLocalData = JSON.parse(localStorage.getItem("regCase")) || dummyCases || [];
       setgetCaseLocal(storedLocalData);
-      console.log("Storage changed, reloaded cases:", storedLocalData);
+      // console.log("Storage changed, reloaded cases:", storedLocalData);
     };
 
     // Listen for storage events (when localStorage changes in other tabs)
@@ -184,10 +186,11 @@ const CaseList = () => {
         </div>
 
         {/* Results Count */}
+        {/* from today */}
         <div className="mb-1">
           <p className="text-webprimary text-xs">
             Showing <span className="font-semibold">{filteredCases.length}</span> case(s)
-            {activeFilter === "today" && " from today"}
+            {activeFilter === "today" && " from today "}
             {activeFilter === "week" && " from this week"}
             {activeFilter === "month" && " from this month"}
           </p>

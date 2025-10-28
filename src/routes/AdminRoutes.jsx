@@ -18,6 +18,7 @@ const AdminRoutes = () => (
       <Route path="case-portfolio/case-profiling/" element={<CaseProfiling />} />
       <Route path="case-portfolio/case-profile/" element={<CaseProfile />} />
       <Route path="case-portfolio/case-progress/" element={<CaseProgressDashboard />} />
+
       <Route path="case-portfolio/case-progress/case-records/" element={<DetailedCaseRecords />} />
       {/* </Route> */}
 

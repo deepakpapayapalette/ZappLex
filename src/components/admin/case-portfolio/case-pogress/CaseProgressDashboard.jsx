@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import FormButton from "../../../common/FormButton";
 import { Dialog } from '@mui/material';
@@ -8,6 +8,9 @@ import NextHearingsPopup from "./NextHearingsPopup";
 import AdjournmentPopup from "./AdjournmentPopup";
 import checkImg from "../../../../assets/images/check.jpg"
 import { IoClose } from "react-icons/io5";
+import DriveSafeGauge from "../../dashboard/charts/DriveSafeGauge";
+import DonutScore from "../../dashboard/charts/DonutScore";
+import QuickActions from "../../dashboard/charts/QuickActions";
 
 
 const StatementsBtns = ["Add Opening Statements",
@@ -38,6 +41,12 @@ const CaseProgressDashboard = () => {
     );
   };
 
+  useEffect(() => {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+  }, []);
 
   return (
     <div className="container mx-auto p-6 bg-white rounded-2xl shadow-md my-10 space-y-8">
@@ -56,8 +65,34 @@ const CaseProgressDashboard = () => {
           <h3 className="text-2xl font-semibold mt-1">04</h3>
         </div>
         <div className="bg-yellow-500 text-white p-4 rounded-xl lg:py-[25px]">
-          <p className="text-lg font-medium">Absent</p>
-          <h3 className="text-2xl font-semibold mt-1">03</h3>
+          <p className="text-lg font-medium">Case Stack Value </p>
+          <h3 className="text-2xl font-semibold mt-1">INR 28.0 Cr</h3>
+        </div>
+
+      </div>
+      <div className="grid grid-cols-1 sm:grid-cols-2  lg:grid-cols-5 gap-3 ">
+        <div className="col-span-1 bg-white  p-3 rounded border border-gray-300" >
+          <div>
+            <DriveSafeGauge rank={12} lastYearRank={13} />
+          </div>
+        </div>
+        <div className="col-span-2  px-3  bg-white rounded border border-gray-300 ">
+          <DonutScore
+            driverScore={400}
+            vehicleScore={180}
+            behaviourScore={720}
+            totalScore={900}
+          />
+        </div>
+
+        <div className="col-span-2  rounded border border-gray-300 bg-white ">
+          <QuickActions
+            actions={[
+              { label: "Download Case Files", onClick: () => handleDownload("Health Report 1") },
+              { label: "Download Witness Testimony Report", onClick: () => handleDownload("Health Report 2") },
+              { label: "Download Investigation Report", onClick: () => handleDownload("Health Report 3") },
+            ]}
+          />
         </div>
       </div>
 
@@ -147,7 +182,7 @@ const CaseProgressDashboard = () => {
 
       {/* ====================plaintiff-difenderCard============== */}
       <div className="grid lg:grid-cols-2 gap-6">
-        <PlaintiffCard setCheckFileModal={setCheckFileModal} checkFileName={"Cheque, Return Memo, Notice, Invoices, Affidavits (Tasks 1–9 from evidence plan)"}  />
+        <PlaintiffCard setCheckFileModal={setCheckFileModal} checkFileName={"Cheque, Return Memo, Notice, Invoices, Affidavits (Tasks 1–9 from evidence plan)"} />
         <DefendantCard
           setCheckFileModal={setCheckFileModal} checkFileName={"Cheque, Return Memo, Notice, Invoices, Affidavits (Tasks 1–9 from evidence plan)"}
         />

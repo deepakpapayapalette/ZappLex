@@ -100,9 +100,11 @@ const WitnessTestimonyOverview = () => {
             className="w-full appearance-none border-2 border-gray-300 rounded-lg px-6 py-3 pr-12 bg-white cursor-pointer hover:border-gray-400 focus:outline-none focus:border-blue-500 text-gray-600"
           >
             <option disabled>Choose Case</option>
-            <option>case 1</option>
-            <option>Case 2</option>
-            <option>Case 3</option>
+            <option value="CR/138/2025/DEL/056">CR/138/2025/DEL/056</option>
+            <option value="CR/136/2025/DEL/056">CR/136/2025/DEL/056</option>
+            <option value="CR/138/2025/DEL/057">CR/138/2025/DEL/057</option>
+            <option value="CR/138/2025/DEL/055">CR/138/2025/DEL/055</option>
+            <option value="CR/138/2025/DEL/055">CR/138/2025/DEL/055</option>
           </select>
           <ChevronDown className="w-5 h-5 absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-gray-600" />
         </div>
@@ -156,7 +158,7 @@ const WitnessTestimonyOverview = () => {
                       className="w-full inline-flex items-center justify-center  px-4 py-2 rounded-lg border-2 border-webprimary text-webprimary  text-base hover:bg-active hover:border-active hover:text-white transition"
                       aria-label="View case file"
                     >
-                      View Case File
+                      View Witness Profile
                     </button>
                   </div>
                 </div>

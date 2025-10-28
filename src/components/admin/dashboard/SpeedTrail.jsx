@@ -14,13 +14,13 @@ const SpeedTrail = () => {
     <>
       {/* Speedy Trial Section */}
       <div className="bg-white rounded-xl border-2 border-gray-300 p-6">
-        <div className="flex items-start justify-between mb-4">
-          <h2 className="text-xl font-bold">Speedy Trial Eligible Cases</h2>
+        <div className="md:flex items-start justify-between mb-4">
+          <h2 className="text-xl font-bold md:mb-0 mb-4">Speedy Trial Eligible Cases</h2>
           <div className="relative">
             <select
               value={selectedFilter}
               onChange={(e) => setSelectedFilter(e.target.value)}
-              className="appearance-none border-2 border-gray-300 rounded-lg px-4 py-2 pr-10 bg-white cursor-pointer hover:border-gray-400 focus:outline-none focus:border-blue-500"
+              className="appearance-none border-2 border-gray-300 rounded-lg px-4 py-2 pr-10 bg-white cursor-pointer hover:border-gray-400 focus:outline-none focus:border-blue-500 max-w-[220px]"
             >
               <option>Choose</option>
               <option value="CR/138/2025/DEL/056">CR/138/2025/DEL/056</option>

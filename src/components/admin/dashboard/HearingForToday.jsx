@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { ChevronLeft, ChevronRight, Calendar } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 // Sample hearing data
 const hearingData = {
@@ -223,6 +224,13 @@ const hearingData = {
 };
 
 const HearingForToday = () => {
+  useEffect(() => {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+  }, []);
+
   const today = new Date();
   const [currentDate, setCurrentDate] = useState(new Date(today.getFullYear(), today.getMonth(), 1));
   const [selectedDate, setSelectedDate] = useState(
@@ -355,16 +363,17 @@ const HearingForToday = () => {
             {currentHearingData.length > 0 ? (
               currentHearingData.map((caseRef, index) => (
                 <div key={index}>
-                  <a
-                    href={`#/case/${caseRef}`}
+                  <Link
+                    to="case-portfolio/case-progress/"
+                    // href={`#/case/${caseRef}`}
                     className="text-blue-600 hover:text-blue-800 hover:underline text-sm font-medium block py-1"
-                    onClick={(e) => {
-                      e.preventDefault();
-                      console.log(`Navigating to case: ${caseRef}`);
-                    }}
+                  // onClick={(e) => {
+                  //   e.preventDefault();
+                  //   console.log(`Navigating to case: ${caseRef}`);
+                  // }}
                   >
                     {caseRef}
-                  </a>
+                  </Link>
                 </div>
               ))
             ) : (

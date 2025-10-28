@@ -109,6 +109,7 @@ const CaseRegistration = () => {
   useEffect(() => {
     const existingData = JSON.parse(localStorage.getItem("regCase")) || [];
     setRegCase(existingData);
+    
   }, []);
 
   // console.log(regCase, "regCase")
